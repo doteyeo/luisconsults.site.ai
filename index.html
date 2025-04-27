@@ -91,6 +91,39 @@
             text-align: center;
         }
         
+        /* Logo styling */
+        .logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* If you want the logo to be on the left and the hamburger menu to shift */
+        /* Uncomment this and adjust the hamburger menu position accordingly */
+        /*
+        .logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .menu-toggle {
+            left: 90px; /* Adjust based on your logo width */
+        /*}
+        */
+        
         /* Hamburger Menu */
         .menu-toggle {
             position: fixed;
@@ -534,6 +567,12 @@
   </style>
 </head>
 <body>
+    <!-- Logo -->
+    <div class="logo">
+        <a href="#home">
+            <img src="your-logo.png" alt="Luis Consults LLC" />
+        </a>
+    </div>
     <!-- Hamburger Menu -->
     <div class="menu-toggle">
         <div class="hamburger-line"></div>
