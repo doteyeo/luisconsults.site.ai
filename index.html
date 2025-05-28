@@ -1137,6 +1137,44 @@
                 height: 150px;
             }
         }
+       
+        /* Demo-specific styles */
+#demos ul {
+    text-align: left;
+    line-height: 1.8;
+}
+
+#demos ul li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #4a5568;
+}
+
+#activeDemoContainer {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Override Flowise styles for demos */
+.demo-chatbot {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Add demo indicator to chatbot */
+.demo-chatbot::before {
+    content: "DEMO";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e53e3e;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 1000;
+}
     </style>
 </head>
 <body>
@@ -1434,6 +1472,125 @@
         </div>
     </section>
 
+    <!-- Demo Section -->
+<section id="demos" class="section-gradient-4" style="display: none;">
+    <div class="decorative-circle" style="left: -150px; top: 30%;"></div>
+    <div class="container">
+        <div class="highlight-badge">AI Agent Demonstrations</div>
+        <h2>Experience <span class="gradient-text">Live Demos</span> of Our Solutions</h2>
+        
+        <!-- Password Gate -->
+        <div id="demoPasswordGate" class="card animate-fade-in-up" style="max-width: 500px; margin: 0 auto;">
+            <h3>Access Demo Environment</h3>
+            <p>Enter the demo password to explore our AI agent demonstrations with sample data.</p>
+            <div style="margin-top: 1.5rem;">
+                <input type="password" id="demoPasswordInput" placeholder="Enter demo password" 
+                    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 1rem; margin-bottom: 1rem;">
+                <button onclick="checkDemoPassword()" class="cta-button gradient-btn" style="width: 100%;">
+                    Access Demos
+                </button>
+                <p id="demoErrorMsg" style="color: #e53e3e; margin-top: 0.5rem; display: none;">
+                    Incorrect password. Please try again.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Demo Content (Hidden until authenticated) -->
+        <div id="demoContent" style="display: none;">
+            <p style="text-align: center; margin-bottom: 3rem; font-style: italic; color: #718096;">
+                These are demonstration environments with sample data. Each demo showcases how our AI agents can transform specific aspects of your organization's work.
+            </p>
+            
+            <!-- Demo Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                
+                <!-- Financial Intelligence Demo -->
+                <div class="card animate-fade-in-up">
+                    <h3>Financial Intelligence Co-Pilot</h3>
+                    <div class="highlight-badge" style="background: rgba(74, 142, 91, 0.1); color: var(--primary); margin-bottom: 1rem;">
+                        Budget Planning Assistant
+                    </div>
+                    <p>See how our AI helps translate program visions into financial language, create scenario models, and democratize budget understanding across your team.</p>
+                    <p><strong>Try asking:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        <li>"How would expanding our legal clinic program affect our budget?"</li>
+                        <li>"Show me our Q3 program spending by category"</li>
+                        <li>"What if we received 15% less funding next year?"</li>
+                    </ul>
+                    <button onclick="activateDemo('financial')" class="cta-button" style="width: 100%;">
+                        Launch Financial Demo
+                    </button>
+                </div>
+                
+                <!-- Knowledge Management Demo -->
+                <div class="card animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <h3>Knowledge Management Assistant</h3>
+                    <div class="highlight-badge" style="background: rgba(74, 109, 167, 0.1); color: var(--secondary); margin-bottom: 1rem;">
+                        Institutional Memory System
+                    </div>
+                    <p>Explore how AI can preserve and surface your organization's collective wisdom, making years of experience accessible to all staff members.</p>
+                    <p><strong>Try asking:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        <li>"What strategies worked for tenant organizing in Westside?"</li>
+                        <li>"Find our previous work with youth programs"</li>
+                        <li>"Who are our key community partners in housing justice?"</li>
+                    </ul>
+                    <button onclick="activateDemo('knowledge')" class="cta-button" style="width: 100%;">
+                        Launch Knowledge Demo
+                    </button>
+                </div>
+                
+                <!-- Impact Storytelling Demo -->
+                <div class="card animate-fade-in-up" style="animation-delay: 0.4s;">
+                    <h3>Impact Storytelling Engine</h3>
+                    <div class="highlight-badge" style="background: rgba(101, 166, 209, 0.1); color: var(--accent); margin-bottom: 1rem;">
+                        Program Effectiveness Analysis
+                    </div>
+                    <p>Discover how AI can help you identify patterns across programs, connect metrics to narratives, and communicate impact to diverse audiences.</p>
+                    <p><strong>Try asking:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        <li>"What's been the impact of our bail reform campaign?"</li>
+                        <li>"Show me success stories from Q2"</li>
+                        <li>"How do our programs connect to policy changes?"</li>
+                    </ul>
+                    <button onclick="activateDemo('impact')" class="cta-button" style="width: 100%;">
+                        Launch Impact Demo
+                    </button>
+                </div>
+                
+            </div>
+            
+            <!-- Active Demo Container -->
+            <div id="activeDemoContainer" style="display: none; margin-top: 3rem;">
+                <div class="card" style="background: rgba(247, 249, 252, 0.95);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 id="activeDemoTitle" style="margin: 0;">Active Demo</h3>
+                        <button onclick="closeActiveDemo()" style="background: #e53e3e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                            Close Demo
+                        </button>
+                    </div>
+                    <div id="demoNotice" style="background: rgba(251, 211, 141, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #744210;">
+                            <strong>Demo Mode:</strong> This is a demonstration with sample data only. Responses are illustrative of system capabilities.
+                        </p>
+                    </div>
+                    <div id="demoChatbotContainer" style="position: relative; height: 600px;">
+                        <!-- Chatbot will be initialized here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Demo Expiration Notice -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: #718096; font-size: 0.9rem;">
+                    Demo access expires after 1 hour. For full access and customization options, 
+                    <a href="#contact" style="color: var(--primary);">schedule a consultation</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1598,7 +1755,239 @@
             }
         });
     </script>
+
+    <script>
+        
+    // Demo configuration
+    const demoConfigs = {
+        financial: {
+            chatflowid: '7850d756-7242-4b3c-a8c6-5ed52a80c5f7', // REPLACE WITH YOUR ACTUAL FLOWISE DEMO ID
+            title: 'Financial Intelligence Co-Pilot Demo',
+            welcomeMessage: 'Welcome to the Financial Intelligence demo! I can help you explore budget scenarios, understand financial impacts, and translate between program and financial language. Try asking me about budget planning or financial analysis.',
+            starterPrompts: [
+                "How would expanding our programs affect the budget?",
+                "Show me our spending by category",
+                "What if our funding decreased by 15%?",
+                "Explain our financial health in simple terms"
+            ]
+        },
+        knowledge: {
+            chatflowid: 'dda91f00-5d9a-4573-98a7-f53886473229', // REPLACE WITH YOUR ACTUAL FLOWISE DEMO ID
+            title: 'Knowledge Management Assistant Demo',
+            welcomeMessage: 'Welcome to the Knowledge Management demo! I can help you access institutional memory, find historical context, and connect related information across your organization. Ask me about past campaigns, strategies, or partnerships.',
+            starterPrompts: [
+                "What strategies worked in past campaigns?",
+                "Find information about community partnerships",
+                "Show me successful program approaches",
+                "Who has expertise in tenant organizing?"
+            ]
+        },
+        impact: {
+            chatflowid: '3c6acd52-1e93-43fa-b231-40c01104d635', // REPLACE WITH YOUR ACTUAL FLOWISE DEMO ID
+            title: 'Impact Storytelling Engine Demo',
+            welcomeMessage: 'Welcome to the Impact Storytelling demo! I can help you analyze program effectiveness, identify patterns, and create compelling narratives about your impact. Ask me about outcomes, success stories, or program connections.',
+            starterPrompts: [
+                "What impact have our programs had this quarter?",
+                "Show me success stories from our work",
+                "How do our programs connect to policy changes?",
+                "Generate an impact summary for funders"
+            ]
+        }
+    };
     
+    // Check if user has demo parameter in URL
+    function checkDemoAccess() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const demoParam = urlParams.get('demo');
+        
+        if (demoParam === 'preview') {
+            // Show demos link in navigation
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu) {
+                // Check if demo link already exists
+                const existingDemoLink = Array.from(navMenu.querySelectorAll('.nav-link')).find(link => link.textContent === 'AI Demos');
+                if (!existingDemoLink) {
+                    const demoLink = document.createElement('a');
+                    demoLink.href = '#demos';
+                    demoLink.className = 'nav-link';
+                    demoLink.textContent = 'AI Demos';
+                    navMenu.insertBefore(demoLink, navMenu.lastElementChild);
+                }
+                
+                // Show demo section
+                const demoSection = document.getElementById('demos');
+                if (demoSection) {
+                    demoSection.style.display = 'block';
+                }
+            }
+        }
+    }
+    
+    // Check demo password
+    function checkDemoPassword() {
+        const password = document.getElementById('demoPasswordInput').value;
+        const errorMsg = document.getElementById('demoErrorMsg');
+        
+        // IMPORTANT: For production, implement server-side authentication
+        // This is for demonstration only
+        const hashedPassword = btoa(password); // Basic encoding for demo
+        
+        if (hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==') { // Base64 of 'movementtech2025'
+            document.getElementById('demoPasswordGate').style.display = 'none';
+            document.getElementById('demoContent').style.display = 'block';
+            
+            // Set expiration (1 hour)
+            const expiry = new Date().getTime() + (60 * 60 * 1000);
+            sessionStorage.setItem('demoExpiry', expiry);
+            sessionStorage.setItem('demoAccess', 'granted');
+            
+            errorMsg.style.display = 'none';
+        } else {
+            errorMsg.style.display = 'block';
+            document.getElementById('demoPasswordInput').value = '';
+        }
+    }
+    
+    // Check if demo access is still valid
+    function checkDemoExpiry() {
+        const expiry = sessionStorage.getItem('demoExpiry');
+        const access = sessionStorage.getItem('demoAccess');
+        
+        if (access === 'granted' && expiry) {
+            if (new Date().getTime() > parseInt(expiry)) {
+                sessionStorage.removeItem('demoExpiry');
+                sessionStorage.removeItem('demoAccess');
+                if (document.getElementById('demoPasswordGate')) {
+                    document.getElementById('demoPasswordGate').style.display = 'block';
+                    document.getElementById('demoContent').style.display = 'none';
+                }
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    // Initialize demo chatbot
+    let activeDemoChatbot = null;
+    let DemoChatbotModule = null;
+    
+    function activateDemo(demoType) {
+        // Check expiry first
+        if (!checkDemoExpiry()) {
+            document.getElementById('demoPasswordGate').style.display = 'block';
+            document.getElementById('demoContent').style.display = 'none';
+            return;
+        }
+        
+        // Clear any existing chatbot
+        if (activeDemoChatbot) {
+            const container = document.getElementById('demoChatbotContainer');
+            container.innerHTML = '';
+        }
+        
+        // Show active demo container
+        document.getElementById('activeDemoContainer').style.display = 'block';
+        document.getElementById('activeDemoTitle').textContent = demoConfigs[demoType].title;
+        
+        // Scroll to demo
+        document.getElementById('activeDemoContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Initialize new chatbot
+        const demoConfig = demoConfigs[demoType];
+        
+        // Use already loaded Flowise module or load it
+        if (window.Chatbot) {
+            initializeDemoChatbot(window.Chatbot, demoConfig);
+        } else {
+            import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js').then((module) => {
+                DemoChatbotModule = module.default;
+                initializeDemoChatbot(DemoChatbotModule, demoConfig);
+            });
+        }
+    }
+    
+    function initializeDemoChatbot(ChatbotModule, demoConfig) {
+        const container = document.getElementById('demoChatbotContainer');
+        container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 100%;"></div>';
+        
+        activeDemoChatbot = ChatbotModule.initFull({
+            chatflowid: demoConfig.chatflowid,
+            apiHost: "https://cloud.flowiseai.com",
+            theme: {
+                chatWindow: {
+                    showTitle: false,
+                    welcomeMessage: demoConfig.welcomeMessage,
+                    backgroundColor: '#ffffff',
+                    height: '100%',
+                    width: '100%',
+                    fontSize: 16,
+                    starterPrompts: demoConfig.starterPrompts,
+                    starterPromptFontSize: 14,
+                    botMessage: {
+                        backgroundColor: '#f7f8ff',
+                        textColor: '#303235',
+                        showAvatar: true,
+                        avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=Demo' + demoConfig.title
+                    },
+                    userMessage: {
+                        backgroundColor: '#2e5d3b',
+                        textColor: '#ffffff',
+                        showAvatar: true,
+                        avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
+                    },
+                    textInput: {
+                        placeholder: 'Ask me anything about this demo...',
+                        backgroundColor: '#ffffff',
+                        textColor: '#303235',
+                        sendButtonColor: '#2e5d3b'
+                    },
+                    footer: {
+                        showFooter: true,
+                        textColor: '#718096',
+                        text: 'Demo Mode - Sample Data Only',
+                        company: 'Luis Consults',
+                        companyLink: 'https://luisconsults.com'
+                    }
+                }
+            }
+        }, 'demoFlowiseContainer');
+    }
+    
+    function closeActiveDemo() {
+        document.getElementById('activeDemoContainer').style.display = 'none';
+        if (activeDemoChatbot) {
+            const container = document.getElementById('demoChatbotContainer');
+            container.innerHTML = '';
+            activeDemoChatbot = null;
+        }
+    }
+    
+    // Add to existing DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add demo access check
+        checkDemoAccess();
+        
+        // If already authenticated, show demo content
+        if (checkDemoExpiry()) {
+            const demoSection = document.getElementById('demos');
+            if (demoSection && demoSection.style.display !== 'none') {
+                document.getElementById('demoPasswordGate').style.display = 'none';
+                document.getElementById('demoContent').style.display = 'block';
+            }
+        }
+        
+        // Add keyboard support for password input
+        const passwordInput = document.getElementById('demoPasswordInput');
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkDemoPassword();
+                }
+            });
+        }
+    });
+</script>
     
     <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
