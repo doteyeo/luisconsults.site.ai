@@ -1868,100 +1868,150 @@
         return false;
     }
     
-    // Initialize demo chatbot
-    let activeDemoChatbot = null;
-    let DemoChatbotModule = null;
-    
-    function activateDemo(demoType) {
-        // Check expiry first
-        if (!checkDemoExpiry()) {
-            document.getElementById('demoPasswordGate').style.display = 'block';
-            document.getElementById('demoContent').style.display = 'none';
-            return;
-        }
-        
-        // Clear any existing chatbot
-        if (activeDemoChatbot) {
-            const container = document.getElementById('demoChatbotContainer');
-            container.innerHTML = '';
-        }
-        
-        // Show active demo container
-        document.getElementById('activeDemoContainer').style.display = 'block';
-        document.getElementById('activeDemoTitle').textContent = demoConfigs[demoType].title;
-        
-        // Scroll to demo
-        document.getElementById('activeDemoContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-        // Initialize new chatbot
-        const demoConfig = demoConfigs[demoType];
-        
-        // Use already loaded Flowise module or load it
-        if (window.Chatbot) {
-            initializeDemoChatbot(window.Chatbot, demoConfig);
-        } else {
-            import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js').then((module) => {
-                DemoChatbotModule = module.default;
-                initializeDemoChatbot(DemoChatbotModule, demoConfig);
-            });
-        }
+   // Initialize demo chatbot - FIXED VERSION
+let activeDemoChatbot = null;
+let demoFlowiseInstance = null;
+
+function activateDemo(demoType) {
+    // Check expiry first
+    if (!checkDemoExpiry()) {
+        document.getElementById('demoPasswordGate').style.display = 'block';
+        document.getElementById('demoContent').style.display = 'none';
+        return;
     }
     
-    function initializeDemoChatbot(ChatbotModule, demoConfig) {
+    // Clear any existing chatbot
+    if (demoFlowiseInstance) {
         const container = document.getElementById('demoChatbotContainer');
-        container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 100%;"></div>';
-        
-        activeDemoChatbot = ChatbotModule.initFull({
-            chatflowid: demoConfig.chatflowid,
-            apiHost: "https://cloud.flowiseai.com",
-            theme: {
-                chatWindow: {
-                    showTitle: false,
-                    welcomeMessage: demoConfig.welcomeMessage,
-                    backgroundColor: '#ffffff',
-                    height: '100%',
-                    width: '100%',
-                    fontSize: 16,
-                    starterPrompts: demoConfig.starterPrompts,
-                    starterPromptFontSize: 14,
-                    botMessage: {
-                        backgroundColor: '#f7f8ff',
-                        textColor: '#303235',
-                        showAvatar: true,
-                        avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=Demo' + demoConfig.title
-                    },
-                    userMessage: {
-                        backgroundColor: '#2e5d3b',
-                        textColor: '#ffffff',
-                        showAvatar: true,
-                        avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
-                    },
-                    textInput: {
-                        placeholder: 'Ask me anything about this demo...',
-                        backgroundColor: '#ffffff',
-                        textColor: '#303235',
-                        sendButtonColor: '#2e5d3b'
-                    },
-                    footer: {
-                        showFooter: true,
-                        textColor: '#718096',
-                        text: 'Demo Mode - Sample Data Only',
-                        company: 'Luis Consults',
-                        companyLink: 'https://luisconsults.com'
-                    }
-                }
-            }
-        }, 'demoFlowiseContainer');
+        if (container) {
+            container.innerHTML = '';
+        }
+        demoFlowiseInstance = null;
     }
     
-    function closeActiveDemo() {
-        document.getElementById('activeDemoContainer').style.display = 'none';
-        if (activeDemoChatbot) {
-            const container = document.getElementById('demoChatbotContainer');
-            container.innerHTML = '';
-            activeDemoChatbot = null;
-        }
+    // Show active demo container
+    const activeDemoContainer = document.getElementById('activeDemoContainer');
+    if (activeDemoContainer) {
+        activeDemoContainer.style.display = 'block';
     }
+    
+    const activeDemoTitle = document.getElementById('activeDemoTitle');
+    if (activeDemoTitle && demoConfigs[demoType]) {
+        activeDemoTitle.textContent = demoConfigs[demoType].title;
+    }
+    
+    // Scroll to demo
+    if (activeDemoContainer) {
+        activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Initialize new chatbot
+    const demoConfig = demoConfigs[demoType];
+    if (!demoConfig) {
+        console.error('Demo configuration not found for:', demoType);
+        return;
+    }
+    
+    // Create container for Flowise
+    const container = document.getElementById('demoChatbotContainer');
+    if (!container) {
+        console.error('Demo chatbot container not found');
+        return;
+    }
+    
+    container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 600px;"></div>';
+    
+    // Delay initialization to ensure DOM is ready
+    setTimeout(() => {
+        initializeDemoChatbot(demoConfig);
+    }, 100);
+}
+
+function initializeDemoChatbot(demoConfig) {
+    const container = document.getElementById('demoFlowiseContainer');
+    if (!container) {
+        console.error('Flowise container not found');
+        return;
+    }
+    
+    // Import Flowise dynamically for demos
+    import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js')
+        .then((module) => {
+            const Chatbot = module.default || module.Chatbot;
+            
+            if (!Chatbot || !Chatbot.initFull) {
+                console.error('Flowise Chatbot module not loaded correctly');
+                return;
+            }
+            
+            try {
+                demoFlowiseInstance = Chatbot.initFull({
+                    chatflowid: demoConfig.chatflowid,
+                    apiHost: "https://cloud.flowiseai.com",
+                    theme: {
+                        chatWindow: {
+                            showTitle: false,
+                            welcomeMessage: demoConfig.welcomeMessage,
+                            backgroundColor: '#ffffff',
+                            height: 600,
+                            width: '100%',
+                            fontSize: 16,
+                            starterPrompts: demoConfig.starterPrompts,
+                            starterPromptFontSize: 14,
+                            clearChatOnReload: true,
+                            botMessage: {
+                                backgroundColor: '#f7f8ff',
+                                textColor: '#303235',
+                                showAvatar: true,
+                                avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
+                            },
+                            userMessage: {
+                                backgroundColor: '#2e5d3b',
+                                textColor: '#ffffff',
+                                showAvatar: true,
+                                avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
+                            },
+                            textInput: {
+                                placeholder: 'Ask me anything about this demo...',
+                                backgroundColor: '#ffffff',
+                                textColor: '#303235',
+                                sendButtonColor: '#2e5d3b'
+                            },
+                            footer: {
+                                showFooter: true,
+                                textColor: '#718096',
+                                text: 'Demo Mode - Sample Data Only',
+                                company: 'Luis Consults',
+                                companyLink: 'https://luisconsults.com'
+                            }
+                        }
+                    }
+                }, 'demoFlowiseContainer');
+                
+                console.log('Demo chatbot initialized successfully');
+            } catch (error) {
+                console.error('Error initializing demo chatbot:', error);
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading Flowise module:', error);
+        });
+}
+
+function closeActiveDemo() {
+    const activeDemoContainer = document.getElementById('activeDemoContainer');
+    if (activeDemoContainer) {
+        activeDemoContainer.style.display = 'none';
+    }
+    
+    if (demoFlowiseInstance) {
+        const container = document.getElementById('demoChatbotContainer');
+        if (container) {
+            container.innerHTML = '';
+        }
+        demoFlowiseInstance = null;
+    }
+}
     
     // Add to existing DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function() {
