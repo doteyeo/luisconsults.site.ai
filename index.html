@@ -1928,24 +1928,16 @@ function activateDemo(demoType) {
 }
 
 function initializeDemoChatbot(demoConfig) {
-    const container = document.getElementById('demoFlowiseContainer');
-    if (!container) {
-        console.error('Flowise container not found');
-        return;
-    }
-    
-    // Import Flowise dynamically for demos
-    import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js')
-        .then((module) => {
-            const Chatbot = module.default || module.Chatbot;
-            
-            if (!Chatbot || !Chatbot.initFull) {
-                console.error('Flowise Chatbot module not loaded correctly');
-                return;
-            }
-            
+        const container = document.getElementById('demoFlowiseContainer');
+        if (!container) {
+            console.error('Flowise container not found');
+            return;
+        }
+        
+        // Check if Flowise module is already loaded
+        if (window.FlowiseChatbot) {
             try {
-                demoFlowiseInstance = Chatbot.initFull({
+                demoFlowiseInstance = window.FlowiseChatbot.initFull({
                     chatflowid: demoConfig.chatflowid,
                     apiHost: "https://cloud.flowiseai.com",
                     theme: {
@@ -1992,11 +1984,21 @@ function initializeDemoChatbot(demoConfig) {
             } catch (error) {
                 console.error('Error initializing demo chatbot:', error);
             }
-        })
-        .catch((error) => {
-            console.error('Error loading Flowise module:', error);
-        });
-}
+        } else {
+            // If module not loaded yet, import it
+            import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js')
+                .then((module) => {
+                    const Chatbot = module.default || module.Chatbot;
+                    window.FlowiseChatbot = Chatbot;
+                    
+                    // Try initializing again
+                    initializeDemoChatbot(demoConfig);
+                })
+                .catch((error) => {
+                    console.error('Error loading Flowise module for demo:', error);
+                });
+        }
+    }
 
 function closeActiveDemo() {
     const activeDemoContainer = document.getElementById('activeDemoContainer');
@@ -2039,115 +2041,147 @@ function closeActiveDemo() {
     });
 </script>
     
-    <script type="module">
-    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
-    Chatbot.init({
-        chatflowid: "76884779-7195-49d8-9e5d-ee41394b4700",
-        apiHost: "https://cloud.flowiseai.com",
-        chatflowConfig: {
-            /* Chatflow Config */
-        },
-        observersConfig: {
-            /* Observers Config */
-        },
-        theme: {
-            button: {
-                backgroundColor: '#2e5d3b',
-                right: 20,
-                bottom: 20,
-                size: 48,
-                dragAndDrop: true,
-                iconColor: 'white',
-                customIconSrc: 'https://api.iconify.design/lucide/circle-power.svg?color=%23ffffff',
-                autoWindowOpen: {
-                    autoOpen: true,
-                    openDelay: 2,
-                    autoOpenOnMobile: false
-                }
-            },
-            tooltip: {
-                showTooltip: false,
-                tooltipMessage: 'Tap In',
-                tooltipBackgroundColor: 'black',
-                tooltipTextColor: 'white',
-                tooltipFontSize: 16
-            },
-            disclaimer: {
-                title: 'Welcome',
-                message: "You can use this chat to find out more information about my philosophy</a>",
-                textColor: 'black',
-                buttonColor: '#2e5d3b',
-                buttonText: 'Tap In',
-                buttonTextColor: 'white',
-                blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
-                backgroundColor: 'white'
-            },
-            customCSS: ``,
-            chatWindow: {
-                showTitle: true,
-                showAgentMessages: true,
-                title: 'The Plug',
-                titleAvatarSrc: 'https://api.iconify.design/lucide/plug.svg?color=white',
-                welcomeMessage: 'Whats good? How can I support?',
-                errorMessage: 'This is a custom error message',
-                backgroundColor: '#ffffff',
-                backgroundImage: 'enter image path or link',
-                height: 700,
-                width: 400,
-                fontSize: 16,
-                starterPrompts: [
-                    "What is the Human-AI Partnership Philosophy?",
-                    "Are you suggesting staff replacements?",
-                    "How can AI benefit our Movement?",
-                    "What are you offering?"
+   <script type="module">
+    // Wait for DOM to be fully loaded
+    window.addEventListener('DOMContentLoaded', function() {
+        // Only initialize main chatbot if we're not on a demo page
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDemoMode = urlParams.get('demo') === 'preview';
+        
+        // Store Flowise module globally to avoid re-importing
+        let mainChatbotInstance = null;
+        
+        // Initialize main chatbot
+        function initializeMainChatbot() {
+            import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
+                .then((module) => {
+                    const Chatbot = module.default || module.Chatbot;
                     
-                ],
-                starterPromptFontSize: 15,
-                clearChatOnReload: false,
-                sourceDocsTitle: 'Sources:',
-                renderHTML: true,
-                botMessage: {
-                    backgroundColor: '#f7f8ff',
-                    textColor: '#303235',
-                    showAvatar: true,
-                    avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=LuisChatbot'
-                },
-                userMessage: {
-                    backgroundColor: '#2e5d3b',
-                    textColor: '#ffffff',
-                    showAvatar: true,
-                    avatarSrc: 'gender-neutral-user.svg'
-                },
-                textInput: {
-                    placeholder: 'Type your question',
-                    backgroundColor: '#ffffff',
-                    textColor: '#303235',
-                    sendButtonColor: '#2e5d3b',
-                    maxChars: 250,
-                    maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 250 characters.',
-                    autoFocus: true,
-                    sendMessageSound: true,
-                    sendSoundLocation: 'send_message.mp3',
-                    receiveMessageSound: true,
-                    receiveSoundLocation: 'receive_message.mp3'
-                },
-                feedback: {
-                    color: '#303235'
-                },
-                dateTimeToggle: {
-                    date: true,
-                    time: true
-                },
-                footer: {
-                    showFooter: true,
-                    textColor: '#000000',
-                    text: 'Developed by',
-                    company: 'Luis',
-                    companyLink: 'https://luisconsults.com'
-                }
-            }
+                    // Store module globally for demo use
+                    window.FlowiseChatbot = Chatbot;
+                    
+                    // Only create main chatbot if not in demo mode or if demo section is not visible
+                    const demoSection = document.getElementById('demos');
+                    const isDemoSectionVisible = demoSection && demoSection.style.display !== 'none';
+                    
+                    if (!isDemoSectionVisible || !isDemoMode) {
+                        mainChatbotInstance = Chatbot.init({
+                            chatflowid: "76884779-7195-49d8-9e5d-ee41394b4700",
+                            apiHost: "https://cloud.flowiseai.com",
+                            chatflowConfig: {
+                                /* Chatflow Config */
+                            },
+                            observersConfig: {
+                                /* Observers Config */
+                            },
+                            theme: {
+                                button: {
+                                    backgroundColor: '#2e5d3b',
+                                    right: 20,
+                                    bottom: 20,
+                                    size: 48,
+                                    dragAndDrop: true,
+                                    iconColor: 'white',
+                                    customIconSrc: 'https://api.iconify.design/lucide/circle-power.svg?color=%23ffffff',
+                                    autoWindowOpen: {
+                                        autoOpen: true,
+                                        openDelay: 2,
+                                        autoOpenOnMobile: false
+                                    }
+                                },
+                                tooltip: {
+                                    showTooltip: false,
+                                    tooltipMessage: 'Tap In',
+                                    tooltipBackgroundColor: 'black',
+                                    tooltipTextColor: 'white',
+                                    tooltipFontSize: 16
+                                },
+                                disclaimer: {
+                                    title: 'Welcome',
+                                    message: "You can use this chat to find out more information about my philosophy",
+                                    textColor: 'black',
+                                    buttonColor: '#2e5d3b',
+                                    buttonText: 'Tap In',
+                                    buttonTextColor: 'white',
+                                    blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
+                                    backgroundColor: 'white'
+                                },
+                                customCSS: ``,
+                                chatWindow: {
+                                    showTitle: true,
+                                    showAgentMessages: true,
+                                    title: 'The Plug',
+                                    titleAvatarSrc: 'https://api.iconify.design/lucide/plug.svg?color=white',
+                                    welcomeMessage: 'Whats good? How can I support?',
+                                    errorMessage: 'This is a custom error message',
+                                    backgroundColor: '#ffffff',
+                                    backgroundImage: 'enter image path or link',
+                                    height: 700,
+                                    width: 400,
+                                    fontSize: 16,
+                                    starterPrompts: [
+                                        "What is the Human-AI Partnership Philosophy?",
+                                        "Are you suggesting staff replacements?",
+                                        "How can AI benefit our Movement?",
+                                        "What are you offering?"
+                                    ],
+                                    starterPromptFontSize: 15,
+                                    clearChatOnReload: false,
+                                    sourceDocsTitle: 'Sources:',
+                                    renderHTML: true,
+                                    botMessage: {
+                                        backgroundColor: '#f7f8ff',
+                                        textColor: '#303235',
+                                        showAvatar: true,
+                                        avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=LuisChatbot'
+                                    },
+                                    userMessage: {
+                                        backgroundColor: '#2e5d3b',
+                                        textColor: '#ffffff',
+                                        showAvatar: true,
+                                        avatarSrc: 'gender-neutral-user.svg'
+                                    },
+                                    textInput: {
+                                        placeholder: 'Type your question',
+                                        backgroundColor: '#ffffff',
+                                        textColor: '#303235',
+                                        sendButtonColor: '#2e5d3b',
+                                        maxChars: 250,
+                                        maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 250 characters.',
+                                        autoFocus: true,
+                                        sendMessageSound: true,
+                                        sendSoundLocation: 'send_message.mp3',
+                                        receiveMessageSound: true,
+                                        receiveSoundLocation: 'receive_message.mp3'
+                                    },
+                                    feedback: {
+                                        color: '#303235'
+                                    },
+                                    dateTimeToggle: {
+                                        date: true,
+                                        time: true
+                                    },
+                                    footer: {
+                                        showFooter: true,
+                                        textColor: '#000000',
+                                        text: 'Developed by',
+                                        company: 'Luis',
+                                        companyLink: 'https://luisconsults.com'
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading main Flowise chatbot:', error);
+                });
         }
-    })
-    </script>
+        
+        // Initialize after a short delay to ensure page is fully loaded
+        setTimeout(initializeMainChatbot, 500);
+    });
+</script>
+
     </body>
 </html>
