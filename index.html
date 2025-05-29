@@ -1756,12 +1756,13 @@
         });
     </script>
 
-    <script>
-        
-  // Demo configuration
+<!-- Replace the existing demo script section with this corrected version -->
+<script>
+// Demo configuration
 const demoConfigs = {
     financial: {
         chatflowid: '7850d756-7242-4b3c-a8c6-5ed52a80c5f7',
+        apiHost: 'https://cloud.flowiseai.com',
         title: 'Financial Intelligence Co-Pilot Demo',
         welcomeMessage: 'Welcome to the Financial Intelligence demo! I can help you explore budget scenarios, understand financial impacts, and translate between program and financial language. Try asking me about budget planning or financial analysis.',
         starterPrompts: [
@@ -1773,6 +1774,7 @@ const demoConfigs = {
     },
     knowledge: {
         chatflowid: 'dda91f00-5d9a-4573-98a7-f53886473229',
+        apiHost: 'https://cloud.flowiseai.com',
         title: 'Knowledge Management Assistant Demo',
         welcomeMessage: 'Welcome to the Knowledge Management demo! I can help you access institutional memory, find historical context, and connect related information across your organization. Ask me about past campaigns, strategies, or partnerships.',
         starterPrompts: [
@@ -1784,6 +1786,7 @@ const demoConfigs = {
     },
     impact: {
         chatflowid: '3c6acd52-1e93-43fa-b231-40c01104d635',
+        apiHost: 'https://cloud.flowiseai.com',
         title: 'Impact Storytelling Engine Demo',
         welcomeMessage: 'Welcome to the Impact Storytelling demo! I can help you analyze program effectiveness, identify patterns, and create compelling narratives about your impact. Ask me about outcomes, success stories, or program connections.',
         starterPrompts: [
@@ -1802,19 +1805,26 @@ let activeDemoChatbot = null;
 function loadFlowiseLibrary() {
     return new Promise((resolve, reject) => {
         // Check if already loaded
-        if (window.FlowiseChatbot) {
-            resolve(window.FlowiseChatbot);
+        if (window.Chatbot && window.Chatbot.initFull) {
+            resolve(window.Chatbot);
             return;
         }
         
-        // Load the library
-        import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
-            .then((module) => {
-                const Chatbot = module.default || module.Chatbot;
-                window.FlowiseChatbot = Chatbot;
-                resolve(Chatbot);
-            })
-            .catch(reject);
+        // Create script tag to load Flowise
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.onload = () => {
+            // Import the module after script loads
+            import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
+                .then((module) => {
+                    window.Chatbot = module.Chatbot || module.default;
+                    resolve(window.Chatbot);
+                })
+                .catch(reject);
+        };
+        script.onerror = reject;
+        script.src = "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+        document.head.appendChild(script);
     });
 }
 
@@ -1833,6 +1843,23 @@ function checkDemoAccess() {
                 demoLink.href = '#demos';
                 demoLink.className = 'nav-link';
                 demoLink.textContent = 'AI Demos';
+                
+                // Add click handler for demo link
+                demoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const demoSection = document.getElementById('demos');
+                    if (demoSection) {
+                        demoSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    // Close mobile menu if open
+                    const hamburger = document.querySelector('.hamburger');
+                    const navOverlay = document.querySelector('.nav-overlay');
+                    if (hamburger) hamburger.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    if (navOverlay) navOverlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                });
+                
                 navMenu.insertBefore(demoLink, navMenu.lastElementChild);
             }
             
@@ -1842,9 +1869,6 @@ function checkDemoAccess() {
                 demoSection.style.display = 'block';
             }
         }
-        
-        // Preload Flowise library
-        loadFlowiseLibrary().catch(console.error);
     }
 }
 
@@ -1864,9 +1888,6 @@ function checkDemoPassword() {
         sessionStorage.setItem('demoAccess', 'granted');
         
         errorMsg.style.display = 'none';
-        
-        // Preload Flowise library after authentication
-        loadFlowiseLibrary().catch(console.error);
     } else {
         errorMsg.style.display = 'block';
         document.getElementById('demoPasswordInput').value = '';
@@ -1895,6 +1916,8 @@ function checkDemoExpiry() {
 
 // Activate demo function
 async function activateDemo(demoType) {
+    console.log('Activating demo:', demoType);
+    
     // Check expiry first
     if (!checkDemoExpiry()) {
         document.getElementById('demoPasswordGate').style.display = 'block';
@@ -1904,11 +1927,20 @@ async function activateDemo(demoType) {
     
     // Clear any existing chatbot
     if (activeDemoChatbot) {
-        const container = document.getElementById('demoChatbotContainer');
-        if (container) {
-            container.innerHTML = '';
+        try {
+            if (typeof activeDemoChatbot.destroy === 'function') {
+                activeDemoChatbot.destroy();
+            }
+        } catch (e) {
+            console.warn('Could not destroy previous chatbot:', e);
         }
         activeDemoChatbot = null;
+    }
+    
+    // Clear container
+    const container = document.getElementById('demoChatbotContainer');
+    if (container) {
+        container.innerHTML = '';
     }
     
     // Show active demo container
@@ -1924,7 +1956,9 @@ async function activateDemo(demoType) {
     
     // Scroll to demo
     if (activeDemoContainer) {
-        activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+            activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     }
     
     // Get demo config
@@ -1935,22 +1969,32 @@ async function activateDemo(demoType) {
     }
     
     // Create container for Flowise
-    const container = document.getElementById('demoChatbotContainer');
     if (!container) {
         console.error('Demo chatbot container not found');
         return;
     }
     
-    container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 600px;"></div>';
+    // Show loading message
+    container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #718096;">Loading demo chatbot...</div>';
     
     try {
         // Load Flowise library
         const Chatbot = await loadFlowiseLibrary();
         
-        // Initialize chatbot
-        activeDemoChatbot = Chatbot.initFull({
+        if (!Chatbot || typeof Chatbot.initFull !== 'function') {
+            throw new Error('Flowise Chatbot library not loaded properly');
+        }
+        
+        // Clear container again before initializing
+        container.innerHTML = '<div id="flowise-demo-embed" style="width: 100%; height: 600px;"></div>';
+        
+        // Small delay to ensure DOM is ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Initialize chatbot with the config's apiHost
+        const chatbotConfig = {
             chatflowid: demoConfig.chatflowid,
-            apiHost: "https://cloud.flowiseai.com",
+            apiHost: demoConfig.apiHost,
             theme: {
                 chatWindow: {
                     showTitle: false,
@@ -1966,13 +2010,13 @@ async function activateDemo(demoType) {
                         backgroundColor: '#f7f8ff',
                         textColor: '#303235',
                         showAvatar: true,
-                        avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
+                        avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png'
                     },
                     userMessage: {
                         backgroundColor: '#2e5d3b',
                         textColor: '#ffffff',
                         showAvatar: true,
-                        avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
+                        avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png'
                     },
                     textInput: {
                         placeholder: 'Ask me anything about this demo...',
@@ -1989,13 +2033,30 @@ async function activateDemo(demoType) {
                     }
                 }
             }
-        }, 'demoFlowiseContainer');
+        };
+        
+        console.log('Initializing chatbot with config:', chatbotConfig);
+        
+        activeDemoChatbot = Chatbot.initFull(chatbotConfig, 'flowise-demo-embed');
         
         console.log('Demo chatbot initialized successfully');
     } catch (error) {
         console.error('Error initializing demo chatbot:', error);
         // Show error message to user
-        container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #e53e3e;">Failed to load demo. Please refresh and try again.</div>';
+        container.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: #e53e3e;">
+                <p>Failed to load demo. Please try the following:</p>
+                <ul style="text-align: left; max-width: 400px; margin: 1rem auto;">
+                    <li>Refresh the page and try again</li>
+                    <li>Check your internet connection</li>
+                    <li>Try a different browser</li>
+                    <li>Disable ad blockers temporarily</li>
+                </ul>
+                <button onclick="activateDemo('${demoType}')" class="cta-button" style="margin-top: 1rem;">
+                    Try Again
+                </button>
+            </div>
+        `;
     }
 }
 
@@ -2007,6 +2068,13 @@ function closeActiveDemo() {
     }
     
     if (activeDemoChatbot) {
+        try {
+            if (typeof activeDemoChatbot.destroy === 'function') {
+                activeDemoChatbot.destroy();
+            }
+        } catch (e) {
+            console.warn('Could not destroy chatbot:', e);
+        }
         const container = document.getElementById('demoChatbotContainer');
         if (container) {
             container.innerHTML = '';
@@ -2031,9 +2099,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (demoSection && demoSection.style.display !== 'none') {
             document.getElementById('demoPasswordGate').style.display = 'none';
             document.getElementById('demoContent').style.display = 'block';
-            
-            // Preload Flowise library
-            loadFlowiseLibrary().catch(console.error);
         }
     }
     
