@@ -1928,77 +1928,20 @@ function activateDemo(demoType) {
 }
 
 function initializeDemoChatbot(demoConfig) {
-        const container = document.getElementById('demoFlowiseContainer');
-        if (!container) {
-            console.error('Flowise container not found');
-            return;
-        }
-        
-        // Check if Flowise module is already loaded
-        if (window.FlowiseChatbot) {
-            try {
-                demoFlowiseInstance = window.FlowiseChatbot.initFull({
-                    chatflowid: demoConfig.chatflowid,
-                    apiHost: "https://cloud.flowiseai.com",
-                    theme: {
-                        chatWindow: {
-                            showTitle: false,
-                            welcomeMessage: demoConfig.welcomeMessage,
-                            backgroundColor: '#ffffff',
-                            height: 600,
-                            width: '100%',
-                            fontSize: 16,
-                            starterPrompts: demoConfig.starterPrompts,
-                            starterPromptFontSize: 14,
-                            clearChatOnReload: true,
-                            botMessage: {
-                                backgroundColor: '#f7f8ff',
-                                textColor: '#303235',
-                                showAvatar: true,
-                                avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
-                            },
-                            userMessage: {
-                                backgroundColor: '#2e5d3b',
-                                textColor: '#ffffff',
-                                showAvatar: true,
-                                avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
-                            },
-                            textInput: {
-                                placeholder: 'Ask me anything about this demo...',
-                                backgroundColor: '#ffffff',
-                                textColor: '#303235',
-                                sendButtonColor: '#2e5d3b'
-                            },
-                            footer: {
-                                showFooter: true,
-                                textColor: '#718096',
-                                text: 'Demo Mode - Sample Data Only',
-                                company: 'Luis Consults',
-                                companyLink: 'https://luisconsults.com'
-                            }
-                        }
-                    }
-                }, 'demoFlowiseContainer');
-                
-                console.log('Demo chatbot initialized successfully');
-            } catch (error) {
-                console.error('Error initializing demo chatbot:', error);
-            }
-        } else {
-            // If module not loaded yet, import it
-            import('https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js')
-                .then((module) => {
-                    const Chatbot = module.default || module.Chatbot;
-                    window.FlowiseChatbot = Chatbot;
-                    
-                    // Try initializing again
-                    initializeDemoChatbot(demoConfig);
-                })
-                .catch((error) => {
-                    console.error('Error loading Flowise module for demo:', error);
-                });
-        }
-    }
+    const container = document.getElementById('demoFlowiseContainer');
+    if (!container) return;
+    
+    // Create an iframe for the chatbot
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://cloud.flowiseai.com/chatbot/${demoConfig.chatflowid}`;
+    iframe.style.width = '100%';
+    iframe.style.height = '600px';
+    iframe.style.border = 'none';
+    iframe.style.borderRadius = '8px';
+    
+    container.innerHTML = '';
+    container.appendChild(iframe);
+}
 
 function closeActiveDemo() {
     const activeDemoContainer = document.getElementById('activeDemoContainer');
