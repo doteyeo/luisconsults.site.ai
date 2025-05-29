@@ -2003,24 +2003,6 @@ async function activateDemo(demoType) {
         return;
     }
     
-    // Check if this demo is already active
-    if (activeDemoChatbots[demoType]) {
-        console.log('Demo already active:', demoType);
-        showDemoNotification(`${demoConfigs[demoType].title} is already open!`, 'info');
-        
-        // Optionally, you can trigger the chat window to open if it's closed
-        // This depends on the Flowise API, but you can try:
-        try {
-            if (activeDemoChatbots[demoType].open) {
-                activeDemoChatbots[demoType].open();
-            }
-        } catch (e) {
-            console.log('Could not open chat window programmatically');
-        }
-        
-        return; // Exit early to prevent resetting
-    }
-    
     // Hide the previous active demo container since we're using floating buttons
     const activeDemoContainer = document.getElementById('activeDemoContainer');
     if (activeDemoContainer) {
@@ -2056,6 +2038,17 @@ async function activateDemo(demoType) {
     document.body.appendChild(loadingMsg);
     
     try {
+        // Clean up any existing chatbot for this demo type
+        if (activeDemoChatbots[demoType]) {
+            console.log('Cleaning up existing chatbot for:', demoType);
+            if (typeof activeDemoChatbots[demoType].destroy === 'function') {
+                activeDemoChatbots[demoType].destroy();
+            }
+            // Remove any existing Flowise elements
+            const existingElements = document.querySelectorAll(`[id*="flowise-chatbot-button"]`);
+            existingElements.forEach(el => el.remove());
+        }
+        
         // Load Flowise library
         const Chatbot = await loadFlowiseLibrary();
         
@@ -2071,7 +2064,7 @@ async function activateDemo(demoType) {
                 button: {
                     backgroundColor: demoConfig.buttonColor,
                     right: 20,
-                    bottom: 20 + (Object.keys(activeDemoChatbots).length * 70), // Stack buttons vertically
+                    bottom: 20,
                     size: 56,
                     dragAndDrop: true,
                     iconColor: 'white',
@@ -2101,7 +2094,7 @@ async function activateDemo(demoType) {
                 },
                 chatWindow: {
                     showTitle: true,
-                    showAgentMessages: false, // This removes the processing message
+                    showAgentMessages: false,
                     title: demoConfig.title,
                     titleAvatarSrc: 'https://api.iconify.design/material-symbols:smart-toy-rounded.svg?color=' + demoConfig.buttonColor.replace('#', ''),
                     welcomeMessage: demoConfig.welcomeMessage,
@@ -2112,7 +2105,7 @@ async function activateDemo(demoType) {
                     fontSize: 16,
                     starterPrompts: demoConfig.starterPrompts,
                     starterPromptFontSize: 14,
-                    clearChatOnReload: false, // Changed to false to preserve chat history
+                    clearChatOnReload: true,
                     sourceDocsTitle: 'Demo Sources:',
                     renderHTML: true,
                     botMessage: {
@@ -2233,10 +2226,6 @@ function showDemoNotification(message, type = 'info') {
 
 // Close all active demos
 function closeAllDemos() {
-    console.log('Closing all demos...');
-    
-    // Try multiple methods to remove Flowise elements
-    // Method 1: Destroy through stored instances
     Object.keys(activeDemoChatbots).forEach(demoType => {
         if (activeDemoChatbots[demoType]) {
             try {
@@ -2249,45 +2238,10 @@ function closeAllDemos() {
         }
     });
     
-    // Method 2: Remove all Flowise-related elements from DOM
-    const selectors = [
-        '[id*="flowise"]',
-        '[class*="flowise"]',
-        'flowise-fullchatbot',
-        'flowise-chatbot',
-        '.flowise-chat-widget',
-        '.flowise-chat-button',
-        'div[style*="z-index: 9999"]',
-        'div[style*="bottom: 20px"][style*="right: 20px"]',
-        'button[style*="position: fixed"]'
-    ];
+    // Remove any Flowise elements
+    const flowiseElements = document.querySelectorAll('[id*="flowise"]');
+    flowiseElements.forEach(el => el.remove());
     
-    selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-            // Check if this looks like a Flowise element
-            if (el.shadowRoot || el.tagName.toLowerCase().includes('flowise') || 
-                (el.style && el.style.cssText && el.style.cssText.includes('fixed'))) {
-                el.remove();
-            }
-        });
-    });
-    
-    // Method 3: Remove shadow DOM elements
-    document.querySelectorAll('*').forEach(el => {
-        if (el.shadowRoot) {
-            try {
-                // Check if it's a Flowise element
-                if (el.tagName.toLowerCase().includes('flowise')) {
-                    el.remove();
-                }
-            } catch (e) {
-                // Continue if we can't access shadow root
-            }
-        }
-    });
-    
-    // Clear the stored instances
     activeDemoChatbots = {};
     
     showDemoNotification('All demos closed', 'info');
