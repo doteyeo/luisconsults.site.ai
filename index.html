@@ -1758,10 +1758,10 @@
 
     <script>
         
-    // Demo configuration
-   const demoConfigs = {
+  // Demo configuration
+const demoConfigs = {
     financial: {
-        chatflowid: '7850d756-7242-4b3c-a8c6-5ed52a80c5f7', // Your actual ID
+        chatflowid: '7850d756-7242-4b3c-a8c6-5ed52a80c5f7',
         title: 'Financial Intelligence Co-Pilot Demo',
         welcomeMessage: 'Welcome to the Financial Intelligence demo! I can help you explore budget scenarios, understand financial impacts, and translate between program and financial language. Try asking me about budget planning or financial analysis.',
         starterPrompts: [
@@ -1772,7 +1772,7 @@
         ]
     },
     knowledge: {
-        chatflowid: 'dda91f00-5d9a-4573-98a7-f53886473229', // Your actual ID
+        chatflowid: 'dda91f00-5d9a-4573-98a7-f53886473229',
         title: 'Knowledge Management Assistant Demo',
         welcomeMessage: 'Welcome to the Knowledge Management demo! I can help you access institutional memory, find historical context, and connect related information across your organization. Ask me about past campaigns, strategies, or partnerships.',
         starterPrompts: [
@@ -1783,7 +1783,7 @@
         ]
     },
     impact: {
-        chatflowid: '3c6acd52-1e93-43fa-b231-40c01104d635', // Your actual ID
+        chatflowid: '3c6acd52-1e93-43fa-b231-40c01104d635',
         title: 'Impact Storytelling Engine Demo',
         welcomeMessage: 'Welcome to the Impact Storytelling demo! I can help you analyze program effectiveness, identify patterns, and create compelling narratives about your impact. Ask me about outcomes, success stories, or program connections.',
         starterPrompts: [
@@ -1794,85 +1794,107 @@
         ]
     }
 };
-        
-    // Check if user has demo parameter in URL
-    function checkDemoAccess() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const demoParam = urlParams.get('demo');
-        
-        if (demoParam === 'preview') {
-            // Show demos link in navigation
-            const navMenu = document.querySelector('.nav-menu');
-            if (navMenu) {
-                // Check if demo link already exists
-                const existingDemoLink = Array.from(navMenu.querySelectorAll('.nav-link')).find(link => link.textContent === 'AI Demos');
-                if (!existingDemoLink) {
-                    const demoLink = document.createElement('a');
-                    demoLink.href = '#demos';
-                    demoLink.className = 'nav-link';
-                    demoLink.textContent = 'AI Demos';
-                    navMenu.insertBefore(demoLink, navMenu.lastElementChild);
-                }
-                
-                // Show demo section
-                const demoSection = document.getElementById('demos');
-                if (demoSection) {
-                    demoSection.style.display = 'block';
-                }
-            }
-        }
-    }
-    
-    // Check demo password
-    function checkDemoPassword() {
-        const password = document.getElementById('demoPasswordInput').value;
-        const errorMsg = document.getElementById('demoErrorMsg');
-        
-        // IMPORTANT: For production, implement server-side authentication
-        // This is for demonstration only
-        const hashedPassword = btoa(password); // Basic encoding for demo
-        
-        if (hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==') { // Base64 of 'movementtech2025'
-            document.getElementById('demoPasswordGate').style.display = 'none';
-            document.getElementById('demoContent').style.display = 'block';
-            
-            // Set expiration (1 hour)
-            const expiry = new Date().getTime() + (60 * 60 * 1000);
-            sessionStorage.setItem('demoExpiry', expiry);
-            sessionStorage.setItem('demoAccess', 'granted');
-            
-            errorMsg.style.display = 'none';
-        } else {
-            errorMsg.style.display = 'block';
-            document.getElementById('demoPasswordInput').value = '';
-        }
-    }
-    
-    // Check if demo access is still valid
-    function checkDemoExpiry() {
-        const expiry = sessionStorage.getItem('demoExpiry');
-        const access = sessionStorage.getItem('demoAccess');
-        
-        if (access === 'granted' && expiry) {
-            if (new Date().getTime() > parseInt(expiry)) {
-                sessionStorage.removeItem('demoExpiry');
-                sessionStorage.removeItem('demoAccess');
-                if (document.getElementById('demoPasswordGate')) {
-                    document.getElementById('demoPasswordGate').style.display = 'block';
-                    document.getElementById('demoContent').style.display = 'none';
-                }
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-    
-   // Initialize demo chatbot - FIXED VERSION
-let activeDemoChatbot = null;
-let demoFlowiseInstance = null;
 
-function activateDemo(demoType) {
+// Store active demo instance
+let activeDemoChatbot = null;
+
+// Load Flowise library once and store globally
+function loadFlowiseLibrary() {
+    return new Promise((resolve, reject) => {
+        // Check if already loaded
+        if (window.FlowiseChatbot) {
+            resolve(window.FlowiseChatbot);
+            return;
+        }
+        
+        // Load the library
+        import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
+            .then((module) => {
+                const Chatbot = module.default || module.Chatbot;
+                window.FlowiseChatbot = Chatbot;
+                resolve(Chatbot);
+            })
+            .catch(reject);
+    });
+}
+
+// Check if user has demo parameter in URL
+function checkDemoAccess() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const demoParam = urlParams.get('demo');
+    
+    if (demoParam === 'preview') {
+        // Show demos link in navigation
+        const navMenu = document.querySelector('.nav-menu');
+        if (navMenu) {
+            const existingDemoLink = Array.from(navMenu.querySelectorAll('.nav-link')).find(link => link.textContent === 'AI Demos');
+            if (!existingDemoLink) {
+                const demoLink = document.createElement('a');
+                demoLink.href = '#demos';
+                demoLink.className = 'nav-link';
+                demoLink.textContent = 'AI Demos';
+                navMenu.insertBefore(demoLink, navMenu.lastElementChild);
+            }
+            
+            // Show demo section
+            const demoSection = document.getElementById('demos');
+            if (demoSection) {
+                demoSection.style.display = 'block';
+            }
+        }
+        
+        // Preload Flowise library
+        loadFlowiseLibrary().catch(console.error);
+    }
+}
+
+// Check demo password
+function checkDemoPassword() {
+    const password = document.getElementById('demoPasswordInput').value;
+    const errorMsg = document.getElementById('demoErrorMsg');
+    
+    const hashedPassword = btoa(password);
+    
+    if (hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==') {
+        document.getElementById('demoPasswordGate').style.display = 'none';
+        document.getElementById('demoContent').style.display = 'block';
+        
+        const expiry = new Date().getTime() + (60 * 60 * 1000);
+        sessionStorage.setItem('demoExpiry', expiry);
+        sessionStorage.setItem('demoAccess', 'granted');
+        
+        errorMsg.style.display = 'none';
+        
+        // Preload Flowise library after authentication
+        loadFlowiseLibrary().catch(console.error);
+    } else {
+        errorMsg.style.display = 'block';
+        document.getElementById('demoPasswordInput').value = '';
+    }
+}
+
+// Check if demo access is still valid
+function checkDemoExpiry() {
+    const expiry = sessionStorage.getItem('demoExpiry');
+    const access = sessionStorage.getItem('demoAccess');
+    
+    if (access === 'granted' && expiry) {
+        if (new Date().getTime() > parseInt(expiry)) {
+            sessionStorage.removeItem('demoExpiry');
+            sessionStorage.removeItem('demoAccess');
+            if (document.getElementById('demoPasswordGate')) {
+                document.getElementById('demoPasswordGate').style.display = 'block';
+                document.getElementById('demoContent').style.display = 'none';
+            }
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+// Activate demo function
+async function activateDemo(demoType) {
     // Check expiry first
     if (!checkDemoExpiry()) {
         document.getElementById('demoPasswordGate').style.display = 'block';
@@ -1881,12 +1903,12 @@ function activateDemo(demoType) {
     }
     
     // Clear any existing chatbot
-    if (demoFlowiseInstance) {
+    if (activeDemoChatbot) {
         const container = document.getElementById('demoChatbotContainer');
         if (container) {
             container.innerHTML = '';
         }
-        demoFlowiseInstance = null;
+        activeDemoChatbot = null;
     }
     
     // Show active demo container
@@ -1905,7 +1927,7 @@ function activateDemo(demoType) {
         activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
-    // Initialize new chatbot
+    // Get demo config
     const demoConfig = demoConfigs[demoType];
     if (!demoConfig) {
         console.error('Demo configuration not found for:', demoType);
@@ -1921,115 +1943,110 @@ function activateDemo(demoType) {
     
     container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 600px;"></div>';
     
-    // Delay initialization to ensure DOM is ready
-    setTimeout(() => {
-        initializeDemoChatbot(demoConfig);
-    }, 100);
-}
-
-function initializeDemoChatbot(demoConfig) {
-    const container = document.getElementById('demoFlowiseContainer');
-    if (!container) {
-        console.error('Flowise container not found');
-        return;
-    }
-    
-    // Use the globally loaded Chatbot
-    if (typeof Chatbot !== 'undefined') {
-        try {
-            demoFlowiseInstance = Chatbot.initFull({
-                chatflowid: demoConfig.chatflowid,
-                apiHost: "https://cloud.flowiseai.com",
-                theme: {
-                    chatWindow: {
-                        showTitle: false,
-                        welcomeMessage: demoConfig.welcomeMessage,
+    try {
+        // Load Flowise library
+        const Chatbot = await loadFlowiseLibrary();
+        
+        // Initialize chatbot
+        activeDemoChatbot = Chatbot.initFull({
+            chatflowid: demoConfig.chatflowid,
+            apiHost: "https://cloud.flowiseai.com",
+            theme: {
+                chatWindow: {
+                    showTitle: false,
+                    welcomeMessage: demoConfig.welcomeMessage,
+                    backgroundColor: '#ffffff',
+                    height: 600,
+                    width: '100%',
+                    fontSize: 16,
+                    starterPrompts: demoConfig.starterPrompts,
+                    starterPromptFontSize: 14,
+                    clearChatOnReload: true,
+                    botMessage: {
+                        backgroundColor: '#f7f8ff',
+                        textColor: '#303235',
+                        showAvatar: true,
+                        avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
+                    },
+                    userMessage: {
+                        backgroundColor: '#2e5d3b',
+                        textColor: '#ffffff',
+                        showAvatar: true,
+                        avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
+                    },
+                    textInput: {
+                        placeholder: 'Ask me anything about this demo...',
                         backgroundColor: '#ffffff',
-                        height: 600,
-                        width: '100%',
-                        fontSize: 16,
-                        starterPrompts: demoConfig.starterPrompts,
-                        starterPromptFontSize: 14,
-                        clearChatOnReload: true,
-                        botMessage: {
-                            backgroundColor: '#f7f8ff',
-                            textColor: '#303235',
-                            showAvatar: true,
-                            avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
-                        },
-                        userMessage: {
-                            backgroundColor: '#2e5d3b',
-                            textColor: '#ffffff',
-                            showAvatar: true,
-                            avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
-                        },
-                        textInput: {
-                            placeholder: 'Ask me anything about this demo...',
-                            backgroundColor: '#ffffff',
-                            textColor: '#303235',
-                            sendButtonColor: '#2e5d3b'
-                        },
-                        footer: {
-                            showFooter: true,
-                            textColor: '#718096',
-                            text: 'Demo Mode - Sample Data Only',
-                            company: 'Luis Consults',
-                            companyLink: 'https://luisconsults.com'
-                        }
+                        textColor: '#303235',
+                        sendButtonColor: '#2e5d3b'
+                    },
+                    footer: {
+                        showFooter: true,
+                        textColor: '#718096',
+                        text: 'Demo Mode - Sample Data Only',
+                        company: 'Luis Consults',
+                        companyLink: 'https://luisconsults.com'
                     }
                 }
-            }, 'demoFlowiseContainer');
-            
-            console.log('Demo chatbot initialized successfully');
-        } catch (error) {
-            console.error('Error initializing demo chatbot:', error);
-        }
-    } else {
-        console.error('Chatbot library not loaded');
-        // Retry after a delay
-        setTimeout(() => initializeDemoChatbot(demoConfig), 1000);
+            }
+        }, 'demoFlowiseContainer');
+        
+        console.log('Demo chatbot initialized successfully');
+    } catch (error) {
+        console.error('Error initializing demo chatbot:', error);
+        // Show error message to user
+        container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #e53e3e;">Failed to load demo. Please refresh and try again.</div>';
     }
 }
 
+// Close active demo
 function closeActiveDemo() {
     const activeDemoContainer = document.getElementById('activeDemoContainer');
     if (activeDemoContainer) {
         activeDemoContainer.style.display = 'none';
     }
     
-    if (demoFlowiseInstance) {
+    if (activeDemoChatbot) {
         const container = document.getElementById('demoChatbotContainer');
         if (container) {
             container.innerHTML = '';
         }
-        demoFlowiseInstance = null;
+        activeDemoChatbot = null;
     }
 }
+
+// Make functions globally available
+window.checkDemoPassword = checkDemoPassword;
+window.activateDemo = activateDemo;
+window.closeActiveDemo = closeActiveDemo;
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    // Add demo access check
+    checkDemoAccess();
     
-    // Add to existing DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add demo access check
-        checkDemoAccess();
-        
-        // If already authenticated, show demo content
-        if (checkDemoExpiry()) {
-            const demoSection = document.getElementById('demos');
-            if (demoSection && demoSection.style.display !== 'none') {
-                document.getElementById('demoPasswordGate').style.display = 'none';
-                document.getElementById('demoContent').style.display = 'block';
+    // If already authenticated, show demo content
+    if (checkDemoExpiry()) {
+        const demoSection = document.getElementById('demos');
+        if (demoSection && demoSection.style.display !== 'none') {
+            document.getElementById('demoPasswordGate').style.display = 'none';
+            document.getElementById('demoContent').style.display = 'block';
+            
+            // Preload Flowise library
+            loadFlowiseLibrary().catch(console.error);
+        }
+    }
+    
+    // Add keyboard support for password input
+    const passwordInput = document.getElementById('demoPasswordInput');
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkDemoPassword();
             }
-        }
-        
-        // Add keyboard support for password input
-        const passwordInput = document.getElementById('demoPasswordInput');
-        if (passwordInput) {
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkDemoPassword();
-                }
-            });
-        }
-    });
+        });
+    }
+});
 </script>
     
    <script type="module">
