@@ -1799,105 +1799,70 @@
     window.demoFlowiseInstance = null;
     window.mainChatbotInstance = null;
 
-    // Load Flowise library once
-    function loadFlowiseLibrary() {
-        return new Promise((resolve, reject) => {
-            if (window.Chatbot) {
-                resolve(window.Chatbot);
-                return;
-            }
+  // Enhanced Flowise library loader with better error handling
+function loadFlowiseLibrary() {
+    return new Promise((resolve, reject) => {
+        // Check if already loaded
+        if (window.Chatbot) {
+            console.log('Flowise already loaded');
+            resolve(window.Chatbot);
+            return;
+        }
 
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
-            script.type = 'text/javascript';
-            script.onload = () => {
+        // Check if script is already in DOM but still loading
+        const existingScript = document.querySelector('script[src*="flowise-embed"]');
+        if (existingScript) {
+            existingScript.addEventListener('load', () => {
                 if (window.Chatbot) {
                     resolve(window.Chatbot);
                 } else {
-                    reject(new Error('Flowise library failed to load'));
+                    reject(new Error('Flowise loaded but Chatbot not available'));
                 }
-            };
-            script.onerror = () => reject(new Error('Failed to load Flowise script'));
-            document.head.appendChild(script);
-        });
-    }
-
-    // Check if user has demo parameter in URL
-    function checkDemoAccess() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const demoParam = urlParams.get('demo');
-        
-        if (demoParam === 'preview') {
-            const navMenu = document.querySelector('.nav-menu');
-            if (navMenu) {
-                const existingDemoLink = Array.from(navMenu.querySelectorAll('.nav-link')).find(link => link.textContent === 'AI Demos');
-                if (!existingDemoLink) {
-                    const demoLink = document.createElement('a');
-                    demoLink.href = '#demos';
-                    demoLink.className = 'nav-link';
-                    demoLink.textContent = 'AI Demos';
-                    navMenu.insertBefore(demoLink, navMenu.lastElementChild);
-                }
-                
-                const demoSection = document.getElementById('demos');
-                if (demoSection) {
-                    demoSection.style.display = 'block';
-                }
-            }
-        }
-    }
-    
-    // Check demo password
-    window.checkDemoPassword = function() {
-        const password = document.getElementById('demoPasswordInput').value;
-        const errorMsg = document.getElementById('demoErrorMsg');
-        const hashedPassword = btoa(password);
-        
-        if (hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==') {
-            document.getElementById('demoPasswordGate').style.display = 'none';
-            document.getElementById('demoContent').style.display = 'block';
-            
-            const expiry = new Date().getTime() + (60 * 60 * 1000);
-            sessionStorage.setItem('demoExpiry', expiry);
-            sessionStorage.setItem('demoAccess', 'granted');
-            
-            errorMsg.style.display = 'none';
-        } else {
-            errorMsg.style.display = 'block';
-            document.getElementById('demoPasswordInput').value = '';
-        }
-    }
-    
-    // Check if demo access is still valid
-    window.checkDemoExpiry = function() {
-        const expiry = sessionStorage.getItem('demoExpiry');
-        const access = sessionStorage.getItem('demoAccess');
-        
-        if (access === 'granted' && expiry) {
-            if (new Date().getTime() > parseInt(expiry)) {
-                sessionStorage.removeItem('demoExpiry');
-                sessionStorage.removeItem('demoAccess');
-                if (document.getElementById('demoPasswordGate')) {
-                    document.getElementById('demoPasswordGate').style.display = 'block';
-                    document.getElementById('demoContent').style.display = 'none';
-                }
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-    
-    // Initialize demo chatbot
-    window.activateDemo = async function(demoType) {
-        if (!checkDemoExpiry()) {
-            document.getElementById('demoPasswordGate').style.display = 'block';
-            document.getElementById('demoContent').style.display = 'none';
+            });
             return;
         }
+
+        // Load the script
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+        script.type = 'text/javascript';
+        script.async = true;
         
+        script.onload = () => {
+            // Wait a bit for the library to fully initialize
+            setTimeout(() => {
+                if (window.Chatbot) {
+                    console.log('Flowise library loaded successfully');
+                    resolve(window.Chatbot);
+                } else {
+                    reject(new Error('Flowise library loaded but Chatbot object not found'));
+                }
+            }, 500);
+        };
+        
+        script.onerror = (error) => {
+            console.error('Failed to load Flowise script:', error);
+            reject(new Error('Failed to load Flowise script'));
+        };
+        
+        document.head.appendChild(script);
+    });
+}
+
+// Enhanced demo activation with better error handling
+window.activateDemo = async function(demoType) {
+    console.log('Activating demo:', demoType);
+    
+    if (!checkDemoExpiry()) {
+        document.getElementById('demoPasswordGate').style.display = 'block';
+        document.getElementById('demoContent').style.display = 'none';
+        return;
+    }
+    
+    try {
         // Clear any existing chatbot
         if (window.demoFlowiseInstance) {
+            console.log('Clearing existing demo instance');
             const container = document.getElementById('demoChatbotContainer');
             if (container) {
                 container.innerHTML = '';
@@ -1906,242 +1871,153 @@
         }
         
         const activeDemoContainer = document.getElementById('activeDemoContainer');
+        const activeDemoTitle = document.getElementById('activeDemoTitle');
+        const demoConfig = demoConfigs[demoType];
+        
+        if (!demoConfig) {
+            throw new Error(`Demo configuration not found for: ${demoType}`);
+        }
+        
+        // Update UI
         if (activeDemoContainer) {
             activeDemoContainer.style.display = 'block';
         }
         
-        const activeDemoTitle = document.getElementById('activeDemoTitle');
-        const demoConfig = demoConfigs[demoType];
-        
-        if (activeDemoTitle && demoConfig) {
+        if (activeDemoTitle) {
             activeDemoTitle.textContent = demoConfig.title;
         }
         
+        // Scroll to view
         if (activeDemoContainer) {
             activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
-        if (!demoConfig) {
-            console.error('Demo configuration not found for:', demoType);
-            return;
-        }
-        
+        // Prepare container
         const container = document.getElementById('demoChatbotContainer');
         if (!container) {
-            console.error('Demo chatbot container not found');
-            return;
+            throw new Error('Demo chatbot container not found');
         }
         
-        container.innerHTML = '<div id="demoFlowiseContainer" style="width: 100%; height: 600px;"></div>';
+        // Create a unique container for this instance
+        const uniqueId = `demoFlowiseContainer_${Date.now()}`;
+        container.innerHTML = `<div id="${uniqueId}" style="width: 100%; height: 600px;"></div>`;
         
+        // Load Flowise library
+        const Chatbot = await loadFlowiseLibrary();
+        
+        // Wait for DOM to be ready
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Verify container still exists
+        const flowiseContainer = document.getElementById(uniqueId);
+        if (!flowiseContainer) {
+            throw new Error('Flowise container was removed before initialization');
+        }
+        
+        console.log('Initializing Flowise with config:', demoConfig.chatflowid);
+        
+        // Initialize Flowise
+        window.demoFlowiseInstance = Chatbot.initFull({
+            chatflowid: demoConfig.chatflowid,
+            apiHost: "https://cloud.flowiseai.com",
+            theme: {
+                chatWindow: {
+                    showTitle: false,
+                    welcomeMessage: demoConfig.welcomeMessage,
+                    backgroundColor: '#ffffff',
+                    height: 600,
+                    width: '100%',
+                    fontSize: 16,
+                    starterPrompts: demoConfig.starterPrompts || [],
+                    starterPromptFontSize: 14,
+                    clearChatOnReload: true,
+                    botMessage: {
+                        backgroundColor: '#f7f8ff',
+                        textColor: '#303235',
+                        showAvatar: true,
+                        avatarSrc: `https://api.dicebear.com/9.x/bottts/svg?seed=${encodeURIComponent(demoConfig.title)}`
+                    },
+                    userMessage: {
+                        backgroundColor: '#2e5d3b',
+                        textColor: '#ffffff',
+                        showAvatar: true,
+                        avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
+                    },
+                    textInput: {
+                        placeholder: 'Ask me anything about this demo...',
+                        backgroundColor: '#ffffff',
+                        textColor: '#303235',
+                        sendButtonColor: '#2e5d3b'
+                    },
+                    footer: {
+                        showFooter: true,
+                        textColor: '#718096',
+                        text: 'Demo Mode - Sample Data Only',
+                        company: 'Luis Consults',
+                        companyLink: 'https://luisconsults.com'
+                    }
+                }
+            }
+        }, uniqueId);
+        
+        console.log('Demo chatbot initialized successfully');
+        
+    } catch (error) {
+        console.error('Error initializing demo chatbot:', error);
+        alert(`Failed to load demo: ${error.message}`);
+    }
+}
+
+// Enhanced main chatbot initialization
+async function initializeMainChatbot() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDemoMode = urlParams.get('demo') === 'preview';
+    const demoSection = document.getElementById('demos');
+    const isDemoSectionVisible = demoSection && demoSection.style.display !== 'none';
+    
+    if (!isDemoSectionVisible || !isDemoMode) {
         try {
+            console.log('Initializing main chatbot...');
             const Chatbot = await loadFlowiseLibrary();
             
-            // Wait a bit for DOM to update
-            setTimeout(() => {
-                window.demoFlowiseInstance = Chatbot.initFull({
-                    chatflowid: demoConfig.chatflowid,
-                    apiHost: "https://cloud.flowiseai.com",
-                    theme: {
-                        chatWindow: {
-                            showTitle: false,
-                            welcomeMessage: demoConfig.welcomeMessage,
-                            backgroundColor: '#ffffff',
-                            height: 600,
-                            width: '100%',
-                            fontSize: 16,
-                            starterPrompts: demoConfig.starterPrompts,
-                            starterPromptFontSize: 14,
-                            clearChatOnReload: true,
-                            botMessage: {
-                                backgroundColor: '#f7f8ff',
-                                textColor: '#303235',
-                                showAvatar: true,
-                                avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=' + demoConfig.title
-                            },
-                            userMessage: {
-                                backgroundColor: '#2e5d3b',
-                                textColor: '#ffffff',
-                                showAvatar: true,
-                                avatarSrc: 'https://api.dicebear.com/9.x/initials/svg?seed=User'
-                            },
-                            textInput: {
-                                placeholder: 'Ask me anything about this demo...',
-                                backgroundColor: '#ffffff',
-                                textColor: '#303235',
-                                sendButtonColor: '#2e5d3b'
-                            },
-                            footer: {
-                                showFooter: true,
-                                textColor: '#718096',
-                                text: 'Demo Mode - Sample Data Only',
-                                company: 'Luis Consults',
-                                companyLink: 'https://luisconsults.com'
-                            }
-                        }
-                    }
-                }, 'demoFlowiseContainer');
-                
-                console.log('Demo chatbot initialized successfully');
-            }, 100);
-        } catch (error) {
-            console.error('Error initializing demo chatbot:', error);
-        }
-    }
-
-    window.closeActiveDemo = function() {
-        const activeDemoContainer = document.getElementById('activeDemoContainer');
-        if (activeDemoContainer) {
-            activeDemoContainer.style.display = 'none';
-        }
-        
-        if (window.demoFlowiseInstance) {
-            const container = document.getElementById('demoChatbotContainer');
-            if (container) {
-                container.innerHTML = '';
-            }
-            window.demoFlowiseInstance = null;
-        }
-    }
-    
-    // Initialize main chatbot
-    async function initializeMainChatbot() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isDemoMode = urlParams.get('demo') === 'preview';
-        const demoSection = document.getElementById('demos');
-        const isDemoSectionVisible = demoSection && demoSection.style.display !== 'none';
-        
-        if (!isDemoSectionVisible || !isDemoMode) {
-            try {
-                const Chatbot = await loadFlowiseLibrary();
-                
-                window.mainChatbotInstance = Chatbot.init({
-                    chatflowid: "76884779-7195-49d8-9e5d-ee41394b4700",
-                    apiHost: "https://cloud.flowiseai.com",
-                    theme: {
-                        button: {
-                            backgroundColor: '#2e5d3b',
-                            right: 20,
-                            bottom: 20,
-                            size: 48,
-                            dragAndDrop: true,
-                            iconColor: 'white',
-                            customIconSrc: 'https://api.iconify.design/lucide/circle-power.svg?color=%23ffffff',
-                            autoWindowOpen: {
-                                autoOpen: true,
-                                openDelay: 2,
-                                autoOpenOnMobile: false
-                            }
-                        },
-                        tooltip: {
-                            showTooltip: false,
-                            tooltipMessage: 'Tap In',
-                            tooltipBackgroundColor: 'black',
-                            tooltipTextColor: 'white',
-                            tooltipFontSize: 16
-                        },
-                        disclaimer: {
-                            title: 'Welcome',
-                            message: "You can use this chat to find out more information about my philosophy",
-                            textColor: 'black',
-                            buttonColor: '#2e5d3b',
-                            buttonText: 'Tap In',
-                            buttonTextColor: 'white',
-                            blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
-                            backgroundColor: 'white'
-                        },
-                        chatWindow: {
-                            showTitle: true,
-                            showAgentMessages: true,
-                            title: 'The Plug',
-                            titleAvatarSrc: 'https://api.iconify.design/lucide/plug.svg?color=white',
-                            welcomeMessage: 'Whats good? How can I support?',
-                            errorMessage: 'This is a custom error message',
-                            backgroundColor: '#ffffff',
-                            height: 700,
-                            width: 400,
-                            fontSize: 16,
-                            starterPrompts: [
-                                "What is the Human-AI Partnership Philosophy?",
-                                "Are you suggesting staff replacements?",
-                                "How can AI benefit our Movement?",
-                                "What are you offering?"
-                            ],
-                            starterPromptFontSize: 15,
-                            clearChatOnReload: false,
-                            sourceDocsTitle: 'Sources:',
-                            renderHTML: true,
-                            botMessage: {
-                                backgroundColor: '#f7f8ff',
-                                textColor: '#303235',
-                                showAvatar: true,
-                                avatarSrc: 'https://api.dicebear.com/9.x/bottts/svg?seed=LuisChatbot'
-                            },
-                            userMessage: {
-                                backgroundColor: '#2e5d3b',
-                                textColor: '#ffffff',
-                                showAvatar: true,
-                                avatarSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg'
-                            },
-                            textInput: {
-                                placeholder: 'Type your question',
-                                backgroundColor: '#ffffff',
-                                textColor: '#303235',
-                                sendButtonColor: '#2e5d3b',
-                                maxChars: 250,
-                                maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 250 characters.',
-                                autoFocus: true,
-                                sendMessageSound: true,
-                                receiveMessageSound: true
-                            },
-                            feedback: {
-                                color: '#303235'
-                            },
-                            dateTimeToggle: {
-                                date: true,
-                                time: true
-                            },
-                            footer: {
-                                showFooter: true,
-                                textColor: '#000000',
-                                text: 'Developed by',
-                                company: 'Luis',
-                                companyLink: 'https://luisconsults.com'
-                            }
-                        }
-                    }
-                });
-                
-                console.log('Main chatbot initialized successfully');
-            } catch (error) {
-                console.error('Error loading main Flowise chatbot:', error);
-            }
-        }
-    }
-    
-    // Initialize when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        checkDemoAccess();
-        
-        if (checkDemoExpiry()) {
-            const demoSection = document.getElementById('demos');
-            if (demoSection && demoSection.style.display !== 'none') {
-                document.getElementById('demoPasswordGate').style.display = 'none';
-                document.getElementById('demoContent').style.display = 'block';
-            }
-        }
-        
-        const passwordInput = document.getElementById('demoPasswordInput');
-        if (passwordInput) {
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkDemoPassword();
-                }
+            window.mainChatbotInstance = Chatbot.init({
+                chatflowid: "76884779-7195-49d8-9e5d-ee41394b4700",
+                apiHost: "https://cloud.flowiseai.com",
+                // ... rest of your configuration
             });
+            
+            console.log('Main chatbot initialized successfully');
+        } catch (error) {
+            console.error('Error loading main Flowise chatbot:', error);
         }
+    }
+}
+
+// Add debugging for password check
+window.checkDemoPassword = function() {
+    console.log('Checking demo password...');
+    const password = document.getElementById('demoPasswordInput').value;
+    const errorMsg = document.getElementById('demoErrorMsg');
+    const hashedPassword = btoa(password);
+    
+    console.log('Password check:', hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==');
+    
+    if (hashedPassword === 'bW92ZW1lbnR0ZWNoMjAyNQ==') {
+        document.getElementById('demoPasswordGate').style.display = 'none';
+        document.getElementById('demoContent').style.display = 'block';
         
-        // Initialize main chatbot after a delay
-        setTimeout(initializeMainChatbot, 1000);
+        const expiry = new Date().getTime() + (60 * 60 * 1000);
+        sessionStorage.setItem('demoExpiry', expiry);
+        sessionStorage.setItem('demoAccess', 'granted');
+        
+        errorMsg.style.display = 'none';
+        console.log('Demo access granted');
+    } else {
+        errorMsg.style.display = 'block';
+        document.getElementById('demoPasswordInput').value = '';
+        console.log('Invalid password');
+    }
+}
     });
 </script>
 
