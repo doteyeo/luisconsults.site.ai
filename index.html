@@ -2182,6 +2182,24 @@ function closeActiveDemo() {
         setTimeout(initializeMainChatbot, 500);
     });
 </script>
-
+    
+<script src="https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"></script>
+<script>
+    // Simple test to see if demos work
+    window.testDemo = function() {
+        if (typeof Chatbot !== 'undefined') {
+            console.log('Chatbot library is loaded!');
+            // Try to manually activate a demo
+            document.getElementById('demos').style.display = 'block';
+            document.getElementById('demoPasswordGate').style.display = 'none';
+            document.getElementById('demoContent').style.display = 'block';
+            sessionStorage.setItem('demoAccess', 'granted');
+            sessionStorage.setItem('demoExpiry', new Date().getTime() + 3600000);
+        } else {
+            console.log('Chatbot library NOT loaded!');
+        }
+    }
+</script>
+    
     </body>
 </html>
