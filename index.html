@@ -929,6 +929,37 @@
         box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
     }
         
+    .tip-box {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    
+    .tip-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tip-box h4 {
+        color: #2e5d3b;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    
+    .tip-box p {
+        color: #4a5568;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+        
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -1603,21 +1634,26 @@
         </div>
         
     </div>
+           
             <!-- Demo Tips -->
-    <div style="background: linear-gradient(135deg, rgba(247, 249, 252, 0.8), rgba(237, 242, 247, 0.8)); border-radius: 16px; padding: 2rem; margin-top: 3rem;">
-        <h3 style="text-align: center; margin-bottom: 1.5rem;">Tips for Using the Demos</h3>
+    <div style="margin-top: 3rem;">
+        <h3 style="text-align: center; margin-bottom: 2rem;">Tips for Using the Demos</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-            <div>
-                <p><strong>🎯 Multiple Demos:</strong> You can open all three demos at once to compare different AI capabilities.</p>
+            <div class="tip-box">
+                <h4>Multiple Demos</h4>
+                <p>You can open all three demos at once to compare different AI capabilities.</p>
             </div>
-            <div>
-                <p><strong>💬 Natural Language:</strong> Ask questions in plain language - the AI understands context and intent.</p>
+            <div class="tip-box">
+                <h4>Natural Language</h4>
+                <p>Ask questions in plain language - the AI understands context and intent.</p>
             </div>
-            <div>
-                <p><strong>🔄 Try Variations:</strong> Experiment with different ways of asking the same question to see how the AI adapts.</p>
+            <div class="tip-box">
+                <h4>Try Variations</h4>
+                <p>Experiment with different ways of asking the same question to see how the AI adapts.</p>
             </div>
-            <div>
-                <p><strong>📱 Mobile Friendly:</strong> The chat windows work great on mobile devices too!</p>
+            <div class="tip-box">
+                <h4>Mobile Friendly</h4>
+                <p>The chat windows work great on mobile devices too!</p>
             </div>
         </div>
     </div>
