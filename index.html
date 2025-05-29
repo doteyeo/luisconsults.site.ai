@@ -894,6 +894,40 @@
         .no-scroll {
             overflow: hidden;
         }
+
+        /* close all button */ 
+    .demo-info-box {
+        background: rgba(251, 211, 141, 0.2);
+        border: 1px solid rgba(251, 211, 141, 0.5);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .demo-info-box p {
+        margin-bottom: 0.5rem;
+        color: #744210;
+        font-size: 0.95rem;
+    }
+    
+    .close-demos-btn {
+        background: #e53e3e;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 1rem;
+    }
+    
+    .close-demos-btn:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+    }
         
         /* Animations */
         @keyframes fadeInUp {
@@ -1496,99 +1530,106 @@
         </div>
         
         <!-- Demo Content (Hidden until authenticated) -->
-        <div id="demoContent" style="display: none;">
-            <p style="text-align: center; margin-bottom: 3rem; font-style: italic; color: #718096;">
-                These are demonstration environments with sample data. Each demo showcases how my AI agents can transform specific aspects of your organization's work.
-            </p>
-            
-            <!-- Demo Cards Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                
-                <!-- Financial Intelligence Demo -->
-                <div class="card animate-fade-in-up">
-                    <h3>Financial Intelligence Co-Pilot</h3>
-                    <div class="highlight-badge" style="background: rgba(74, 142, 91, 0.1); color: var(--primary); margin-bottom: 1rem;">
-                        Budget Planning Assistant
-                    </div>
-                    <p>See how AI helps translate program visions into financial language, create scenario models, and democratize budget understanding across your team.</p>
-                    <p><strong>Try asking:</strong></p>
-                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-                        <li>"How would expanding our legal clinic program affect our budget?"</li>
-                        <li>"Show me our Q3 program spending by category"</li>
-                        <li>"What if we received 15% less funding next year?"</li>
-                    </ul>
-                    <button onclick="activateDemo('financial')" class="cta-button" style="width: 100%;">
-                        Launch Financial Demo
-                    </button>
-                </div>
-                
-                <!-- Knowledge Management Demo -->
-                <div class="card animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <h3>Knowledge Management Assistant</h3>
-                    <div class="highlight-badge" style="background: rgba(74, 109, 167, 0.1); color: var(--secondary); margin-bottom: 1rem;">
-                        Institutional Memory System
-                    </div>
-                    <p>Explore how AI can preserve and surface your organization's collective wisdom, making years of experience accessible to all staff members.</p>
-                    <p><strong>Try asking:</strong></p>
-                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-                        <li>"What strategies worked for tenant organizing in Westside?"</li>
-                        <li>"Find our previous work with youth programs"</li>
-                        <li>"Who are our key community partners in housing justice?"</li>
-                    </ul>
-                    <button onclick="activateDemo('knowledge')" class="cta-button" style="width: 100%;">
-                        Launch Knowledge Demo
-                    </button>
-                </div>
-                
-                <!-- Impact Storytelling Demo -->
-                <div class="card animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <h3>Impact Storytelling Engine</h3>
-                    <div class="highlight-badge" style="background: rgba(101, 166, 209, 0.1); color: var(--accent); margin-bottom: 1rem;">
-                        Program Effectiveness Analysis
-                    </div>
-                    <p>Discover how AI can help you identify patterns across programs, connect metrics to narratives, and communicate impact to diverse audiences.</p>
-                    <p><strong>Try asking:</strong></p>
-                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-                        <li>"What's been the impact of our bail reform campaign?"</li>
-                        <li>"Show me success stories from Q2"</li>
-                        <li>"How do our programs connect to policy changes?"</li>
-                    </ul>
-                    <button onclick="activateDemo('impact')" class="cta-button" style="width: 100%;">
-                        Launch Impact Demo
-                    </button>
-                </div>
-                
+       <div id="demoContent" style="display: none;">
+    <!-- Info Box about floating demos -->
+    <div class="demo-info-box">
+        <p><strong>How the demos work:</strong></p>
+        <p>Click any demo below to launch a floating chat window in the bottom-right corner of your screen.</p>
+        <p>You can have multiple demos open at once - each will appear as a separate chat button.</p>
+        <button onclick="closeAllDemos()" class="close-demos-btn">
+            Close All Active Demos
+        </button>
+    </div>
+    
+    <p style="text-align: center; margin-bottom: 3rem; font-style: italic; color: #718096;">
+        These are demonstration environments with sample data. Each demo showcases how my AI agents can transform specific aspects of your organization's work.
+    </p>
+    
+    <!-- Demo Cards Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+        
+        <!-- Financial Intelligence Demo -->
+        <div class="card animate-fade-in-up">
+            <h3>Financial Intelligence Co-Pilot</h3>
+            <div class="highlight-badge" style="background: rgba(74, 142, 91, 0.1); color: var(--primary); margin-bottom: 1rem;">
+                Budget Planning Assistant
             </div>
-            
-            <!-- Active Demo Container -->
-            <div id="activeDemoContainer" style="display: none; margin-top: 3rem;">
-                <div class="card" style="background: rgba(247, 249, 252, 0.95);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <h3 id="activeDemoTitle" style="margin: 0;">Active Demo</h3>
-                        <button onclick="closeActiveDemo()" style="background: #e53e3e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
-                            Close Demo
-                        </button>
-                    </div>
-                    <div id="demoNotice" style="background: rgba(251, 211, 141, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <p style="margin: 0; font-size: 0.9rem; color: #744210;">
-                            <strong>Demo Mode:</strong> This is a demonstration with sample data only. Responses are illustrative of system capabilities.
-                        </p>
-                    </div>
-                    <div id="demoChatbotContainer" style="position: relative; height: 600px;">
-                        <!-- Chatbot will be initialized here -->
-                    </div>
-                </div>
+            <p>See how AI helps translate program visions into financial language, create scenario models, and democratize budget understanding across your team.</p>
+            <p><strong>Try asking:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li>"How would expanding our legal clinic program affect our budget?"</li>
+                <li>"Show me our Q3 program spending by category"</li>
+                <li>"What if we received 15% less funding next year?"</li>
+            </ul>
+            <button onclick="activateDemo('financial')" class="cta-button" style="width: 100%;">
+                Launch Financial Demo
+            </button>
+        </div>
+        
+        <!-- Knowledge Management Demo -->
+        <div class="card animate-fade-in-up" style="animation-delay: 0.2s;">
+            <h3>Knowledge Management Assistant</h3>
+            <div class="highlight-badge" style="background: rgba(74, 109, 167, 0.1); color: var(--secondary); margin-bottom: 1rem;">
+                Institutional Memory System
             </div>
-            
-            <!-- Demo Expiration Notice -->
-            <div style="text-align: center; margin-top: 2rem;">
-                <p style="color: #718096; font-size: 0.9rem;">
-                    Demo access expires after 1 hour. For full access and customization options, 
-                    <a href="#contact" style="color: var(--primary);">schedule a consultation</a>.
-                </p>
+            <p>Explore how AI can preserve and surface your organization's collective wisdom, making years of experience accessible to all staff members.</p>
+            <p><strong>Try asking:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li>"What strategies worked for tenant organizing in Westside?"</li>
+                <li>"Find our previous work with youth programs"</li>
+                <li>"Who are our key community partners in housing justice?"</li>
+            </ul>
+            <button onclick="activateDemo('knowledge')" class="cta-button" style="width: 100%;">
+                Launch Knowledge Demo
+            </button>
+        </div>
+        
+        <!-- Impact Storytelling Demo -->
+        <div class="card animate-fade-in-up" style="animation-delay: 0.4s;">
+            <h3>Impact Storytelling Engine</h3>
+            <div class="highlight-badge" style="background: rgba(101, 166, 209, 0.1); color: var(--accent); margin-bottom: 1rem;">
+                Program Effectiveness Analysis
+            </div>
+            <p>Discover how AI can help you identify patterns across programs, connect metrics to narratives, and communicate impact to diverse audiences.</p>
+            <p><strong>Try asking:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li>"What's been the impact of our bail reform campaign?"</li>
+                <li>"Show me success stories from Q2"</li>
+                <li>"How do our programs connect to policy changes?"</li>
+            </ul>
+            <button onclick="activateDemo('impact')" class="cta-button" style="width: 100%;">
+                Launch Impact Demo
+            </button>
+        </div>
+        
+    </div>
+            <!-- Demo Tips -->
+    <div style="background: linear-gradient(135deg, rgba(247, 249, 252, 0.8), rgba(237, 242, 247, 0.8)); border-radius: 16px; padding: 2rem; margin-top: 3rem;">
+        <h3 style="text-align: center; margin-bottom: 1.5rem;">Tips for Using the Demos</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <div>
+                <p><strong>🎯 Multiple Demos:</strong> You can open all three demos at once to compare different AI capabilities.</p>
+            </div>
+            <div>
+                <p><strong>💬 Natural Language:</strong> Ask questions in plain language - the AI understands context and intent.</p>
+            </div>
+            <div>
+                <p><strong>🔄 Try Variations:</strong> Experiment with different ways of asking the same question to see how the AI adapts.</p>
+            </div>
+            <div>
+                <p><strong>📱 Mobile Friendly:</strong> The chat windows work great on mobile devices too!</p>
             </div>
         </div>
     </div>
+    
+    <!-- Demo Expiration Notice -->
+    <div style="text-align: center; margin-top: 2rem;">
+        <p style="color: #718096; font-size: 0.9rem;">
+            Demo access expires after 1 hour. For full access and customization options, 
+            <a href="#contact" style="color: var(--primary);">schedule a consultation</a>.
+        </p>
+    </div>
+</div>
 </section>
     
     <!-- Footer -->
@@ -1756,7 +1797,7 @@
         });
     </script>
 
-<!-- Replace the existing demo script section with this corrected version -->
+<!-- Replace the existing demo script section with this alternative version -->
 <script>
 // Demo configuration
 const demoConfigs = {
@@ -1764,7 +1805,9 @@ const demoConfigs = {
         chatflowid: '7850d756-7242-4b3c-a8c6-5ed52a80c5f7',
         apiHost: 'https://cloud.flowiseai.com',
         title: 'Financial Intelligence Co-Pilot Demo',
-        welcomeMessage: 'Welcome to the Financial Intelligence demo! I can help you explore budget scenarios, understand financial impacts, and translate between program and financial language. Try asking me about budget planning or financial analysis.',
+        welcomeMessage: 'Welcome to the Financial Intelligence demo! I can help you explore budget scenarios, understand financial impacts, and translate between program and financial language.',
+        buttonText: 'Financial Demo',
+        buttonColor: '#2e5d3b',
         starterPrompts: [
             "How would expanding our programs affect the budget?",
             "Show me our spending by category",
@@ -1776,7 +1819,9 @@ const demoConfigs = {
         chatflowid: 'dda91f00-5d9a-4573-98a7-f53886473229',
         apiHost: 'https://cloud.flowiseai.com',
         title: 'Knowledge Management Assistant Demo',
-        welcomeMessage: 'Welcome to the Knowledge Management demo! I can help you access institutional memory, find historical context, and connect related information across your organization. Ask me about past campaigns, strategies, or partnerships.',
+        welcomeMessage: 'Welcome to the Knowledge Management demo! I can help you access institutional memory, find historical context, and connect related information across your organization.',
+        buttonText: 'Knowledge Demo',
+        buttonColor: '#4a6da7',
         starterPrompts: [
             "What strategies worked in past campaigns?",
             "Find information about community partnerships",
@@ -1788,7 +1833,9 @@ const demoConfigs = {
         chatflowid: '3c6acd52-1e93-43fa-b231-40c01104d635',
         apiHost: 'https://cloud.flowiseai.com',
         title: 'Impact Storytelling Engine Demo',
-        welcomeMessage: 'Welcome to the Impact Storytelling demo! I can help you analyze program effectiveness, identify patterns, and create compelling narratives about your impact. Ask me about outcomes, success stories, or program connections.',
+        welcomeMessage: 'Welcome to the Impact Storytelling demo! I can help you analyze program effectiveness, identify patterns, and create compelling narratives about your impact.',
+        buttonText: 'Impact Demo',
+        buttonColor: '#65a6d1',
         starterPrompts: [
             "What impact have our programs had this quarter?",
             "Show me success stories from our work",
@@ -1798,33 +1845,25 @@ const demoConfigs = {
     }
 };
 
-// Store active demo instance
-let activeDemoChatbot = null;
+// Store active demo instances
+let activeDemoChatbots = {};
 
 // Load Flowise library once and store globally
 function loadFlowiseLibrary() {
     return new Promise((resolve, reject) => {
         // Check if already loaded
-        if (window.Chatbot && window.Chatbot.initFull) {
-            resolve(window.Chatbot);
+        if (window.FlowiseChatbot) {
+            resolve(window.FlowiseChatbot);
             return;
         }
         
-        // Create script tag to load Flowise
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.onload = () => {
-            // Import the module after script loads
-            import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
-                .then((module) => {
-                    window.Chatbot = module.Chatbot || module.default;
-                    resolve(window.Chatbot);
-                })
-                .catch(reject);
-        };
-        script.onerror = reject;
-        script.src = "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
-        document.head.appendChild(script);
+        // Import the module
+        import("https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js")
+            .then((module) => {
+                window.FlowiseChatbot = module.Chatbot || module.default;
+                resolve(window.FlowiseChatbot);
+            })
+            .catch(reject);
     });
 }
 
@@ -1844,7 +1883,7 @@ function checkDemoAccess() {
                 demoLink.className = 'nav-link';
                 demoLink.textContent = 'AI Demos';
                 
-                // Add click handler for demo link
+                // Add click handler
                 demoLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     const demoSection = document.getElementById('demos');
@@ -1869,6 +1908,9 @@ function checkDemoAccess() {
                 demoSection.style.display = 'block';
             }
         }
+        
+        // Preload Flowise library
+        loadFlowiseLibrary().catch(console.error);
     }
 }
 
@@ -1888,6 +1930,9 @@ function checkDemoPassword() {
         sessionStorage.setItem('demoAccess', 'granted');
         
         errorMsg.style.display = 'none';
+        
+        // Preload Flowise library after authentication
+        loadFlowiseLibrary().catch(console.error);
     } else {
         errorMsg.style.display = 'block';
         document.getElementById('demoPasswordInput').value = '';
@@ -1914,7 +1959,7 @@ function checkDemoExpiry() {
     return false;
 }
 
-// Activate demo function
+// Activate demo function - Alternative approach
 async function activateDemo(demoType) {
     console.log('Activating demo:', demoType);
     
@@ -1925,40 +1970,10 @@ async function activateDemo(demoType) {
         return;
     }
     
-    // Clear any existing chatbot
-    if (activeDemoChatbot) {
-        try {
-            if (typeof activeDemoChatbot.destroy === 'function') {
-                activeDemoChatbot.destroy();
-            }
-        } catch (e) {
-            console.warn('Could not destroy previous chatbot:', e);
-        }
-        activeDemoChatbot = null;
-    }
-    
-    // Clear container
-    const container = document.getElementById('demoChatbotContainer');
-    if (container) {
-        container.innerHTML = '';
-    }
-    
-    // Show active demo container
+    // Hide the previous active demo container since we're using floating buttons
     const activeDemoContainer = document.getElementById('activeDemoContainer');
     if (activeDemoContainer) {
-        activeDemoContainer.style.display = 'block';
-    }
-    
-    const activeDemoTitle = document.getElementById('activeDemoTitle');
-    if (activeDemoTitle && demoConfigs[demoType]) {
-        activeDemoTitle.textContent = demoConfigs[demoType].title;
-    }
-    
-    // Scroll to demo
-    if (activeDemoContainer) {
-        setTimeout(() => {
-            activeDemoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+        activeDemoContainer.style.display = 'none';
     }
     
     // Get demo config
@@ -1968,66 +1983,132 @@ async function activateDemo(demoType) {
         return;
     }
     
-    // Create container for Flowise
-    if (!container) {
-        console.error('Demo chatbot container not found');
-        return;
-    }
-    
     // Show loading message
-    container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #718096;">Loading demo chatbot...</div>';
+    const loadingMsg = document.createElement('div');
+    loadingMsg.id = 'demo-loading-msg';
+    loadingMsg.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 9999;
+        text-align: center;
+    `;
+    loadingMsg.innerHTML = `
+        <p style="margin-bottom: 1rem; color: #2d3748;">Loading ${demoConfig.title}...</p>
+        <div style="color: #718096; font-size: 0.9rem;">This may take a few seconds</div>
+    `;
+    document.body.appendChild(loadingMsg);
     
     try {
+        // Clean up any existing chatbot for this demo type
+        if (activeDemoChatbots[demoType]) {
+            console.log('Cleaning up existing chatbot for:', demoType);
+            if (typeof activeDemoChatbots[demoType].destroy === 'function') {
+                activeDemoChatbots[demoType].destroy();
+            }
+            // Remove any existing Flowise elements
+            const existingElements = document.querySelectorAll(`[id*="flowise-chatbot-button"]`);
+            existingElements.forEach(el => el.remove());
+        }
+        
         // Load Flowise library
         const Chatbot = await loadFlowiseLibrary();
         
-        if (!Chatbot || typeof Chatbot.initFull !== 'function') {
+        if (!Chatbot || typeof Chatbot.init !== 'function') {
             throw new Error('Flowise Chatbot library not loaded properly');
         }
         
-        // Clear container again before initializing
-        container.innerHTML = '<div id="flowise-demo-embed" style="width: 100%; height: 600px;"></div>';
-        
-        // Small delay to ensure DOM is ready
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Initialize chatbot with the config's apiHost
+        // Initialize chatbot with floating button
         const chatbotConfig = {
             chatflowid: demoConfig.chatflowid,
             apiHost: demoConfig.apiHost,
             theme: {
+                button: {
+                    backgroundColor: demoConfig.buttonColor,
+                    right: 20,
+                    bottom: 20,
+                    size: 56,
+                    dragAndDrop: true,
+                    iconColor: 'white',
+                    customIconSrc: 'https://api.iconify.design/material-symbols:chat-rounded.svg?color=white',
+                    autoWindowOpen: {
+                        autoOpen: true, // Auto-open the chat window
+                        openDelay: 1,
+                        autoOpenOnMobile: false
+                    }
+                },
+                tooltip: {
+                    showTooltip: true,
+                    tooltipMessage: demoConfig.buttonText,
+                    tooltipBackgroundColor: demoConfig.buttonColor,
+                    tooltipTextColor: 'white',
+                    tooltipFontSize: 14
+                },
+                disclaimer: {
+                    title: 'Demo Mode',
+                    message: 'This is a demonstration with sample data. ' + demoConfig.welcomeMessage,
+                    textColor: '#2d3748',
+                    buttonColor: demoConfig.buttonColor,
+                    buttonText: 'Start Demo',
+                    buttonTextColor: 'white',
+                    blurredBackgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    backgroundColor: 'white'
+                },
                 chatWindow: {
-                    showTitle: false,
+                    showTitle: true,
+                    showAgentMessages: true,
+                    title: demoConfig.title,
+                    titleAvatarSrc: 'https://api.iconify.design/material-symbols:smart-toy-rounded.svg?color=' + demoConfig.buttonColor.replace('#', ''),
                     welcomeMessage: demoConfig.welcomeMessage,
+                    errorMessage: 'This is a demo error - please refresh and try again',
                     backgroundColor: '#ffffff',
-                    height: 600,
-                    width: '100%',
+                    height: 700,
+                    width: 450,
                     fontSize: 16,
                     starterPrompts: demoConfig.starterPrompts,
                     starterPromptFontSize: 14,
                     clearChatOnReload: true,
+                    sourceDocsTitle: 'Demo Sources:',
+                    renderHTML: true,
                     botMessage: {
                         backgroundColor: '#f7f8ff',
                         textColor: '#303235',
                         showAvatar: true,
-                        avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png'
+                        avatarSrc: 'https://api.iconify.design/game-icons:artificial-intelligence.svg?color=' + demoConfig.buttonColor.replace('#', '')
                     },
                     userMessage: {
-                        backgroundColor: '#2e5d3b',
+                        backgroundColor: demoConfig.buttonColor,
                         textColor: '#ffffff',
                         showAvatar: true,
-                        avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png'
+                        avatarSrc: 'https://api.iconify.design/mdi:account.svg?color=4a5568'
                     },
                     textInput: {
-                        placeholder: 'Ask me anything about this demo...',
+                        placeholder: 'Type your question...',
                         backgroundColor: '#ffffff',
                         textColor: '#303235',
-                        sendButtonColor: '#2e5d3b'
+                        sendButtonColor: demoConfig.buttonColor,
+                        maxChars: 500,
+                        maxCharsWarningMessage: 'You exceeded the character limit. Please shorten your message.',
+                        autoFocus: true,
+                        sendMessageSound: false,
+                        receiveMessageSound: false
+                    },
+                    feedback: {
+                        color: '#303235'
+                    },
+                    dateTimeToggle: {
+                        date: false,
+                        time: false
                     },
                     footer: {
                         showFooter: true,
                         textColor: '#718096',
-                        text: 'Demo Mode - Sample Data Only',
+                        text: 'Demo Mode - Sample Data',
                         company: 'Luis Consults',
                         companyLink: 'https://luisconsults.com'
                     }
@@ -2037,56 +2118,106 @@ async function activateDemo(demoType) {
         
         console.log('Initializing chatbot with config:', chatbotConfig);
         
-        activeDemoChatbot = Chatbot.initFull(chatbotConfig, 'flowise-demo-embed');
+        // Initialize the chatbot
+        activeDemoChatbots[demoType] = Chatbot.init(chatbotConfig);
+        
+        // Remove loading message
+        setTimeout(() => {
+            loadingMsg.remove();
+        }, 500);
+        
+        // Show success message
+        showDemoNotification(`${demoConfig.title} loaded! Look for the chat button in the bottom right corner.`, 'success');
         
         console.log('Demo chatbot initialized successfully');
     } catch (error) {
         console.error('Error initializing demo chatbot:', error);
-        // Show error message to user
-        container.innerHTML = `
-            <div style="padding: 2rem; text-align: center; color: #e53e3e;">
-                <p>Failed to load demo. Please try the following:</p>
-                <ul style="text-align: left; max-width: 400px; margin: 1rem auto;">
-                    <li>Refresh the page and try again</li>
-                    <li>Check your internet connection</li>
-                    <li>Try a different browser</li>
-                    <li>Disable ad blockers temporarily</li>
-                </ul>
-                <button onclick="activateDemo('${demoType}')" class="cta-button" style="margin-top: 1rem;">
-                    Try Again
-                </button>
-            </div>
-        `;
+        
+        // Remove loading message
+        if (loadingMsg && loadingMsg.parentNode) {
+            loadingMsg.remove();
+        }
+        
+        // Show error notification
+        showDemoNotification('Failed to load demo. Please refresh and try again.', 'error');
     }
 }
 
-// Close active demo
-function closeActiveDemo() {
-    const activeDemoContainer = document.getElementById('activeDemoContainer');
-    if (activeDemoContainer) {
-        activeDemoContainer.style.display = 'none';
-    }
+// Show notification for demo status
+function showDemoNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${type === 'error' ? '#fee' : '#e6fffa'};
+        color: ${type === 'error' ? '#e53e3e' : '#2e5d3b'};
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideDown 0.3s ease-out;
+        max-width: 400px;
+        text-align: center;
+    `;
+    notification.innerHTML = message;
     
-    if (activeDemoChatbot) {
-        try {
-            if (typeof activeDemoChatbot.destroy === 'function') {
-                activeDemoChatbot.destroy();
+    // Add animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
             }
-        } catch (e) {
-            console.warn('Could not destroy chatbot:', e);
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
-        const container = document.getElementById('demoChatbotContainer');
-        if (container) {
-            container.innerHTML = '';
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideDown 0.3s ease-out reverse';
+        setTimeout(() => {
+            notification.remove();
+            style.remove();
+        }, 300);
+    }, 5000);
+}
+
+// Close all active demos
+function closeAllDemos() {
+    Object.keys(activeDemoChatbots).forEach(demoType => {
+        if (activeDemoChatbots[demoType]) {
+            try {
+                if (typeof activeDemoChatbots[demoType].destroy === 'function') {
+                    activeDemoChatbots[demoType].destroy();
+                }
+            } catch (e) {
+                console.warn('Could not destroy chatbot:', e);
+            }
         }
-        activeDemoChatbot = null;
-    }
+    });
+    
+    // Remove any Flowise elements
+    const flowiseElements = document.querySelectorAll('[id*="flowise"]');
+    flowiseElements.forEach(el => el.remove());
+    
+    activeDemoChatbots = {};
+    
+    showDemoNotification('All demos closed', 'info');
 }
 
 // Make functions globally available
 window.checkDemoPassword = checkDemoPassword;
 window.activateDemo = activateDemo;
-window.closeActiveDemo = closeActiveDemo;
+window.closeAllDemos = closeAllDemos;
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', function() {
