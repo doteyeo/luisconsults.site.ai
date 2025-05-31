@@ -2053,41 +2053,6 @@
             animation: pulseBlue 2.5s infinite;
         }
 
-        /* Philosophy Section - First tab icon pulse */
-        .philosophy-tab-btn:first-child:not(.active) {
-            position: relative;
-        }
-
-        .philosophy-tab-btn:first-child:not(.active)::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            animation: pulse 2.5s infinite;
-            z-index: -1;
-        }
-
-        /* Alternative: Pulse the actual philosophy icon */
-        .philosophy-tab-btn:first-child:not(.active) svg {
-            animation: iconPulse 2s infinite;
-        }
-
-        @keyframes iconPulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
         /* Add subtle pulse to CTA buttons for extra attention */
         .cta-button {
             animation: subtlePulse 3s infinite;
