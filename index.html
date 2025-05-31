@@ -492,7 +492,7 @@
         }
         
         .challenge-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) !important;
             box-shadow: var(--card-hover-shadow);
             border: 2px solid rgba(46, 93, 59, 0.3);
         }
@@ -603,18 +603,18 @@
         }
         
         .challenge-content {
-            height: 0;
+            max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: none;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
             padding: 0 1.5rem;
         }
         
         .challenge-card.active .challenge-content {
-            height: auto;
+            max-height: 2000px; /* Large enough for content */
             opacity: 1;
             padding: 0 1.5rem 1.5rem;
-            animation: slideDown 0.3s ease-out;
+            overflow: visible;
         }
         
         .challenge-card.active .challenge-toggle svg {
@@ -648,7 +648,7 @@
         }
         
         .solution-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) !important;
             box-shadow: var(--card-hover-shadow);
             border: 2px solid rgba(101, 166, 209, 0.3);
         }
@@ -763,18 +763,18 @@
         }
         
         .solution-content {
-            height: 0;
+            max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: none;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
             padding: 0 1.5rem;
         }
         
         .solution-card.active .solution-content {
-            height: auto;
+            max-height: 2000px; /* Large enough for content */
             opacity: 1;
             padding: 1.5rem;
-            animation: slideDown 0.3s ease-out;
+            overflow: visible;
         }
         
         .solution-card.active .solution-toggle svg {
@@ -948,9 +948,10 @@
         }
         
         .service-card-modern:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) !important;
             box-shadow: var(--card-hover-shadow);
             border: 2px solid rgba(74, 109, 167, 0.3);
+            
         }
 
         /* Service Card Centered Tooltip */
@@ -1073,18 +1074,18 @@
         }
         
         .service-content {
-            height: 0;
+            max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: none;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
             padding: 0 1.5rem;
         }
         
         .service-card-modern.active .service-content {
-            height: auto;
+            max-height: 1500px; /* Large enough for content */
             opacity: 1;
             padding: 1.5rem;
-            animation: slideDown 0.3s ease-out;
+            overflow: visible;
         }
         
         .service-card-modern.active .service-toggle svg {
@@ -2149,18 +2150,6 @@
        .service-card-modern:hover .service-icon {
            animation: none !important;
        }
-
-    /* Add this animation for smooth sliding */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
        /* Mobile adjustments - reduce pulse intensity */
        @media (max-width: 768px) {
