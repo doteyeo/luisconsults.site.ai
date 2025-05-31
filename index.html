@@ -469,6 +469,362 @@
             border-radius: 1.5px;
         }
         
+        /* Challenge Cards */
+        .challenges-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .challenge-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-medium);
+            border: var(--card-border);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .challenge-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .challenge-header h3 {
+            flex: 1;
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+        
+        .challenge-toggle {
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .challenge-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .challenge-card.active .challenge-content {
+            max-height: 1000px;
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        .challenge-card.active .challenge-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .solution-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-medium);
+            border: var(--card-border);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .solution-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .solution-icon {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .solution-title {
+            flex: 1;
+        }
+        
+        .solution-title h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.35rem;
+            color: var(--text-dark);
+        }
+        
+        .solution-toggle {
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .solution-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .solution-card.active .solution-content {
+            max-height: 1500px;
+            padding: 1.5rem;
+        }
+        
+        .solution-card.active .solution-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        /* Philosophy Tabs */
+        .philosophy-tabs {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: var(--card-border);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .philosophy-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .philosophy-tab-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border-right: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .philosophy-tab-btn:last-child {
+            border-right: none;
+        }
+        
+        .philosophy-tab-btn:hover {
+            background: rgba(46, 93, 59, 0.05);
+        }
+        
+        .philosophy-tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .philosophy-tab-btn svg {
+            margin-right: 0.5rem;
+        }
+        
+        .philosophy-content {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .philosophy-panel {
+            display: none;
+        }
+        
+        .philosophy-panel.active {
+            display: block;
+            animation: fadeInUp 0.3s ease-out;
+        }
+        
+        .philosophy-features {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .philosophy-feature {
+            display: flex;
+            align-items: start;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .philosophy-feature h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        
+        .philosophy-feature p {
+            margin: 0;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .service-card-modern {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-medium);
+            border: var(--card-border);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .service-card-modern:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .service-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .service-icon {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .service-title-section {
+            flex: 1;
+        }
+        
+        .service-title-section h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.35rem;
+            color: var(--text-dark);
+        }
+        
+        .service-price {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--secondary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .service-toggle {
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .service-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .service-card-modern.active .service-content {
+            max-height: 800px;
+            padding: 1.5rem;
+        }
+        
+        .service-card-modern.active .service-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        .service-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .service-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-dark);
+        }
+        
+        .service-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
         /* Philosophy Section */
         .philosophy-item {
             background: var(--card-bg);
@@ -959,6 +1315,44 @@
         line-height: 1.6;
         margin: 0;
     }
+
+        /* Demo-specific styles */
+#demos ul {
+    text-align: left;
+    line-height: 1.8;
+}
+
+#demos ul li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #4a5568;
+}
+
+#activeDemoContainer {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Override Flowise styles for demos */
+.demo-chatbot {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Add demo indicator to chatbot */
+.demo-chatbot::before {
+    content: "DEMO";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e53e3e;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 1000;
+}
         
         /* Animations */
         @keyframes fadeInUp {
@@ -1202,44 +1596,6 @@
                 height: 150px;
             }
         }
-       
-        /* Demo-specific styles */
-#demos ul {
-    text-align: left;
-    line-height: 1.8;
-}
-
-#demos ul li {
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-    color: #4a5568;
-}
-
-#activeDemoContainer {
-    animation: fadeInUp 0.5s ease-out;
-}
-
-/* Override Flowise styles for demos */
-.demo-chatbot {
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-/* Add demo indicator to chatbot */
-.demo-chatbot::before {
-    content: "DEMO";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #e53e3e;
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    z-index: 1000;
-}
     </style>
 </head>
 <body>
@@ -1296,32 +1652,90 @@
             <div class="highlight-badge">Common Challenges</div>
             <h2>When Your <span class="gradient-text">Systems Feel Like Barriers</span> to Justice</h2>
             
-            <div class="card animate-fade-in-up">
-                <h3>Finding clarity in digital chaos</h3>
-                <p>It's Friday afternoon. Your program director just texted that she can't make Monday's funder meeting because she's still struggling to track down impact data scattered across three different systems. Meanwhile, somewhere in your Google Drive labyrinth lies the perfect community testimony from last year's campaign... if only anyone could find it.</p>
-                <p>Most organizations piece together software solutions without a cohesive strategy. The result? Disconnected systems that create more work rather than less—and usually on the shoulders of the people doing the most essential community work.</p>
-                <blockquote>"We have all these powerful tools at our disposal, but they don't talk to each other. Our organizers end up becoming data entry specialists instead of relationship builders." – Most Lead Organizers</blockquote>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.2s;">
-                <h3>When budget spreadsheets become power imbalances</h3>
-                <p>It's budget planning season, and your program directors avoid financial conversations because the spreadsheets are intimidating and disconnected from their daily work. Meanwhile, your finance person is overwhelmed trying to translate program visions into numbers without the right systems to support them.</p>
-                <p>Budget tools should illuminate your organization's story, not obscure it. But without the right approach, financial systems become barriers that exclude voices and centralize power in ways that contradict your values of distributed decision-making and collective leadership.</p>
-                <blockquote>"I know our financial systems should be a source of clarity, not confusion. But right now, our budget process feels like it's working against our mission instead of supporting it." – Any Executive Director</blockquote>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.4s;">
-                <h3>Measuring impact without missing the heart</h3>
-                <p>How do you demonstrate your organization's true impact when traditional metrics miss so much of what matters? Funders want numbers, but your work creates ripple effects that aren't easily quantified: community relationships strengthened, narrative shifts, emerging leadership.</p>
-                <p>You're left cobbling together stories and statistics without a coherent framework that honors both quantitative and qualitative dimensions of your work. And all that reporting effort takes away from doing the work itself.</p>
-                <blockquote>"We're drowning in data but starving for insight. We collect so much information across different systems, but struggle to transform it into meaningful stories about our impact." – Many Program Directors</blockquote>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.6s;">
-                <h3>When fundraising feels disconnected from organizing</h3>
-                <p>Your development director uses a donor database, your organizers use a different system for community engagement, and these worlds rarely connect. The result? Fundraising that feels transactional rather than relational, disconnected from the heart of your movement work.</p>
-                <p>You know your supporters could be powerful participants in your mission, not just sources of funding. But your current tools treat them as data points rather than community members with multiple ways to contribute to your vision.</p>
-                <blockquote>"Our donor management system and our community organizing database might as well be on different planets. We're missing so many opportunities to deepen relationships because our systems don't support an integrated approach." – Almost all Development Directors</blockquote>
+            <div class="challenges-grid">
+                <div class="challenge-card animate-fade-in-up" onclick="toggleChallenge(0)">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                        <h3>Finding clarity in digital chaos</h3>
+                        <div class="challenge-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <p>It's Friday afternoon. Your program director just texted that she can't make Monday's funder meeting because she's still struggling to track down impact data scattered across three different systems. Meanwhile, somewhere in your Google Drive labyrinth lies the perfect community testimony from last year's campaign... if only anyone could find it.</p>
+                        <p>Most organizations piece together software solutions without a cohesive strategy. The result? Disconnected systems that create more work rather than less—and usually on the shoulders of the people doing the most essential community work.</p>
+                        <blockquote>"We have all these powerful tools at our disposal, but they don't talk to each other. Our organizers end up becoming data entry specialists instead of relationship builders." – Most Lead Organizers</blockquote>
+                    </div>
+                </div>
+                
+                <div class="challenge-card animate-fade-in-up" onclick="toggleChallenge(1)" style="animation-delay: 0.2s;">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3>When budget spreadsheets become power imbalances</h3>
+                        <div class="challenge-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <p>It's budget planning season, and your program directors avoid financial conversations because the spreadsheets are intimidating and disconnected from their daily work. Meanwhile, your finance person is overwhelmed trying to translate program visions into numbers without the right systems to support them.</p>
+                        <p>Budget tools should illuminate your organization's story, not obscure it. But without the right approach, financial systems become barriers that exclude voices and centralize power in ways that contradict your values of distributed decision-making and collective leadership.</p>
+                        <blockquote>"I know our financial systems should be a source of clarity, not confusion. But right now, our budget process feels like it's working against our mission instead of supporting it." – Any Executive Director</blockquote>
+                    </div>
+                </div>
+                
+                <div class="challenge-card animate-fade-in-up" onclick="toggleChallenge(2)" style="animation-delay: 0.4s;">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <h3>Measuring impact without missing the heart</h3>
+                        <div class="challenge-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <p>How do you demonstrate your organization's true impact when traditional metrics miss so much of what matters? Funders want numbers, but your work creates ripple effects that aren't easily quantified: community relationships strengthened, narrative shifts, emerging leadership.</p>
+                        <p>You're left cobbling together stories and statistics without a coherent framework that honors both quantitative and qualitative dimensions of your work. And all that reporting effort takes away from doing the work itself.</p>
+                        <blockquote>"We're drowning in data but starving for insight. We collect so much information across different systems, but struggle to transform it into meaningful stories about our impact." – Many Program Directors</blockquote>
+                    </div>
+                </div>
+                
+                <div class="challenge-card animate-fade-in-up" onclick="toggleChallenge(3)" style="animation-delay: 0.6s;">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3>When fundraising feels disconnected from organizing</h3>
+                        <div class="challenge-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <p>Your development director uses a donor database, your organizers use a different system for community engagement, and these worlds rarely connect. The result? Fundraising that feels transactional rather than relational, disconnected from the heart of your movement work.</p>
+                        <p>You know your supporters could be powerful participants in your mission, not just sources of funding. But your current tools treat them as data points rather than community members with multiple ways to contribute to your vision.</p>
+                        <blockquote>"Our donor management system and our community organizing database might as well be on different planets. We're missing so many opportunities to deepen relationships because our systems don't support an integrated approach." – Almost all Development Directors</blockquote>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1346,59 +1760,125 @@
             <div class="highlight-badge">Solutions</div>
             <h2>Human-AI Partnerships That <span class="gradient-text">Amplify Your Mission</span></h2>
             
-            <div class="card animate-fade-in-up">
-                <h3>AI-Powered Systems Assessment</h3>
-                <p>Imagine sitting down with both a human consultant who understands movement work and an AI assistant that can quickly process your organization's information flows. Together, I explore how your team really works—not just your official processes, but the actual day-to-day reality.</p>
-                <p>An AI assessment helps me map all your existing systems—from QuickBooks to Slack to Google Workspace—visualizing how information moves (or doesn't) between them. It identifies patterns you might not see: where data gets duplicated, which teams struggle to share knowledge, and where mission-critical information gets lost.</p>
-                <p>Most importantly, this isn't a cold technical audit. It's a human-centered exploration guided by your values. AI helps me process the details while I focus on the deeper questions: How do your systems distribute or concentrate power? Do they enhance relationships or create barriers? Does your technology reflect your theory of change?</p>
-                <div class="benefits">
-                    <p><strong>Key Benefits:</strong></p>
-                    <p>• <strong>Comprehensive Visibility:</strong> See your entire organizational ecosystem revealed through AI-enhanced analysis</p>
-                    <p>• <strong>Pattern Recognition:</strong> Discover insights that might take months to surface through traditional methods</p>
-                    <p>• <strong>Value-Centered Assessment:</strong> Evaluate systems based on how they support your mission, not just efficiency</p>
-                    <p>• <strong>Data-Informed Planning:</strong> Make strategic decisions backed by concrete analysis, not just intuition</p>
+            <div class="solutions-grid">
+                <div class="solution-card animate-fade-in-up" onclick="toggleSolution(0)">
+                    <div class="solution-header">
+                        <div class="solution-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="solution-title">
+                            <h3>AI-Powered Systems Assessment</h3>
+                            <div class="solution-toggle">
+                                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-content">
+                        <p>Imagine sitting down with both a human consultant who understands movement work and an AI assistant that can quickly process your organization's information flows. Together, I explore how your team really works—not just your official processes, but the actual day-to-day reality.</p>
+                        <p>An AI assessment helps me map all your existing systems—from QuickBooks to Slack to Google Workspace—visualizing how information moves (or doesn't) between them. It identifies patterns you might not see: where data gets duplicated, which teams struggle to share knowledge, and where mission-critical information gets lost.</p>
+                        <p>Most importantly, this isn't a cold technical audit. It's a human-centered exploration guided by your values. AI helps me process the details while I focus on the deeper questions: How do your systems distribute or concentrate power? Do they enhance relationships or create barriers? Does your technology reflect your theory of change?</p>
+                        <div class="benefits">
+                            <p><strong>Key Benefits:</strong></p>
+                            <p>• <strong>Comprehensive Visibility:</strong> See your entire organizational ecosystem revealed through AI-enhanced analysis</p>
+                            <p>• <strong>Pattern Recognition:</strong> Discover insights that might take months to surface through traditional methods</p>
+                            <p>• <strong>Value-Centered Assessment:</strong> Evaluate systems based on how they support your mission, not just efficiency</p>
+                            <p>• <strong>Data-Informed Planning:</strong> Make strategic decisions backed by concrete analysis, not just intuition</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.2s;">
-                <h3>Financial Intelligence Co-Pilots</h3>
-                <p>Picture Maria, a finance director at a community rights organization. For years, she's been the sole keeper of financial knowledge, creating bottlenecks and vulnerability. Now she has an AI financial co-pilot that helps bridge the gap between finance and programs.</p>
-                <p>When program directors explain their work in plain language—"We need to expand our legal clinics to three new neighborhoods this year"—the AI helps translate these real-world needs into financial terms. It suggests budget scenarios, helps model "what if" situations, and explains financial concepts in language that connects to mission work.</p>
-                <p>This isn't about replacing Maria's expertise—it's about extending her reach. The AI supports routine calculations and data organization, enhancing Maria's ability to engage in strategic thinking and relationship building alongside her team. And because it's built to work with your existing tools like QuickBooks, Airtable, and Google Sheets, there's no massive new system to learn or maintain.</p>
-                <div class="benefits">
-                    <p><strong>Key Benefits:</strong></p>
-                    <p>• <strong>Democratized Financial Intelligence:</strong> Financial insights accessible to everyone, not just the "money person"</p>
-                    <p>• <strong>Real-Time Scenario Planning:</strong> Quick modeling of different funding and program scenarios</p>
-                    <p>• <strong>Language Translation:</strong> Bridging the gap between technical financial terms and mission language</p>
-                    <p>• <strong>Team Capacity Enhancement:</strong> Enabling all staff to engage with finances meaningfully, regardless of accounting background or expertise</p>
+                
+                <div class="solution-card animate-fade-in-up" onclick="toggleSolution(1)" style="animation-delay: 0.2s;">
+                    <div class="solution-header">
+                        <div class="solution-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                        <div class="solution-title">
+                            <h3>Financial Intelligence Co-Pilots</h3>
+                            <div class="solution-toggle">
+                                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-content">
+                        <p>Picture Maria, a finance director at a community rights organization. For years, she's been the sole keeper of financial knowledge, creating bottlenecks and vulnerability. Now she has an AI financial co-pilot that helps bridge the gap between finance and programs.</p>
+                        <p>When program directors explain their work in plain language—"We need to expand our legal clinics to three new neighborhoods this year"—the AI helps translate these real-world needs into financial terms. It suggests budget scenarios, helps model "what if" situations, and explains financial concepts in language that connects to mission work.</p>
+                        <p>This isn't about replacing Maria's expertise—it's about extending her reach. The AI supports routine calculations and data organization, enhancing Maria's ability to engage in strategic thinking and relationship building alongside her team. And because it's built to work with your existing tools like QuickBooks, Airtable, and Google Sheets, there's no massive new system to learn or maintain.</p>
+                        <div class="benefits">
+                            <p><strong>Key Benefits:</strong></p>
+                            <p>• <strong>Democratized Financial Intelligence:</strong> Financial insights accessible to everyone, not just the "money person"</p>
+                            <p>• <strong>Real-Time Scenario Planning:</strong> Quick modeling of different funding and program scenarios</p>
+                            <p>• <strong>Language Translation:</strong> Bridging the gap between technical financial terms and mission language</p>
+                            <p>• <strong>Team Capacity Enhancement:</strong> Enabling all staff to engage with finances meaningfully, regardless of accounting background or expertise</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.4s;">
-                <h3>Knowledge Management Assistants</h3>
-                <p>Consider a racial justice coalition with fifteen years of campaign history spread across dozens of Google Drives, email threads, and staff memories. As teams naturally evolve and grow, it's vital to ensure institutional wisdom remains accessible to everyone, strengthening your organization's resilience.</p>
-                <p>I build a contextual knowledge system using your existing document storage and communication tools. Your team's AI research assistant helps transform scattered information into accessible, searchable institutional memory. It connects related documents, surfaces historical context for current decisions, and ensures that vital community relationships and strategies aren't lost during staff transitions.</p>
-                <p>When new staff join, they can ask questions in plain language: "What approaches worked well with the tenant association at Parkview Apartments last year?" The system provides relevant context drawn from meeting notes, emails, and reports—all while maintaining appropriate privacy controls and keeping your data under your control.</p>
-                <div class="benefits">
-                    <p><strong>Key Benefits:</strong></p>
-                    <p>• <strong>Living Organizational Memory:</strong> Preserve and access institutional knowledge across staff changes</p>
-                    <p>• <strong>Contextual Understanding:</strong> Connect current work to historical efforts without manual research</p>
-                    <p>• <strong>Relationship Continuity:</strong> Maintain community relationships across staff transitions</p>
-                    <p>• <strong>Accelerated Onboarding:</strong> Help new staff quickly gain context for their work</p>
+                
+                <div class="solution-card animate-fade-in-up" onclick="toggleSolution(2)" style="animation-delay: 0.4s;">
+                    <div class="solution-header">
+                        <div class="solution-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                        <div class="solution-title">
+                            <h3>Knowledge Management Assistants</h3>
+                            <div class="solution-toggle">
+                                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-content">
+                        <p>Consider a racial justice coalition with fifteen years of campaign history spread across dozens of Google Drives, email threads, and staff memories. As teams naturally evolve and grow, it's vital to ensure institutional wisdom remains accessible to everyone, strengthening your organization's resilience.</p>
+                        <p>I build a contextual knowledge system using your existing document storage and communication tools. Your team's AI research assistant helps transform scattered information into accessible, searchable institutional memory. It connects related documents, surfaces historical context for current decisions, and ensures that vital community relationships and strategies aren't lost during staff transitions.</p>
+                        <p>When new staff join, they can ask questions in plain language: "What approaches worked well with the tenant association at Parkview Apartments last year?" The system provides relevant context drawn from meeting notes, emails, and reports—all while maintaining appropriate privacy controls and keeping your data under your control.</p>
+                        <div class="benefits">
+                            <p><strong>Key Benefits:</strong></p>
+                            <p>• <strong>Living Organizational Memory:</strong> Preserve and access institutional knowledge across staff changes</p>
+                            <p>• <strong>Contextual Understanding:</strong> Connect current work to historical efforts without manual research</p>
+                            <p>• <strong>Relationship Continuity:</strong> Maintain community relationships across staff transitions</p>
+                            <p>• <strong>Accelerated Onboarding:</strong> Help new staff quickly gain context for their work</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="card animate-fade-in-up" style="animation-delay: 0.6s;">
-                <h3>Impact Storytelling Engines</h3>
-                <p>Imagine an environmental justice organization struggling to communicate their full impact. Their data lives in spreadsheets, participant stories in interviews, and policy tracking in yet another system.</p>
-                <p>I create an AI-powered impact intelligence system that helps you make meaning from this scattered information. Your impact storytelling assistant helps identify patterns across programs, connect quantitative metrics to qualitative outcomes, and generate compelling narratives tailored to different audiences—from community members to funders.</p>
-                <p>When board meetings approach, leadership doesn't just get static reports. They can ask questions like, "How has our community organizing affected local policy this quarter?" and receive a rich analysis drawing from multiple data sources. The system helps surface unexpected connections and ripple effects that might otherwise remain invisible.</p>
-                <div class="benefits">
-                    <p><strong>Key Benefits:</strong></p>
-                    <p>• <strong>Multidimensional Analysis:</strong> Capture both numbers and narratives in a cohesive framework</p>
-                    <p>• <strong>Pattern Recognition:</strong> Identify connections and ripple effects across programs</p>
-                    <p>• <strong>Audience-Tailored Communication:</strong> Generate compelling stories for different stakeholders</p>
-                    <p>• <strong>Learning Acceleration:</strong> Surface insights faster to inform strategic decisions</p>
+                
+                <div class="solution-card animate-fade-in-up" onclick="toggleSolution(3)" style="animation-delay: 0.6s;">
+                    <div class="solution-header">
+                        <div class="solution-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="solution-title">
+                            <h3>Impact Storytelling Engines</h3>
+                            <div class="solution-toggle">
+                                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-content">
+                        <p>Imagine an environmental justice organization struggling to communicate their full impact. Their data lives in spreadsheets, participant stories in interviews, and policy tracking in yet another system.</p>
+                        <p>I create an AI-powered impact intelligence system that helps you make meaning from this scattered information. Your impact storytelling assistant helps identify patterns across programs, connect quantitative metrics to qualitative outcomes, and generate compelling narratives tailored to different audiences—from community members to funders.</p>
+                        <p>When board meetings approach, leadership doesn't just get static reports. They can ask questions like, "How has our community organizing affected local policy this quarter?" and receive a rich analysis drawing from multiple data sources. The system helps surface unexpected connections and ripple effects that might otherwise remain invisible.</p>
+                        <div class="benefits">
+                            <p><strong>Key Benefits:</strong></p>
+                            <p>• <strong>Multidimensional Analysis:</strong> Capture both numbers and narratives in a cohesive framework</p>
+                            <p>• <strong>Pattern Recognition:</strong> Identify connections and ripple effects across programs</p>
+                            <p>• <strong>Audience-Tailored Communication:</strong> Generate compelling stories for different stakeholders</p>
+                            <p>• <strong>Learning Acceleration:</strong> Surface insights faster to inform strategic decisions</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1410,37 +1890,195 @@
             <div class="highlight-badge">Philosophy</div>
             <h2>The <span class="gradient-text">Human-AI Partnership</span> Philosophy</h2>
             
-            <div class="philosophy-item animate-fade-in-up">
-                <h3>Beyond the Binary Debate: A Third Path for Social Justice Organizations</h3>
-                <p>For too long, the conversation around artificial intelligence in movement spaces has been stuck in a binary: either embrace corporate AI and sacrifice our values, or reject technology entirely and struggle with limited capacity. This false choice ignores the possibility of a third path—one where technology amplifies human wisdom rather than replacing it, where data remains under community control, and where tools serve our movements rather than extracting from them.</p>
-                <p>My Human-AI Partnership Philosophy offers a different vision: technology designed explicitly for liberation work, built with community ownership at its core, and focused on amplifying rather than replacing human judgment. This isn't about adding technology for its own sake—it's about creating thoughtful partnerships between people and intelligent tools that embody our values while addressing the practical challenges of movement work.</p>
-            </div>
-            
-            <div class="philosophy-item animate-fade-in-up" style="animation-delay: 0.2s;">
-                <h3>AI as Movement Ally</h3>
-                <p>I design AI systems that align with movement principles and center community needs:</p>
-                <p>• <strong>Value-Aligned Intelligence:</strong> AI systems trained to recognize and support social justice frameworks</p>
-                <p>• <strong>Power-Aware Design:</strong> Technologies that distribute rather than concentrate knowledge and decision-making</p>
-                <p>• <strong>Relationship-Centered Tools:</strong> Systems that enhance human connections rather than replacing them</p>
-                <p>• <strong>Mission-Driven Assistance:</strong> AI co-pilots that understand your theory of change, not just generic efficiency</p>
-            </div>
-            
-            <div class="philosophy-item animate-fade-in-up" style="animation-delay: 0.4s;">
-                <h3>True Data Sovereignty</h3>
-                <p>Your movement's data contains sensitive strategies, community relationships, and hard-won insights. Unlike extractive models that treat users as data sources to be mined, my Human-AI Partnership centers data sovereignty as a foundational principle:</p>
-                <p>• <strong>On-Premises Processing:</strong> Critical AI functions run on your infrastructure, not corporate cloud servers</p>
-                <p>• <strong>Local Intelligence:</strong> Systems that learn from your context without exposing sensitive data</p>
-                <p>• <strong>Transparent Operations:</strong> Clear visibility into how AI systems make recommendations</p>
-                <p>• <strong>Community Governance:</strong> Control over what data is used, how it's processed, and who can access insights</p>
-            </div>
-            
-            <div class="philosophy-item animate-fade-in-up" style="animation-delay: 0.6s;">
-                <h3>Accessible Intelligence</h3>
-                <p>AI shouldn't become another barrier to participation or create new hierarchies within your organization. My approach prioritizes accessibility in multiple dimensions:</p>
-                <p>• <strong>Natural Language Interfaces:</strong> Systems that respond to plain language, not technical commands</p>
-                <p>• <strong>Multiple Access Points:</strong> AI assistance available through familiar tools like chat, email, or voice</p>
-                <p>• <strong>Skill-Building Integration:</strong> Implementation that builds your team's capacity to work with AI tools</p>
-                <p>• <strong>Equal Benefit Distribution:</strong> Ensuring AI assistance reaches all levels of your organization, not just leadership</p>
+            <div class="philosophy-tabs">
+                <div class="philosophy-nav">
+                    <button class="philosophy-tab-btn active" onclick="switchPhilosophyTab(0)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Third Path</span>
+                    </button>
+                    <button class="philosophy-tab-btn" onclick="switchPhilosophyTab(1)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                        <span>Movement Ally</span>
+                    </button>
+                    <button class="philosophy-tab-btn" onclick="switchPhilosophyTab(2)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5 0a9 9 0 10-5.93-8.35c-.002.002-.003.002-.005.004l-.017.017-.005.006-4.27 4.27-2.12-2.12a3 3 0 00-4.25 4.25l6.72 6.72a.77.77 0 001.06 0L19 12.93a8.941 8.941 0 01-5 0z"></path>
+                        </svg>
+                        <span>Data Sovereignty</span>
+                    </button>
+                    <button class="philosophy-tab-btn" onclick="switchPhilosophyTab(3)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <span>Accessible Intelligence</span>
+                    </button>
+                </div>
+                
+                <div class="philosophy-content">
+                    <div class="philosophy-panel active" id="philosophy-panel-0">
+                        <h3>Beyond the Binary Debate: A Third Path for Social Justice Organizations</h3>
+                        <p>For too long, the conversation around artificial intelligence in movement spaces has been stuck in a binary: either embrace corporate AI and sacrifice our values, or reject technology entirely and struggle with limited capacity. This false choice ignores the possibility of a third path—one where technology amplifies human wisdom rather than replacing it, where data remains under community control, and where tools serve our movements rather than extracting from them.</p>
+                        <p>My Human-AI Partnership Philosophy offers a different vision: technology designed explicitly for liberation work, built with community ownership at its core, and focused on amplifying rather than replacing human judgment. This isn't about adding technology for its own sake—it's about creating thoughtful partnerships between people and intelligent tools that embody our values while addressing the practical challenges of movement work.</p>
+                    </div>
+                    
+                    <div class="philosophy-panel" id="philosophy-panel-1">
+                        <h3>AI as Movement Ally</h3>
+                        <p>I design AI systems that align with movement principles and center community needs:</p>
+                        <div class="philosophy-features">
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Value-Aligned Intelligence</h4>
+                                    <p>AI systems trained to recognize and support social justice frameworks</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Power-Aware Design</h4>
+                                    <p>Technologies that distribute rather than concentrate knowledge and decision-making</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Relationship-Centered Tools</h4>
+                                    <p>Systems that enhance human connections rather than replacing them</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Mission-Driven Assistance</h4>
+                                    <p>AI co-pilots that understand your theory of change, not just generic efficiency</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="philosophy-panel" id="philosophy-panel-2">
+                        <h3>True Data Sovereignty</h3>
+                        <p>Your movement's data contains sensitive strategies, community relationships, and hard-won insights. Unlike extractive models that treat users as data sources to be mined, my Human-AI Partnership centers data sovereignty as a foundational principle:</p>
+                        <div class="philosophy-features">
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>On-Premises Processing</h4>
+                                    <p>Critical AI functions run on your infrastructure, not corporate cloud servers</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Local Intelligence</h4>
+                                    <p>Systems that learn from your context without exposing sensitive data</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Transparent Operations</h4>
+                                    <p>Clear visibility into how AI systems make recommendations</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Community Governance</h4>
+                                    <p>Control over what data is used, how it's processed, and who can access insights</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="philosophy-panel" id="philosophy-panel-3">
+                        <h3>Accessible Intelligence</h3>
+                        <p>AI shouldn't become another barrier to participation or create new hierarchies within your organization. My approach prioritizes accessibility in multiple dimensions:</p>
+                        <div class="philosophy-features">
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Natural Language Interfaces</h4>
+                                    <p>Systems that respond to plain language, not technical commands</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Multiple Access Points</h4>
+                                    <p>AI assistance available through familiar tools like chat, email, or voice</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Skill-Building Integration</h4>
+                                    <p>Implementation that builds your team's capacity to work with AI tools</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Equal Benefit Distribution</h4>
+                                    <p>Ensuring AI assistance reaches all levels of your organization, not just leadership</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="button-container">
@@ -1482,33 +2120,92 @@
             
             <p>My services are designed to meet organizations where they are—whether you're looking for comprehensive AI integration or targeted intelligent tools for specific challenges. All services are offered on a sliding scale based on organizational budget to ensure accessibility.</p>
             
-            <div class="service-card animate-fade-in-up">
-                <h4>AI Readiness & Systems Assessment <span class="price">Starting at $1,500 for grassroots organizations</span></h4>
-                <p>A comprehensive evaluation of your current systems and how AI could enhance them without disrupting your work. Includes:</p>
-                <p>• AI-powered systems mapping and data flow analysis</p>
-                <p>• Collaborative visioning sessions with your team</p>
-                <p>• Ethical assessment of current tools and potential integrations</p>
-                <p>• Detailed roadmap with phased implementation recommendations</p>
-                <p>• 60-day follow-up check-in to support initial steps</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up" style="animation-delay: 0.2s;">
-                <h4>AI Co-Pilot Implementation <span class="price">Sliding scale for grassroots organizations</span></h4>
-                <p>Creation and integration of custom AI assistants that enhance your existing tools. Example projects include:</p>
-                <p>• Financial Intelligence Co-Pilot for budgeting and reporting</p>
-                <p>• Knowledge Management Assistant for Google Workspace</p>
-                <p>• Impact Storytelling Engine for program data</p>
-                <p>• Donor Engagement Co-Pilot for relationship-centered fundraising</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up" style="animation-delay: 0.4s;">
-                <h4>Strategic AI Roadmapping <span class="price">Sliding scale based on organizational complexity</span></h4>
-                <p>A comprehensive strategic engagement to develop a multi-year AI integration strategy aligned with your theory of change and mission goals:</p>
-                <p>• Vision alignment workshops with leadership, staff, and community members</p>
-                <p>• Technical, ethical, and operational assessment</p>
-                <p>• Phased implementation planning with clear milestones and success metrics</p>
-                <p>• Funding strategy development for technology initiatives</p>
-                <p>• Community governance framework for AI systems</p>
+            <div class="services-grid">
+                <div class="service-card-modern animate-fade-in-up" onclick="toggleService(0)">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-title-section">
+                            <h4>AI Readiness & Systems Assessment</h4>
+                            <span class="service-price">Starting at $1,500 for grassroots organizations</span>
+                        </div>
+                        <div class="service-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <p>A comprehensive evaluation of your current systems and how AI could enhance them without disrupting your work. Includes:</p>
+                        <ul class="service-list">
+                            <li>AI-powered systems mapping and data flow analysis</li>
+                            <li>Collaborative visioning sessions with your team</li>
+                            <li>Ethical assessment of current tools and potential integrations</li>
+                            <li>Detailed roadmap with phased implementation recommendations</li>
+                            <li>60-day follow-up check-in to support initial steps</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-card-modern animate-fade-in-up" onclick="toggleService(1)" style="animation-delay: 0.2s;">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-title-section">
+                            <h4>AI Co-Pilot Implementation</h4>
+                            <span class="service-price">Sliding scale for grassroots organizations</span>
+                        </div>
+                        <div class="service-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <p>Creation and integration of custom AI assistants that enhance your existing tools. Example projects include:</p>
+                        <ul class="service-list">
+                            <li>Financial Intelligence Co-Pilot for budgeting and reporting</li>
+                            <li>Knowledge Management Assistant for Google Workspace</li>
+                            <li>Impact Storytelling Engine for program data</li>
+                            <li>Donor Engagement Co-Pilot for relationship-centered fundraising</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-card-modern animate-fade-in-up" onclick="toggleService(2)" style="animation-delay: 0.4s;">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-title-section">
+                            <h4>Strategic AI Roadmapping</h4>
+                            <span class="service-price">Sliding scale based on organizational complexity</span>
+                        </div>
+                        <div class="service-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <p>A comprehensive strategic engagement to develop a multi-year AI integration strategy aligned with your theory of change and mission goals:</p>
+                        <ul class="service-list">
+                            <li>Vision alignment workshops with leadership, staff, and community members</li>
+                            <li>Technical, ethical, and operational assessment</li>
+                            <li>Phased implementation planning with clear milestones and success metrics</li>
+                            <li>Funding strategy development for technology initiatives</li>
+                            <li>Community governance framework for AI systems</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             
             <div class="button-container">
@@ -1580,7 +2277,7 @@
     </div>
     
     <p style="text-align: left; margin-bottom: 3rem; font-style: italic; color: #718096;">
-       These demonstration environments feature sample data and showcase how my AI agents can transform specific aspects of your organization’s work. 
+       These demonstration environments feature sample data and showcase how my AI agents can transform specific aspects of your organization's work. 
     </p>
            
     <!-- Demo Cards Grid -->
@@ -1839,6 +2536,80 @@
             }
         });
     </script>
+
+<!-- Challenge/Solution Toggle Functions -->
+<script>
+    // Challenge card toggle functionality
+    function toggleChallenge(index) {
+        const card = document.querySelectorAll('.challenge-card')[index];
+        const isActive = card.classList.contains('active');
+        
+        // Close all challenge cards
+        document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
+        
+        // If it wasn't active, open it
+        if (!isActive) {
+            card.classList.add('active');
+        }
+    }
+    
+    // Solution card toggle functionality
+    function toggleSolution(index) {
+        const card = document.querySelectorAll('.solution-card')[index];
+        const isActive = card.classList.contains('active');
+        
+        // Close all solution cards
+        document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
+        
+        // If it wasn't active, open it
+        if (!isActive) {
+            card.classList.add('active');
+        }
+    }
+    
+    // Philosophy tab functionality
+    function switchPhilosophyTab(index) {
+        // Remove active class from all tabs and panels
+        document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.philosophy-panel').forEach(panel => panel.classList.remove('active'));
+        
+        // Add active class to selected tab and panel
+        document.querySelectorAll('.philosophy-tab-btn')[index].classList.add('active');
+        document.getElementById(`philosophy-panel-${index}`).classList.add('active');
+    }
+    
+    // Service card toggle functionality
+    function toggleService(index) {
+        const card = document.querySelectorAll('.service-card-modern')[index];
+        const isActive = card.classList.contains('active');
+        
+        // Close all service cards
+        document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
+        
+        // If it wasn't active, open it
+        if (!isActive) {
+            card.classList.add('active');
+        }
+    }
+    
+    // Initialize first cards as open on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Open first challenge by default
+        if (document.querySelectorAll('.challenge-card').length > 0) {
+            toggleChallenge(0);
+        }
+        
+        // Open first solution by default
+        if (document.querySelectorAll('.solution-card').length > 0) {
+            toggleSolution(0);
+        }
+        
+        // Open first service by default
+        if (document.querySelectorAll('.service-card-modern').length > 0) {
+            toggleService(0);
+        }
+    });
+</script>
 
 <!-- Replace the existing demo script section with this alternative version -->
 <script>
