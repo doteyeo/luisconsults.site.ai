@@ -2167,24 +2167,18 @@
             animation: pulse 3s infinite;
         }
 
-        /* Optional: Add gentle pulse to logo */
+        /* Logo should remain static - no animation */
         .nav-logo {
-            animation: subtlePulse 4s infinite;
+       
+        /* Remove any animation */
+        animation: none !important;
+            
+        /* Keep original styling */
+        height: 55px;
+        width: auto;
         }
 
-        @keyframes logoGlow {
-            0% {
-                filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            }
-            50% {
-                filter: drop-shadow(0 4px 12px rgba(46, 93, 59, 0.2));
-            }
-            100% {
-                filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            }
-        }
-
-        /* Custom pulse colors for different sections */
+    /* Custom pulse colors for different sections */
         
         /* About section - if you want to add icons there */
         .about-content .highlight-badge {
