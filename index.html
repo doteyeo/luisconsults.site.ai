@@ -1983,6 +1983,236 @@
                 transform: translateY(-2px) !important;
             }
         }
+
+    /* PULSING ICON EFFECTS - Add to existing CSS */
+        
+        /* Add pulse animation for extra emphasis */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 93, 59, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 93, 59, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 93, 59, 0);
+            }
+        }
+
+        @keyframes pulseBlue {
+            0% {
+                box-shadow: 0 0 0 0 rgba(74, 109, 167, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(74, 109, 167, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 109, 167, 0);
+            }
+        }
+
+        @keyframes pulseAqua {
+            0% {
+                box-shadow: 0 0 0 0 rgba(101, 166, 209, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(101, 166, 209, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(101, 166, 209, 0);
+            }
+        }
+
+        /* Apply pulse to first unopened card in each section */
+        .challenge-card:first-child:not(.active) .challenge-icon {
+            animation: pulse 2s infinite;
+        }
+
+        .solution-card:first-child:not(.active) .solution-icon {
+            animation: pulse 2s infinite;
+        }
+
+        .service-card-modern:first-child:not(.active) .service-icon {
+            animation: pulseBlue 2s infinite;
+        }
+
+        /* Enhanced pulsing effects for all first icons in each section */
+        
+        /* Challenges Section - Green pulse */
+        .challenge-card:first-child .challenge-icon {
+            animation: pulse 2.5s infinite;
+        }
+
+        /* Solutions Section - Green pulse (matches existing) */
+        .solution-card:first-child .solution-icon {
+            animation: pulse 2.5s infinite;
+        }
+
+        /* Services Section - Blue pulse */
+        .service-card-modern:first-child .service-icon {
+            animation: pulseBlue 2.5s infinite;
+        }
+
+        /* Philosophy Section - First tab icon pulse */
+        .philosophy-tab-btn:first-child:not(.active) {
+            position: relative;
+        }
+
+        .philosophy-tab-btn:first-child:not(.active)::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            animation: pulse 2.5s infinite;
+            z-index: -1;
+        }
+
+        /* Alternative: Pulse the actual philosophy icon */
+        .philosophy-tab-btn:first-child:not(.active) svg {
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Add subtle pulse to CTA buttons for extra attention */
+        .cta-button {
+            animation: subtlePulse 3s infinite;
+        }
+
+        @keyframes subtlePulse {
+            0% {
+                box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(46, 93, 59, 0.2);
+            }
+            100% {
+                box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            }
+        }
+
+        /* Stop pulsing when cards are opened or hovered */
+        .challenge-card.active .challenge-icon,
+        .solution-card.active .solution-icon,
+        .service-card-modern.active .service-icon {
+            animation: none !important;
+        }
+
+        .challenge-card:hover .challenge-icon,
+        .solution-card:hover .solution-icon,
+        .service-card-modern:hover .service-icon {
+            animation: none !important;
+        }
+
+        /* Mobile adjustments - reduce pulse intensity */
+        @media (max-width: 768px) {
+            @keyframes pulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(46, 93, 59, 0.3);
+                }
+                70% {
+                    box-shadow: 0 0 0 6px rgba(46, 93, 59, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(46, 93, 59, 0);
+                }
+            }
+
+            @keyframes pulseBlue {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(74, 109, 167, 0.3);
+                }
+                70% {
+                    box-shadow: 0 0 0 6px rgba(74, 109, 167, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(74, 109, 167, 0);
+                }
+            }
+
+            @keyframes pulseAqua {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(101, 166, 209, 0.3);
+                }
+                70% {
+                    box-shadow: 0 0 0 6px rgba(101, 166, 209, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(101, 166, 209, 0);
+                }
+            }
+
+            /* Disable CTA button pulse on mobile to avoid interference with touch */
+            .cta-button {
+                animation: none;
+            }
+        }
+
+        /* Optional: Add pulse to back-to-top button when visible */
+        .back-to-top.visible {
+            animation: pulse 3s infinite;
+        }
+
+        /* Optional: Add gentle pulse to logo */
+        .nav-logo {
+            animation: subtlePulse 4s infinite;
+        }
+
+        @keyframes logoGlow {
+            0% {
+                filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            }
+            50% {
+                filter: drop-shadow(0 4px 12px rgba(46, 93, 59, 0.2));
+            }
+            100% {
+                filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            }
+        }
+
+        /* Custom pulse colors for different sections */
+        
+        /* About section - if you want to add icons there */
+        .about-content .highlight-badge {
+            animation: subtlePulse 3s infinite;
+        }
+
+        /* Contact section CTA */
+        #contact .cta-button {
+            animation: pulse 2s infinite;
+        }
+
+        /* Demo section buttons */
+        #demos .cta-button {
+            animation: pulseAqua 2.5s infinite;
+        }
+
+        /* Reduce animations for users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .challenge-card:first-child .challenge-icon,
+            .solution-card:first-child .solution-icon,
+            .service-card-modern:first-child .service-icon,
+            .philosophy-tab-btn:first-child svg,
+            .cta-button,
+            .back-to-top.visible,
+            .nav-logo {
+                animation: none !important;
+            }
+        }
     
     </style>
     
