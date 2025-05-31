@@ -1786,9 +1786,7 @@
             .challenge-card::after,
             .solution-card::after,
             .service-card-modern::after {
-                content: 'Tap to expand';
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
+                display: none !important;
             }
         }
        
@@ -1810,6 +1808,19 @@
                 height: 44px !important;
                 min-width: 44px !important;
                 min-height: 44px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                background: rgba(46, 93, 59, 0.1) !important;
+                border-radius: 50% !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .challenge-toggle:active,
+            .solution-toggle:active,
+            .service-toggle:active {
+                background: rgba(46, 93, 59, 0.2) !important;
+                transform: scale(1.05) !important;
             }
         }
         
@@ -1868,6 +1879,144 @@
                 width: 200px;
                 height: 200px;
             }
+
+            /* Enhanced touch targets for headers */
+            .challenge-header,
+            .solution-header,
+            .service-header {
+                min-height: 80px !important;
+                cursor: pointer !important;
+                -webkit-tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
+                tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
+                padding: 1.5rem !important;
+                border-radius: 12px !important;
+                transition: background-color 0.2s ease !important;
+            }
+
+            .challenge-header:active,
+            .solution-header:active,
+            .service-header:active {
+                background-color: rgba(46, 93, 59, 0.05) !important;
+            }
+
+            /* Improved icon containers */
+            .challenge-icon,
+            .solution-icon,
+            .service-icon {
+                width: 50px !important;
+                height: 50px !important;
+                flex-shrink: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 12px !important;
+            }
+
+            /* Philosophy tabs mobile improvements */
+            .philosophy-tab-btn {
+                min-height: 60px !important;
+                padding: 1rem 0.75rem !important;
+                font-size: 0.9rem !important;
+                -webkit-tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .philosophy-tab-btn:active {
+                background: rgba(46, 93, 59, 0.1) !important;
+                transform: translateY(-2px) !important;
+            }
+
+            /* Hamburger menu improvements */
+            .hamburger {
+                width: 32px !important;
+                height: 24px !important;
+                z-index: 1002 !important;
+                -webkit-tap-highlight-color: transparent !important;
+                tap-highlight-color: transparent !important;
+                padding: 10px !important;
+                margin: -10px !important;
+            }
+
+            .hamburger span {
+                height: 3px !important;
+                background-color: var(--text-dark) !important;
+                border-radius: 2px !important;
+                transition: all 0.3s ease !important;
+                display: block !important;
+            }
+
+            .hamburger:active {
+                transform: scale(1.1) !important;
+            }
+
+            /* CTA button improvements */
+            .cta-button {
+                min-height: 50px !important;
+                padding: 1rem 2rem !important;
+                font-size: 1rem !important;
+                -webkit-tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .cta-button:active {
+                transform: translateY(-2px) scale(0.98) !important;
+            }
+
+            /* Social icons mobile fixes */
+            .social-icon {
+                width: 48px !important;
+                height: 48px !important;
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1) !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .social-icon:active {
+                transform: scale(1.1) !important;
+                background: rgba(255, 255, 255, 0.2) !important;
+            }
+
+            /* Back to top button mobile */
+            .back-to-top {
+                width: 56px !important;
+                height: 56px !important;
+                bottom: 1rem !important;
+                left: 1rem !important;
+                font-size: 1.75rem !important;
+                -webkit-tap-highlight-color: transparent !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .back-to-top:active {
+                transform: scale(1.1) !important;
+            }
+
+            /* Prevent zoom on input focus */
+            input[type="password"] {
+                font-size: 16px !important;
+                -webkit-appearance: none !important;
+                border-radius: 8px !important;
+            }
+
+            /* Navigation improvements */
+            .nav-menu {
+                padding: 3rem 2rem !important;
+                gap: 2.5rem !important;
+            }
+
+            .nav-link {
+                font-size: 1.2rem !important;
+                padding: 1rem 0 !important;
+                min-height: 50px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                -webkit-tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
+            }
+
+            .nav-link:active {
+                background: rgba(46, 93, 59, 0.05) !important;
+                border-radius: 8px !important;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1912,21 +2061,136 @@
                 width: 150px;
                 height: 150px;
             }
+
+            /* Smaller icon containers for very small screens */
+            .challenge-icon,
+            .solution-icon,
+            .service-icon {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            /* Adjust toggle sizes */
+            .challenge-toggle,
+            .solution-toggle,
+            .service-toggle {
+                width: 40px !important;
+                height: 40px !important;
+                min-width: 40px !important;
+                min-height: 40px !important;
+            }
+
+            /* Smaller text on very small screens */
+            .philosophy-tab-btn {
+                font-size: 0.8rem !important;
+                padding: 0.75rem 0.5rem !important;
+            }
+
+            /* Compact hero on small screens */
+            .hero-content {
+                padding: 0 1rem !important;
+            }
+
+            .highlight-badge {
+                font-size: 0.75rem !important;
+                padding: 0.25rem 0.6rem !important;
+            }
         }
 
-    .challenge-icon svg,
-    .solution-icon svg,
-    .service-icon svg,
-    .challenge-toggle svg,
-    .solution-toggle svg,
-    .service-toggle svg {
-        display: block !important;
-        width: 100% !important;
-        height: 100% !important;
-        fill: currentColor !important;
-        stroke: currentColor !important;
-        pointer-events: none !important;
-}
+        /* CORRECTED SVG ICON FIXES */
+        .challenge-card .challenge-icon svg,
+        .solution-card .solution-icon svg,
+        .service-card-modern .service-icon svg,
+        .challenge-card .challenge-toggle svg,
+        .solution-card .solution-toggle svg,
+        .service-card-modern .service-toggle svg,
+        .philosophy-tab-btn svg,
+        .feature-icon svg,
+        .hamburger svg,
+        .social-icon svg,
+        .back-to-top svg,
+        .nav-menu svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            stroke: currentColor !important;
+            fill: none !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            pointer-events: none !important;
+            vertical-align: middle !important;
+            -webkit-transform: translateZ(0) !important;
+            transform: translateZ(0) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+        }
+
+        /* Special handling for filled icons */
+        .social-icon svg,
+        .feature-icon svg {
+            fill: currentColor !important;
+            stroke: none !important;
+        }
+
+        /* Mobile-specific SVG sizing */
+        @media (max-width: 768px) {
+            .challenge-toggle svg,
+            .solution-toggle svg,
+            .service-toggle svg {
+                width: 20px !important;
+                height: 20px !important;
+                stroke-width: 2.5 !important;
+            }
+
+            .challenge-icon svg,
+            .solution-icon svg,
+            .service-icon svg {
+                width: 24px !important;
+                height: 24px !important;
+                stroke-width: 2.5 !important;
+            }
+
+            .philosophy-tab-btn svg {
+                width: 18px !important;
+                height: 18px !important;
+                margin-right: 0.5rem !important;
+                stroke-width: 2.5 !important;
+            }
+
+            .social-icon svg {
+                width: 24px !important;
+                height: 24px !important;
+            }
+
+            .back-to-top svg {
+                width: 24px !important;
+                height: 24px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .challenge-toggle svg,
+            .solution-toggle svg,
+            .service-toggle svg {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            .challenge-icon svg,
+            .solution-icon svg,
+            .service-icon svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            .philosophy-tab-btn svg {
+                width: 16px !important;
+                height: 16px !important;
+                margin-right: 0.25rem !important;
+            }
+        }
+    
     </style>
     
 </head>
