@@ -3191,8 +3191,11 @@
     </script>
 
 <script>
-// Challenge card toggle functionality - NO AUTO-SCROLL
+// Enhanced toggle functions that prevent any scroll behavior
 function toggleChallenge(index) {
+    // Store current scroll position
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
     const card = document.querySelectorAll('.challenge-card')[index];
     if (!card) return;
     
@@ -3201,14 +3204,30 @@ function toggleChallenge(index) {
     // Close all challenge cards
     document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
     
-    // If it wasn't active, open it (no scrolling)
+    // If it wasn't active, open it
     if (!isActive) {
         card.classList.add('active');
+        
+        // Force scroll position to stay the same
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 10);
+        
+        // Double-check after animation completes
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 500);
     }
 }
 
-// Solution card toggle functionality - NO AUTO-SCROLL
 function toggleSolution(index) {
+    // Store current scroll position
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
     const card = document.querySelectorAll('.solution-card')[index];
     if (!card) return;
     
@@ -3217,14 +3236,30 @@ function toggleSolution(index) {
     // Close all solution cards
     document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
     
-    // If it wasn't active, open it (no scrolling)
+    // If it wasn't active, open it
     if (!isActive) {
         card.classList.add('active');
+        
+        // Force scroll position to stay the same
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 10);
+        
+        // Double-check after animation completes
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 500);
     }
 }
 
-// Service card toggle functionality - NO AUTO-SCROLL
 function toggleService(index) {
+    // Store current scroll position
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
     const card = document.querySelectorAll('.service-card-modern')[index];
     if (!card) return;
     
@@ -3233,40 +3268,54 @@ function toggleService(index) {
     // Close all service cards
     document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
     
-    // If it wasn't active, open it (no scrolling)
+    // If it wasn't active, open it
     if (!isActive) {
         card.classList.add('active');
+        
+        // Force scroll position to stay the same
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 10);
+        
+        // Double-check after animation completes
+        setTimeout(() => {
+            if (window.pageYOffset !== currentScrollY) {
+                window.scrollTo(0, currentScrollY);
+            }
+        }, 500);
     }
 }
 
-// Philosophy tab functionality (unchanged - no scrolling)
+// Philosophy tab functionality (unchanged)
 function switchPhilosophyTab(index) {
-    // Remove active class from all tabs and panels
     document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.philosophy-panel').forEach(panel => panel.classList.remove('active'));
     
-    // Add active class to selected tab and panel
     document.querySelectorAll('.philosophy-tab-btn')[index].classList.add('active');
     document.getElementById(`philosophy-panel-${index}`).classList.add('active');
 }
 
-// Initialize first cards as open on page load (unchanged)
+// DEBUGGING: Add scroll event listener to track what's causing scroll
+window.addEventListener('scroll', function() {
+    // Uncomment the line below to debug what's triggering scroll events
+    // console.log('Scroll triggered at position:', window.pageYOffset);
+});
+
+// Initialize cards (unchanged)
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for layout to stabilize before opening cards
     setTimeout(() => {
-        // Open first challenge by default WITHOUT calling toggle function
         const firstChallenge = document.querySelector('.challenge-card');
         if (firstChallenge) {
             firstChallenge.classList.add('active');
         }
         
-        // Open first solution by default WITHOUT calling toggle function
         const firstSolution = document.querySelector('.solution-card');
         if (firstSolution) {
             firstSolution.classList.add('active');
         }
         
-        // Open first service by default WITHOUT calling toggle function
         const firstService = document.querySelector('.service-card-modern');
         if (firstService) {
             firstService.classList.add('active');
