@@ -3234,34 +3234,44 @@ function toggleChallenge(index) {
 }
 
 // Solution card toggle functionality with proper scroll positioning
-function toggleSolution(index) {
-    const card = document.querySelectorAll('.solution-card')[index];
+// Challenge card toggle functionality with proper scroll positioning
+function toggleChallenge(index) {
+    const card = document.querySelectorAll('.challenge-card')[index];
     if (!card) return; // Safety check
     
     const isActive = card.classList.contains('active');
     
-    // Close all solution cards
-    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
+    // Close all challenge cards
+    document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
     
     // If it wasn't active, open it
     if (!isActive) {
         card.classList.add('active');
         
+        // Smart scroll behavior - only scroll if needed and safe to do so
         setTimeout(() => {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const cardRect = card.getBoundingClientRect();
             const cardTop = cardRect.top + currentScrollTop;
-            const navHeight = 80;
-            const buffer = 30;
+            const navHeight = 80; // Height of fixed navigation
+            const buffer = 30; // Extra space below navigation for comfort
             const viewportHeight = window.innerHeight;
             
+            // Only scroll if:
+            // 1. Card top is not visible (above viewport) OR card is too far down
+            // 2. We have a valid card position
+            // 3. User is not at the very top of the page
             const isCardAboveView = cardRect.top < navHeight + buffer;
             const isCardBelowView = cardRect.top > viewportHeight * 0.8;
             const hasValidPosition = cardTop > navHeight + buffer;
-            const isNotAtPageTop = currentScrollTop > 300;
+            const isNotAtPageTop = currentScrollTop > 300; // Don't scroll if we're near the top
             
+            // Only scroll if the card header is not properly visible
             if ((isCardAboveView || isCardBelowView) && hasValidPosition && isNotAtPageTop) {
+                // Calculate target scroll position: card top minus nav height minus buffer
                 const targetScrollTop = cardTop - navHeight - buffer;
+                
+                // Safety: ensure we don't scroll to a negative position or too close to top
                 const finalScrollTop = Math.max(200, targetScrollTop);
                 
                 window.scrollTo({
@@ -3269,9 +3279,10 @@ function toggleSolution(index) {
                     behavior: 'smooth'
                 });
             }
-        }, 200);
+        }, 200); // Longer delay to ensure card expansion is complete
     }
 }
+
 
 // Service card toggle functionality with proper scroll positioning
 function toggleService(index) {
@@ -3324,8 +3335,7 @@ function switchPhilosophyTab(index) {
     document.getElementById(`philosophy-panel-${index}`).classList.add('active');
 }
 
-// OPTIONAL: If you want to also fix the navigation smooth scrolling
-// This ensures nav links also respect the navigation bar height
+// FIXED: Initialize first cards as open WITHOUT triggering scroll behavior
 document.addEventListener('DOMContentLoaded', function() {
     // Wait for layout to stabilize before opening cards
     setTimeout(() => {
@@ -3346,7 +3356,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (firstService) {
             firstService.classList.add('active');
         }
-    }, 100);
+    }, 100); // Small delay to ensure layout is ready
     
     // Enhanced navigation link handling
     const navLinks = document.querySelectorAll('.nav-link');
