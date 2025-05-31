@@ -2266,7 +2266,33 @@
                font-size: 1.4rem !important; /* Slightly smaller for small screens */
            }
        }
-   
+       /* Force proper expansion behavior */
+            .challenge-card.active .challenge-content,
+            .solution-card.active .solution-content,
+            .service-card-modern.active .service-content {
+                display: block !important;
+                visibility: visible !important;
+                max-height: 2000px !important;
+                opacity: 1 !important;
+                overflow: visible !important;
+            }
+    
+            .challenge-content:not(.active),
+            .solution-content:not(.active),
+            .service-content:not(.active) {
+                max-height: 0 !important;
+                opacity: 0 !important;
+                overflow: hidden !important;
+            }
+    
+    /* Ensure the animation runs */
+            .challenge-card .challenge-content,
+            .solution-card .solution-content,
+            .service-card-modern .service-content {
+                transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                            opacity 0.3s ease-out, 
+                            padding 0.3s ease-out !important;
+            }
    </style>
     
 </head>
