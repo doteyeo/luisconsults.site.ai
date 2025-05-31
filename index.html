@@ -552,7 +552,6 @@
             display: flex;
             align-items: center;
             padding: 1.5rem;
-            transition: background-color 0.3s ease;
         }
 
         .challenge-card:hover .challenge-header {
@@ -604,17 +603,14 @@
         
         .challenge-content {
             max-height: 0;
-            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+            transition: max-height 0.3s ease;
             padding: 0 1.5rem;
         }
         
         .challenge-card.active .challenge-content {
-            max-height: 2000px; /* Large enough for content */
-            opacity: 1;
+            max-height: 1000px;
             padding: 0 1.5rem 1.5rem;
-            overflow: visible;
         }
         
         .challenge-card.active .challenge-toggle svg {
@@ -642,9 +638,6 @@
             -webkit-backdrop-filter: blur(15px);
             overflow: hidden;
             cursor: pointer;
-            position: relative;
-            scroll-behavior: auto !important;
-            overflow-anchor: none !important;
         }
         
         .solution-card:hover {
@@ -709,7 +702,6 @@
             align-items: center;
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
         }
 
         .solution-card:hover .solution-header {
@@ -764,17 +756,14 @@
         
         .solution-content {
             max-height: 0;
-            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+            transition: max-height 0.3s ease;
             padding: 0 1.5rem;
         }
         
         .solution-card.active .solution-content {
-            max-height: 2000px; /* Large enough for content */
-            opacity: 1;
+            max-height: 1500px;
             padding: 1.5rem;
-            overflow: visible;
         }
         
         .solution-card.active .solution-toggle svg {
@@ -938,9 +927,6 @@
             -webkit-backdrop-filter: blur(15px);
             overflow: hidden;
             cursor: pointer;
-            position: relative;
-            scroll-behavior: auto !important;
-            overflow-anchor: none !important;
         }
 
         .service-card-modern:focus {
@@ -1010,7 +996,6 @@
             align-items: center;
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
         }
 
         .service-card-modern:hover .service-header {
@@ -1075,17 +1060,14 @@
         
         .service-content {
             max-height: 0;
-            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+            transition: max-height 0.3s ease;
             padding: 0 1.5rem;
         }
         
         .service-card-modern.active .service-content {
-            max-height: 1500px; /* Large enough for content */
-            opacity: 1;
+            max-height: 800px;
             padding: 1.5rem;
-            overflow: visible;
         }
         
         .service-card-modern.active .service-toggle svg {
