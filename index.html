@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+
+<style>
         :root {
             /* Primary color palette with gradients */
             --primary-gradient: linear-gradient(135deg, #2e5d3b, #4a8e5b);
@@ -486,11 +487,64 @@
             -webkit-backdrop-filter: blur(15px);
             overflow: hidden;
             cursor: pointer;
+            position: relative;
         }
         
         .challenge-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--card-hover-shadow);
+            border: 2px solid rgba(46, 93, 59, 0.3);
+        }
+
+        /* Challenge Card Centered Tooltip */
+        .challenge-card::after {
+            content: 'Click to expand';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(46, 93, 59, 0.95);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transition-delay: 0.2s;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 4px 15px rgba(46, 93, 59, 0.3);
+            white-space: nowrap;
+        }
+
+        .challenge-card:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1.05);
+            transition-delay: 0s;
+        }
+
+        .challenge-card.active::after {
+            display: none;
+        }
+
+        /* Add top border indicator */
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .challenge-card:hover::before {
+            opacity: 1;
         }
         
         .challenge-header {
@@ -498,6 +552,11 @@
             align-items: center;
             padding: 1.5rem;
             position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .challenge-card:hover .challenge-header {
+            background-color: rgba(46, 93, 59, 0.05);
         }
         
         .challenge-icon {
@@ -511,6 +570,11 @@
             justify-content: center;
             margin-right: 1rem;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .challenge-card:hover .challenge-icon {
+            transform: scale(1.1);
         }
         
         .challenge-header h3 {
@@ -523,6 +587,19 @@
         .challenge-toggle {
             color: var(--primary);
             margin-left: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(46, 93, 59, 0.1);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .challenge-card:hover .challenge-toggle {
+            background: rgba(46, 93, 59, 0.2);
+            transform: scale(1.1);
         }
         
         .challenge-content {
@@ -558,11 +635,64 @@
             -webkit-backdrop-filter: blur(15px);
             overflow: hidden;
             cursor: pointer;
+            position: relative;
         }
         
         .solution-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--card-hover-shadow);
+            border: 2px solid rgba(101, 166, 209, 0.3);
+        }
+
+        /* Solution Card Centered Tooltip */
+        .solution-card::after {
+            content: 'Click to explore';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(101, 166, 209, 0.95);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transition-delay: 0.2s;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 4px 15px rgba(101, 166, 209, 0.3);
+            white-space: nowrap;
+        }
+
+        .solution-card:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1.05);
+            transition-delay: 0s;
+        }
+
+        .solution-card.active::after {
+            display: none;
+        }
+
+        /* Add top border indicator */
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .solution-card:hover::before {
+            opacity: 1;
         }
         
         .solution-header {
@@ -570,6 +700,11 @@
             align-items: center;
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .solution-card:hover .solution-header {
+            background-color: rgba(101, 166, 209, 0.05);
         }
         
         .solution-icon {
@@ -583,6 +718,11 @@
             justify-content: center;
             margin-right: 1.5rem;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .solution-card:hover .solution-icon {
+            transform: scale(1.1);
         }
         
         .solution-title {
@@ -598,6 +738,19 @@
         .solution-toggle {
             color: var(--primary);
             margin-left: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(101, 166, 209, 0.1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solution-card:hover .solution-toggle {
+            background: rgba(101, 166, 209, 0.2);
+            transform: scale(1.1);
         }
         
         .solution-content {
@@ -646,25 +799,53 @@
             cursor: pointer;
             transition: all var(--transition-fast);
             border-right: 1px solid rgba(0,0,0,0.1);
+            position: relative;
         }
         
         .philosophy-tab-btn:last-child {
             border-right: none;
         }
+
+        /* Add hover indicator */
+        .philosophy-tab-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
         
         .philosophy-tab-btn:hover {
             background: rgba(46, 93, 59, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .philosophy-tab-btn:hover::before {
+            width: 100%;
         }
         
         .philosophy-tab-btn.active {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
+
+        .philosophy-tab-btn.active::before {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+        }
         
         .philosophy-tab-btn svg {
             margin-right: 0.75rem;
             width: 18px;
             height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .philosophy-tab-btn:hover svg {
+            transform: scale(1.1);
         }
         
         .philosophy-tab-btn span {
@@ -743,11 +924,64 @@
             -webkit-backdrop-filter: blur(15px);
             overflow: hidden;
             cursor: pointer;
+            position: relative;
         }
         
         .service-card-modern:hover {
             transform: translateY(-5px);
             box-shadow: var(--card-hover-shadow);
+            border: 2px solid rgba(74, 109, 167, 0.3);
+        }
+
+        /* Service Card Centered Tooltip */
+        .service-card-modern::after {
+            content: 'Click for details';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(74, 109, 167, 0.95);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transition-delay: 0.2s;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 4px 15px rgba(74, 109, 167, 0.3);
+            white-space: nowrap;
+        }
+
+        .service-card-modern:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1.05);
+            transition-delay: 0s;
+        }
+
+        .service-card-modern.active::after {
+            display: none;
+        }
+
+        /* Add top border indicator */
+        .service-card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card-modern:hover::before {
+            opacity: 1;
         }
         
         .service-header {
@@ -755,6 +989,11 @@
             align-items: center;
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .service-card-modern:hover .service-header {
+            background-color: rgba(74, 109, 167, 0.05);
         }
         
         .service-icon {
@@ -768,6 +1007,11 @@
             justify-content: center;
             margin-right: 1.5rem;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card-modern:hover .service-icon {
+            transform: scale(1.1);
         }
         
         .service-title-section {
@@ -793,6 +1037,19 @@
         .service-toggle {
             color: var(--primary);
             margin-left: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(74, 109, 167, 0.1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card-modern:hover .service-toggle {
+            background: rgba(74, 109, 167, 0.2);
+            transform: scale(1.1);
         }
         
         .service-content {
@@ -1360,6 +1617,26 @@
     font-weight: 600;
     z-index: 1000;
 }
+
+        /* Add pulse animation for extra emphasis */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 93, 59, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 93, 59, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 93, 59, 0);
+            }
+        }
+
+        /* Apply pulse to first unopened card in each section */
+        .challenge-card:first-child:not(.active) .challenge-icon,
+        .solution-card:first-child:not(.active) .solution-icon,
+        .service-card-modern:first-child:not(.active) .service-icon {
+            animation: pulse 2s infinite;
+        }
         
         /* Animations */
         @keyframes fadeInUp {
@@ -1502,6 +1779,25 @@
         #services p {
             text-align: left !important;
         }
+
+        /* Mobile specific adjustments for tooltips */
+        @media (max-width: 768px) {
+            .challenge-card::after,
+            .solution-card::after,
+            .service-card-modern::after {
+                content: 'Tap to expand';
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            /* Larger touch targets on mobile */
+            .challenge-toggle,
+            .solution-toggle,
+            .service-toggle {
+                width: 44px;
+                height: 44px;
+            }
+        }
         
         /* Responsive Styles */
         @media (max-width: 1024px) {
@@ -1603,340 +1899,8 @@
                 height: 150px;
             }
         }
-
-        /* Enhanced Challenge Cards with better visual cues */
-.challenge-card {
-    position: relative;
-    /* Add subtle glow on hover */
-}
-
-.challenge-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-    border: 2px solid rgba(46, 93, 59, 0.3);
-}
-
-/* Add click indicator top border */
-.challenge-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.challenge-card:hover::before {
-    opacity: 1;
-}
-
-.challenge-header {
-    transition: background-color 0.3s ease;
-}
-
-.challenge-card:hover .challenge-header {
-    background-color: rgba(46, 93, 59, 0.05);
-}
-
-.challenge-icon {
-    transition: transform 0.3s ease;
-}
-
-.challenge-card:hover .challenge-icon {
-    transform: scale(1.1);
-}
-
-/* Add "Click to expand" hint */
-.challenge-header h3 {
-    position: relative;
-}
-
-.challenge-header h3::after {
-    content: 'Click to expand';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    font-size: 0.75rem;
-    color: var(--primary);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-weight: 400;
-    font-style: italic;
-}
-
-.challenge-card:hover .challenge-header h3::after {
-    opacity: 1;
-}
-
-.challenge-toggle {
-    transition: all 0.3s ease;
-    background: rgba(46, 93, 59, 0.1);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.challenge-card:hover .challenge-toggle {
-    background: rgba(46, 93, 59, 0.2);
-    transform: scale(1.1);
-}
-
-/* Enhanced Solution Cards */
-.solution-card {
-    position: relative;
-}
-
-.solution-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--primary));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.solution-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-    border: 2px solid rgba(101, 166, 209, 0.3);
-}
-
-.solution-card:hover::before {
-    opacity: 1;
-}
-
-.solution-header {
-    transition: background-color 0.3s ease;
-}
-
-.solution-card:hover .solution-header {
-    background-color: rgba(101, 166, 209, 0.05);
-}
-
-.solution-icon {
-    transition: transform 0.3s ease;
-}
-
-.solution-card:hover .solution-icon {
-    transform: scale(1.1);
-}
-
-.solution-title h3 {
-    position: relative;
-}
-
-.solution-title h3::after {
-    content: 'Click to explore';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    font-size: 0.75rem;
-    color: var(--accent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-weight: 400;
-    font-style: italic;
-}
-
-.solution-card:hover .solution-title h3::after {
-    opacity: 1;
-}
-
-.solution-toggle {
-    transition: all 0.3s ease;
-    background: rgba(101, 166, 209, 0.1);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.solution-card:hover .solution-toggle {
-    background: rgba(101, 166, 209, 0.2);
-    transform: scale(1.1);
-}
-
-/* Enhanced Philosophy Tabs */
-.philosophy-tab-btn {
-    position: relative;
-}
-
-/* Add hover indicator */
-.philosophy-tab-btn::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    transition: width 0.3s ease;
-}
-
-.philosophy-tab-btn:hover {
-    background: rgba(46, 93, 59, 0.05);
-    transform: translateY(-2px);
-}
-
-.philosophy-tab-btn:hover::before {
-    width: 100%;
-}
-
-.philosophy-tab-btn.active::before {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.philosophy-tab-btn svg {
-    transition: transform 0.3s ease;
-}
-
-.philosophy-tab-btn:hover svg {
-    transform: scale(1.1);
-}
-
-/* Enhanced Service Cards */
-.service-card-modern {
-    position: relative;
-}
-
-.service-card-modern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--secondary), var(--accent));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.service-card-modern:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-    border: 2px solid rgba(74, 109, 167, 0.3);
-}
-
-.service-card-modern:hover::before {
-    opacity: 1;
-}
-
-.service-header {
-    transition: background-color 0.3s ease;
-}
-
-.service-card-modern:hover .service-header {
-    background-color: rgba(74, 109, 167, 0.05);
-}
-
-.service-icon {
-    transition: transform 0.3s ease;
-}
-
-.service-card-modern:hover .service-icon {
-    transform: scale(1.1);
-}
-
-.service-title-section h4 {
-    position: relative;
-}
-
-.service-title-section h4::after {
-    content: 'Click for details';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    font-size: 0.75rem;
-    color: var(--secondary);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-weight: 400;
-    font-style: italic;
-}
-
-.service-card-modern:hover .service-title-section h4::after {
-    opacity: 1;
-}
-
-.service-toggle {
-    transition: all 0.3s ease;
-    background: rgba(74, 109, 167, 0.1);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.service-card-modern:hover .service-toggle {
-    background: rgba(74, 109, 167, 0.2);
-    transform: scale(1.1);
-}
-
-/* Add pulse animation for extra emphasis */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(46, 93, 59, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(46, 93, 59, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(46, 93, 59, 0);
-    }
-}
-
-/* Apply pulse to first unopened card in each section */
-.challenge-card:first-child:not(.active) .challenge-icon,
-.solution-card:first-child:not(.active) .solution-icon,
-.service-card-modern:first-child:not(.active) .service-icon {
-    animation: pulse 2s infinite;
-}
-
-/* Mobile improvements */
-@media (max-width: 768px) {
-    .challenge-header h3::after,
-    .solution-title h3::after,
-    .service-title-section h4::after {
-        content: 'Tap to expand';
-    }
-    
-    /* Larger touch targets on mobile */
-    .challenge-toggle,
-    .solution-toggle,
-    .service-toggle {
-        width: 44px;
-        height: 44px;
-    }
-}
-
-/* Add subtle entrance animation */
-.challenge-card:nth-child(2) { animation-delay: 0.1s; }
-.challenge-card:nth-child(3) { animation-delay: 0.2s; }
-.challenge-card:nth-child(4) { animation-delay: 0.3s; }
-
-.solution-card:nth-child(2) { animation-delay: 0.1s; }
-.solution-card:nth-child(3) { animation-delay: 0.2s; }
-.solution-card:nth-child(4) { animation-delay: 0.3s; }
-
-.service-card-modern:nth-child(2) { animation-delay: 0.1s; }
-.service-card-modern:nth-child(3) { animation-delay: 0.2s; }
-.service-card-modern:nth-child(4) { animation-delay: 0.3s; }
-        
     </style>
+    
 </head>
 <body>
     <!-- Navigation -->
