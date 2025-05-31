@@ -3264,45 +3264,7 @@ document.addEventListener('DOMContentLoaded', function() {
             firstService.classList.add('active');
         }
     }, 100);
-});
-    
-    // Enhanced navigation link handling
-    const navLinks = document.querySelectorAll('.nav-link');
-    if (navLinks && navLinks.length > 0) {
-        navLinks.forEach(link => {
-            if (!link) return;
-            
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (!targetId) return;
-                
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    const navHeight = 80;
-                    const buffer = 20;
-                    const targetTop = targetSection.offsetTop - navHeight - buffer;
-                    
-                    window.scrollTo({
-                        top: Math.max(0, targetTop),
-                        behavior: 'smooth'
-                    });
-                }
-                
-                // Close mobile menu if open
-                const hamburger = document.querySelector('.hamburger');
-                const navMenu = document.querySelector('.nav-menu');
-                const navOverlay = document.querySelector('.nav-overlay');
-                if (hamburger) hamburger.classList.remove('active');
-                if (navMenu) navMenu.classList.remove('active');
-                if (navOverlay) navOverlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
-    }
-});    
+});  
 </script>
 
 <!-- Replace the existing demo script section with this alternative version -->
