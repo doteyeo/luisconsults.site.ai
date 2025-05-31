@@ -1342,6 +1342,7 @@
         section {
             position: relative;
             padding: 1.5rem 0;
+            scroll-margin-top: 80px;
         }
 
         section::before {
@@ -1519,6 +1520,14 @@
             overflow: hidden;
         }
 
+        /* Ensure cards don't trigger scroll behavior */
+        .challenge-card,
+        .solution-card, 
+        .service-card-modern {
+            scroll-margin-top: 0 !important;
+            scroll-padding-top: 0 !important;
+        }
+    
         /* close all button */ 
     .demo-info-box {
         background: rgba(251, 211, 141, 0.2);
