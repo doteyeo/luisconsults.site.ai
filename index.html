@@ -3237,23 +3237,30 @@
         }
     }
     
-    // Initialize first cards as open on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        // Open first challenge by default
-        if (document.querySelectorAll('.challenge-card').length > 0) {
-            toggleChallenge(0);
+    // FIXED: Initialize first cards as open WITHOUT triggering scroll behavior
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for layout to stabilize before opening cards
+    setTimeout(() => {
+        // Open first challenge by default WITHOUT calling toggle function
+        const firstChallenge = document.querySelector('.challenge-card');
+        if (firstChallenge) {
+            firstChallenge.classList.add('active');
         }
         
-        // Open first solution by default
-        if (document.querySelectorAll('.solution-card').length > 0) {
-            toggleSolution(0);
+        // Open first solution by default WITHOUT calling toggle function
+        const firstSolution = document.querySelector('.solution-card');
+        if (firstSolution) {
+            firstSolution.classList.add('active');
         }
         
-        // Open first service by default
-        if (document.querySelectorAll('.service-card-modern').length > 0) {
-            toggleService(0);
+        // Open first service by default WITHOUT calling toggle function
+        const firstService = document.querySelector('.service-card-modern');
+        if (firstService) {
+            firstService.classList.add('active');
         }
-    });
+    }, 100); // Small delay to ensure layout is ready
+});
+    
 </script>
 
 <!-- Replace the existing demo script section with this alternative version -->
