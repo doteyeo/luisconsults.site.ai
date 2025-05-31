@@ -554,6 +554,7 @@
             padding: 1.5rem;
             position: relative;
             transition: background-color 0.3s ease;
+            z-index: 2;
         }
 
         .challenge-card:hover .challenge-header {
@@ -604,20 +605,18 @@
         }
         
         .challenge-content {
-            max-height: 0;
+            height: 0;
+            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            transition: none;
             padding: 0 1.5rem;
-            will-change: max-height;
-            /* Add these to prevent scroll behavior */
-            position: relative;
-            transform: translateZ(0); /* Force hardware acceleration */
         }
         
         .challenge-card.active .challenge-content {
-            max-height: 1500px;
+            height: auto;
+            opacity: 1;
             padding: 0 1.5rem 1.5rem;
-            overflow: visible; /* Allow content to be visible */
+            animation: slideDown 0.3s ease-out;
         }
         
         .challenge-card.active .challenge-toggle svg {
@@ -713,6 +712,8 @@
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .solution-card:hover .solution-header {
@@ -766,20 +767,18 @@
         }
         
         .solution-content {
-            max-height: 0;
+            height: 0;
+            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            transition: none;
             padding: 0 1.5rem;
-            will-change: max-height;
-            /* Add these to prevent scroll behavior */
-            position: relative;
-            transform: translateZ(0); /* Force hardware acceleration */  
         }
         
         .solution-card.active .solution-content {
-            max-height: 1500px;
+            height: auto;
+            opacity: 1;
             padding: 1.5rem;
-            overflow: visible;
+            animation: slideDown 0.3s ease-out;
         }
         
         .solution-card.active .solution-toggle svg {
@@ -1015,6 +1014,8 @@
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .service-card-modern:hover .service-header {
@@ -1078,20 +1079,18 @@
         }
         
         .service-content {
-            max-height: 0;
+            height: 0;
+            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            transition: none;
             padding: 0 1.5rem;
-            will-change: max-height;
-            /* Add these to prevent scroll behavior */
-            position: relative;
-            transform: translateZ(0); /* Force hardware acceleration */  
         }
         
         .service-card-modern.active .service-content {
-            max-height: 800px;
+            height: auto;
+            opacity: 1;
             padding: 1.5rem;
-            overflow: visible;
+            animation: slideDown 0.3s ease-out;
         }
         
         .service-card-modern.active .service-toggle svg {
@@ -2156,6 +2155,18 @@
        .service-card-modern:hover .service-icon {
            animation: none !important;
        }
+
+    /* Add this animation for smooth sliding */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
        /* Mobile adjustments - reduce pulse intensity */
        @media (max-width: 768px) {
