@@ -3227,10 +3227,19 @@
     </script>
 
     <script>
-// Card toggle functions - Simple version without any scrolling
-function toggleChallenge(index) {
+
+function toggleChallenge(index, event) {
+    // Prevent all default behaviors
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
     const card = document.querySelectorAll('.challenge-card')[index];
     if (!card) return;
+    
+    // Store current scroll position
+    const scrollPos = window.scrollY;
     
     const isActive = card.classList.contains('active');
     
@@ -3241,11 +3250,24 @@ function toggleChallenge(index) {
     if (!isActive) {
         card.classList.add('active');
     }
+    
+    // Restore scroll position to prevent any movement
+    window.scrollTo(0, scrollPos);
+    
+    return false;
 }
 
-function toggleSolution(index) {
+function toggleSolution(index, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
     const card = document.querySelectorAll('.solution-card')[index];
     if (!card) return;
+    
+    // Store current scroll position
+    const scrollPos = window.scrollY;
     
     const isActive = card.classList.contains('active');
     
@@ -3256,11 +3278,24 @@ function toggleSolution(index) {
     if (!isActive) {
         card.classList.add('active');
     }
+    
+    // Restore scroll position to prevent any movement
+    window.scrollTo(0, scrollPos);
+    
+    return false;
 }
 
-function toggleService(index) {
+function toggleService(index, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
     const card = document.querySelectorAll('.service-card-modern')[index];
     if (!card) return;
+    
+    // Store current scroll position
+    const scrollPos = window.scrollY;
     
     const isActive = card.classList.contains('active');
     
@@ -3271,16 +3306,90 @@ function toggleService(index) {
     if (!isActive) {
         card.classList.add('active');
     }
-}
-
-// Philosophy tab functionality (keep this as is)
-function switchPhilosophyTab(index) {
-    document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.philosophy-panel').forEach(panel => panel.classList.remove('active'));
     
-    document.querySelectorAll('.philosophy-tab-btn')[index].classList.add('active');
-    document.getElementById(`philosophy-panel-${index}`).classList.add('active');
+    // Restore scroll position to prevent any movement
+    window.scrollTo(0, scrollPos);
+    
+    return false;
 }
+        
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all card contents with proper height calculation
+    const initializeCards = () => {
+        // For each type of card
+        ['challenge-card', 'solution-card', 'service-card-modern'].forEach(cardClass => {
+            document.querySelectorAll(`.${cardClass}`).forEach(card => {
+                const content = card.querySelector(`.${cardClass.replace('-card', '-content').replace('-modern', '')}`);
+                if (content) {
+                    // Store the natural height
+                    content.style.height = 'auto';
+                    const height = content.scrollHeight;
+                    content.setAttribute('data-height', height);
+                    
+                    // Set initial state
+                    if (!card.classList.contains('active')) {
+                        content.style.height = '0px';
+                        content.style.opacity = '0';
+                        content.style.overflow = 'hidden';
+                    }
+                }
+            });
+        });
+    };
+    
+    // Run initialization
+    initializeCards();
+    
+    // Update toggle functions to use smooth height animation
+    window.toggleChallengeSmooth = function(index, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        
+        const card = document.querySelectorAll('.challenge-card')[index];
+        if (!card) return;
+        
+        const content = card.querySelector('.challenge-content');
+        const isActive = card.classList.contains('active');
+        
+        // Close all other cards smoothly
+        document.querySelectorAll('.challenge-card').forEach((c, i) => {
+            if (i !== index) {
+                const otherContent = c.querySelector('.challenge-content');
+                c.classList.remove('active');
+                if (otherContent) {
+                    otherContent.style.height = '0px';
+                    otherContent.style.opacity = '0';
+                }
+            }
+        });
+        
+        // Toggle current card
+        if (!isActive) {
+            card.classList.add('active');
+            const height = content.getAttribute('data-height');
+            content.style.height = height + 'px';
+            content.style.opacity = '1';
+        } else {
+            card.classList.remove('active');
+            content.style.height = '0px';
+            content.style.opacity = '0';
+        }
+        
+        return false;
+    };
+    
+    // Similar functions for solution and service cards...
+});        
+    // Philosophy tab functionality (keep this as is)
+    function switchPhilosophyTab(index) {
+        document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.philosophy-panel').forEach(panel => panel.classList.remove('active'));
+        
+        document.querySelectorAll('.philosophy-tab-btn')[index].classList.add('active');
+        document.getElementById(`philosophy-panel-${index}`).classList.add('active');
+    }
 </script>
 
 <!-- Replace the existing demo script section with this alternative version -->
