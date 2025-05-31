@@ -487,7 +487,8 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
-            scroll-margin-top: 100px; /* Accounts for fixed navbar */
+            scroll-behavior: auto !important;
+            overflow-anchor: none !important;
         }
         
         .challenge-card:hover {
@@ -607,17 +608,25 @@
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
             padding: 0 1.5rem;
-            will-change: max-height; /* Optimizes animation performance */
+            will-change: max-height;
+            /* Add these to prevent scroll behavior */
+            position: relative;
+            transform: translateZ(0); /* Force hardware acceleration */
         }
         
         .challenge-card.active .challenge-content {
-            max-height: 1500px; /* Increased from 1000px for longer content */
+            max-height: 1500px;
             padding: 0 1.5rem 1.5rem;
+            overflow: visible; /* Allow content to be visible */
         }
         
         .challenge-card.active .challenge-toggle svg {
             transform: rotate(180deg);
         }
+
+        .challenge-card:focus, {
+            outline: none;
+}
         
         /* Solutions Grid */
         .solutions-grid {
@@ -637,7 +646,8 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
-            scroll-margin-top: 100px; /* Accounts for fixed navbar */
+            scroll-behavior: auto !important;
+            overflow-anchor: none !important;
         }
         
         .solution-card:hover {
@@ -760,16 +770,24 @@
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
             padding: 0 1.5rem;
-            will-change: max-height; /* Optimizes animation performance */
+            will-change: max-height;
+            /* Add these to prevent scroll behavior */
+            position: relative;
+            transform: translateZ(0); /* Force hardware acceleration */  
         }
         
         .solution-card.active .solution-content {
             max-height: 1500px;
             padding: 1.5rem;
+            overflow: visible;
         }
         
         .solution-card.active .solution-toggle svg {
             transform: rotate(180deg);
+        }
+
+        .solution-card:focus {
+            outline: none;
         }
         
         /* Philosophy Tabs */
@@ -926,7 +944,12 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
-            scroll-margin-top: 100px; /* Accounts for fixed navbar */
+            scroll-behavior: auto !important;
+            overflow-anchor: none !important;
+        }
+
+        .service-card-modern:focus {
+            outline: none;
         }
         
         .service-card-modern:hover {
@@ -1059,12 +1082,16 @@
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
             padding: 0 1.5rem;
-            will-change: max-height; /* Optimizes animation performance */
+            will-change: max-height;
+            /* Add these to prevent scroll behavior */
+            position: relative;
+            transform: translateZ(0); /* Force hardware acceleration */  
         }
         
         .service-card-modern.active .service-content {
             max-height: 800px;
             padding: 1.5rem;
+            overflow: visible;
         }
         
         .service-card-modern.active .service-toggle svg {
