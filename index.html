@@ -1415,8 +1415,8 @@
             position: fixed;
             bottom: 20px; /* Match chatbot position - was 2rem */
             left: 20px;   /* Match chatbot distance from edge */
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: var(--primary-gradient);
             color: white;
             border-radius: 50%;
@@ -2173,19 +2173,29 @@
             }
         }
     
-        /* Mobile adjustments to keep alignment */
+        /* Update the mobile back-to-top section */
         @media (max-width: 768px) {
             .back-to-top {
-                width: 56px !important;
-                height: 56px !important;
-                bottom: 20px !important; /* Keep same as desktop */
-                left: 20px !important;   /* Keep same as desktop */
-                font-size: 1.75rem !important;
+                width: 48px !important;   /* Match chatbot size - was 56px */
+                height: 48px !important;  /* Match chatbot size - was 56px */
+                bottom: 20px !important;  /* Same height as chatbot */
+                left: 20px !important;    /* Same distance from edge */
+                font-size: 1.5rem !important; /* Slightly smaller font - was 1.75rem */
                 -webkit-tap-highlight-color: transparent !important;
+                transition: all 0.2s ease !important;
             }
         
             .back-to-top:active {
                 transform: scale(1.1) !important;
+            }
+        }
+        
+        /* For very small screens (480px) - keep them the same size */
+        @media (max-width: 480px) {
+            .back-to-top {
+                width: 48px !important;   /* Keep same as chatbot */
+                height: 48px !important;  /* Keep same as chatbot */
+                font-size: 1.4rem !important; /* Slightly smaller for small screens */
             }
         }
     
