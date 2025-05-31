@@ -1411,12 +1411,12 @@
         }
         
         /* Back to top button */
-        .back-to-top {
+       .back-to-top-exact-match {
             position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            width: 50px;
-            height: 50px;
+            bottom: 20px;  /* Chatbot uses: right: 20, bottom: 20 */
+            left: 20px;
+            width: 48px;   /* Match chatbot size */
+            height: 48px;  /* Match chatbot size */
             background: var(--primary-gradient);
             color: white;
             border-radius: 50%;
@@ -2170,6 +2170,22 @@
             .back-to-top.visible,
             .nav-logo {
                 animation: none !important;
+            }
+        }
+    
+        /* Mobile adjustments to keep alignment */
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 56px !important;
+                height: 56px !important;
+                bottom: 20px !important; /* Keep same as desktop */
+                left: 20px !important;   /* Keep same as desktop */
+                font-size: 1.75rem !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+        
+            .back-to-top:active {
+                transform: scale(1.1) !important;
             }
         }
     
