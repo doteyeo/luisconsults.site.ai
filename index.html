@@ -3234,10 +3234,11 @@ function toggleChallenge(index) {
 }
 
 // Solution card toggle functionality with proper scroll positioning
-// Challenge card toggle functionality with proper scroll positioning
+
+// Challenge card toggle functionality with corrected scroll behavior
 function toggleChallenge(index) {
     const card = document.querySelectorAll('.challenge-card')[index];
-    if (!card) return; // Safety check
+    if (!card) return;
     
     const isActive = card.classList.contains('active');
     
@@ -3248,46 +3249,84 @@ function toggleChallenge(index) {
     if (!isActive) {
         card.classList.add('active');
         
-        // Smart scroll behavior - only scroll if needed and safe to do so
+        // Only scroll if user is not near the top AND card is not visible
         setTimeout(() => {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const cardRect = card.getBoundingClientRect();
-            const cardTop = cardRect.top + currentScrollTop;
-            const navHeight = 80; // Height of fixed navigation
-            const buffer = 30; // Extra space below navigation for comfort
-            const viewportHeight = window.innerHeight;
+            const navHeight = 80;
+            const buffer = 20;
             
-            // Only scroll if:
-            // 1. Card top is not visible (above viewport) OR card is too far down
-            // 2. We have a valid card position
-            // 3. User is not at the very top of the page
-            const isCardAboveView = cardRect.top < navHeight + buffer;
-            const isCardBelowView = cardRect.top > viewportHeight * 0.8;
-            const hasValidPosition = cardTop > navHeight + buffer;
-            const isNotAtPageTop = currentScrollTop > 300; // Don't scroll if we're near the top
+            // Don't scroll if user is near the top of the page
+            if (currentScrollTop < 300) return;
             
-            // Only scroll if the card header is not properly visible
-            if ((isCardAboveView || isCardBelowView) && hasValidPosition && isNotAtPageTop) {
-                // Calculate target scroll position: card top minus nav height minus buffer
-                const targetScrollTop = cardTop - navHeight - buffer;
+            // Only scroll if card header is hidden by nav or too far down
+            const cardTopHidden = cardRect.top < navHeight + buffer;
+            const cardTooFarDown = cardRect.top > window.innerHeight * 0.75;
+            
+            if (cardTopHidden || cardTooFarDown) {
+                const cardAbsoluteTop = cardRect.top + currentScrollTop;
+                const targetPosition = cardAbsoluteTop - navHeight - buffer;
                 
-                // Safety: ensure we don't scroll to a negative position or too close to top
-                const finalScrollTop = Math.max(200, targetScrollTop);
+                // Ensure we don't scroll too high
+                const finalPosition = Math.max(300, targetPosition);
                 
                 window.scrollTo({
-                    top: finalScrollTop,
+                    top: finalPosition,
                     behavior: 'smooth'
                 });
             }
-        }, 200); // Longer delay to ensure card expansion is complete
+        }, 250);
     }
 }
 
+// Solution card toggle functionality with corrected scroll behavior
+function toggleSolution(index) {
+    const card = document.querySelectorAll('.solution-card')[index];
+    if (!card) return;
+    
+    const isActive = card.classList.contains('active');
+    
+    // Close all solution cards
+    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
+    
+    // If it wasn't active, open it
+    if (!isActive) {
+        card.classList.add('active');
+        
+        // Only scroll if user is not near the top AND card is not visible
+        setTimeout(() => {
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const cardRect = card.getBoundingClientRect();
+            const navHeight = 80;
+            const buffer = 20;
+            
+            // Don't scroll if user is near the top of the page
+            if (currentScrollTop < 300) return;
+            
+            // Only scroll if card header is hidden by nav or too far down
+            const cardTopHidden = cardRect.top < navHeight + buffer;
+            const cardTooFarDown = cardRect.top > window.innerHeight * 0.75;
+            
+            if (cardTopHidden || cardTooFarDown) {
+                const cardAbsoluteTop = cardRect.top + currentScrollTop;
+                const targetPosition = cardAbsoluteTop - navHeight - buffer;
+                
+                // Ensure we don't scroll too high
+                const finalPosition = Math.max(300, targetPosition);
+                
+                window.scrollTo({
+                    top: finalPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }, 250);
+    }
+}
 
-// Service card toggle functionality with proper scroll positioning
+// Service card toggle functionality with corrected scroll behavior
 function toggleService(index) {
     const card = document.querySelectorAll('.service-card-modern')[index];
-    if (!card) return; // Safety check
+    if (!card) return;
     
     const isActive = card.classList.contains('active');
     
@@ -3298,33 +3337,37 @@ function toggleService(index) {
     if (!isActive) {
         card.classList.add('active');
         
+        // Only scroll if user is not near the top AND card is not visible
         setTimeout(() => {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const cardRect = card.getBoundingClientRect();
-            const cardTop = cardRect.top + currentScrollTop;
             const navHeight = 80;
-            const buffer = 30;
-            const viewportHeight = window.innerHeight;
+            const buffer = 20;
             
-            const isCardAboveView = cardRect.top < navHeight + buffer;
-            const isCardBelowView = cardRect.top > viewportHeight * 0.8;
-            const hasValidPosition = cardTop > navHeight + buffer;
-            const isNotAtPageTop = currentScrollTop > 300;
+            // Don't scroll if user is near the top of the page
+            if (currentScrollTop < 300) return;
             
-            if ((isCardAboveView || isCardBelowView) && hasValidPosition && isNotAtPageTop) {
-                const targetScrollTop = cardTop - navHeight - buffer;
-                const finalScrollTop = Math.max(200, targetScrollTop);
+            // Only scroll if card header is hidden by nav or too far down
+            const cardTopHidden = cardRect.top < navHeight + buffer;
+            const cardTooFarDown = cardRect.top > window.innerHeight * 0.75;
+            
+            if (cardTopHidden || cardTooFarDown) {
+                const cardAbsoluteTop = cardRect.top + currentScrollTop;
+                const targetPosition = cardAbsoluteTop - navHeight - buffer;
+                
+                // Ensure we don't scroll too high
+                const finalPosition = Math.max(300, targetPosition);
                 
                 window.scrollTo({
-                    top: finalScrollTop,
+                    top: finalPosition,
                     behavior: 'smooth'
                 });
             }
-        }, 200);
+        }, 250);
     }
 }
 
-// Philosophy tab functionality (no changes needed - doesn't scroll)
+// Philosophy tab functionality (no scrolling)
 function switchPhilosophyTab(index) {
     // Remove active class from all tabs and panels
     document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -3356,7 +3399,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (firstService) {
             firstService.classList.add('active');
         }
-    }, 100); // Small delay to ensure layout is ready
+    }, 100);
+});
     
     // Enhanced navigation link handling
     const navLinks = document.querySelectorAll('.nav-link');
