@@ -3367,34 +3367,22 @@ function toggleSolution(index) {
     }
 }
     
-    // Alternative approach: Prevent default click behavior and use event delegation
-document.addEventListener('DOMContentLoaded', function() {
-    // For challenge cards
-    document.querySelectorAll('.challenge-card').forEach((card, index) => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleChallenge(index);
-        });
-    });
-    
-    // For solution cards
-    document.querySelectorAll('.solution-card').forEach((card, index) => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleSolution(index);
-        });
-    });
-    
-    // For service cards
-    document.querySelectorAll('.service-card-modern').forEach((card, index) => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleService(index);
-        });
-    });
+     // Initialize first cards as open on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Open first challenge by default
+        if (document.querySelectorAll('.challenge-card').length > 0) {
+            toggleChallenge(0);
+        }
+        
+        // Open first solution by default
+        if (document.querySelectorAll('.solution-card').length > 0) {
+            toggleSolution(0);
+        }
+        
+        // Open first service by default
+        if (document.querySelectorAll('.service-card-modern').length > 0) {
+            toggleService(0);
+        }
 });
 </script>
 
