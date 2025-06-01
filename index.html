@@ -1541,62 +1541,84 @@
         font-size: 0.95rem;
     }
     
-    /* Demo section specific buttons */
-    #demos .cta-button {
-        background: var(--primary);
-        color: white;
-        border: none;
-        width: 100%;
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-    }
+/* Demo section specific buttons - each with unique color matching their badges */
+#demos .cta-button {
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+}
 
-    /* View Demo Guide button specific styling */
-    #demos a.cta-button[target="_blank"] {
-        background: var(--secondary);
-        color: white;
-        display: inline-block;
-        padding: 0.75rem 1.5rem;
-        font-size: 0.95rem;
-        width: auto;
-    }
-    
-    /* Hover effect for demo buttons */
-    #demos .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(46, 93, 59, 0.3);
-        background: var(--primary);
-        filter: brightness(1.1);
-    }
+/* Financial Intelligence Demo button - Green to match badge */
+#demos .card:nth-child(1) .cta-button {
+    background: #2e5d3b; /* Primary green */
+}
 
-    /* Hover effect for View Demo Guide button */
-    #demos a.cta-button[target="_blank"]:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(74, 109, 167, 0.3);
-        background: var(--secondary);
-        filter: brightness(1.1);
-    }
-    
-    /* Close demos button */
-    .close-demos-btn {
-        background: #e53e3e;
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top: 1rem;
-        display: inline-block;
-    }
-    
-    .close-demos-btn:hover {
-        background: #dc2626;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
-    }
-        
+#demos .card:nth-child(1) .cta-button:hover {
+    background: #4a8e5b;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(46, 93, 59, 0.3);
+}
+
+/* Knowledge Management Demo button - Blue to match badge */
+#demos .card:nth-child(2) .cta-button {
+    background: #4a6da7; /* Secondary blue */
+}
+
+#demos .card:nth-child(2) .cta-button:hover {
+    background: #5e81c5;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(74, 109, 167, 0.3);
+}
+
+/* Impact Storytelling Demo button - Light blue to match badge */
+#demos .card:nth-child(3) .cta-button {
+    background: #65a6d1; /* Accent blue */
+}
+
+#demos .card:nth-child(3) .cta-button:hover {
+    background: #7db8dd;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(101, 166, 209, 0.3);
+}
+
+/* View Demo Guide button specific styling */
+#demos a.cta-button[target="_blank"] {
+    background: var(--secondary);
+    color: white;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    width: auto;
+}
+
+/* Close demos button */
+.close-demos-btn {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.close-demos-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+}
+
+/* Hover effects for all CTA buttons */
+.cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+       
     .tip-box {
         background: rgba(255, 255, 255, 0.85);
         border-radius: 16px;
