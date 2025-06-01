@@ -341,6 +341,14 @@
             text-align: center;
         }
 
+        /* Ensure gradient text works in hero */
+        .hero .gradient-text {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+    }
+
         .cta-button {
             display: inline-block;
             background-color: var(--white);
@@ -496,6 +504,7 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
+            z-index: 1;
         }
         
         .challenge-card:hover {
@@ -581,6 +590,18 @@
             transition: transform 0.3s ease;
         }
 
+        .challenge-card .challenge-icon svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            stroke: currentColor !important;
+            fill: none !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            pointer-events: none !important;
+        }
+
         .challenge-card:hover .challenge-icon {
             transform: scale(1.1);
         }
@@ -603,6 +624,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .challenge-card .challenge-toggle svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            stroke: currentColor !important;
+            fill: none !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            pointer-events: none !important;
         }
 
         .challenge-card:hover .challenge-toggle {
@@ -644,6 +677,7 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
+            z-index: 1;
         }
         
         .solution-card:hover {
@@ -729,6 +763,18 @@
             transition: transform 0.3s ease;
         }
 
+        .solution-card .solution-icon svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            stroke: currentColor !important;
+            fill: none !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            pointer-events: none !important;
+        }
+
         .solution-card:hover .solution-icon {
             transform: scale(1.1);
         }
@@ -754,6 +800,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .solution-card .solution-toggle svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            stroke: currentColor !important;
+            fill: none !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            pointer-events: none !important;
         }
 
         .solution-card:hover .solution-toggle {
@@ -789,12 +847,13 @@
             margin-bottom: 2rem;
         }
         
+        /* Ensure philosophy tabs work properly with 5 tabs */
         .philosophy-nav {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(5, 1fr); /* Updated from auto-fit to accommodate 5 tabs */
             border-bottom: 2px solid rgba(0,0,0,0.1);
-            gap: 1px; /* Add small gap between tabs */
-            background: rgba(0,0,0,0.05); /* Background shows through gaps */
+            gap: 1px;
+            background: rgba(0,0,0,0.05);
         }
         
         .philosophy-tab-btn {
@@ -847,13 +906,20 @@
             background: rgba(255, 255, 255, 0.3);
         }
         
+        /* Philosophy tab icons */
         .philosophy-tab-btn svg {
-            margin-right: 0.75rem;
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s ease;
+            display: inline-block !important;
+            width: 18px !important;
+            height: 18px !important;
+            fill: none !important;
+            stroke: currentColor !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            margin-right: 0.75rem !important;
+            transition: transform 0.3s ease !important;
         }
-
+    
         .philosophy-tab-btn:hover svg {
             transform: scale(1.1);
         }
@@ -903,6 +969,18 @@
             justify-content: center;
             margin-right: 1rem;
             flex-shrink: 0;
+        }
+
+            /* Philosophy feature icons */
+        .philosophy-feature .feature-icon svg {
+            display: inline-block !important;
+            width: 100% !important;
+            height: 100% !important;
+            fill: none !important;
+            stroke: currentColor !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
         }
         
         .philosophy-feature h4 {
@@ -2056,11 +2134,11 @@
             stroke: none !important;
         }
 
-       /* Enhanced mobile styling for philosophy tabs */
+       /* Mobile adjustments for 5 philosophy tabs */
 @media (max-width: 768px) {
     .philosophy-nav {
-        grid-template-columns: 1fr 1fr; /* Two columns on mobile */
-        gap: 2px; /* Slightly larger gap on mobile */
+        grid-template-columns: 1fr 1fr 1fr; /* 3 columns on mobile */
+        gap: 2px;
     }
     
     .philosophy-tab-btn {
@@ -2081,6 +2159,17 @@
         margin-right: 0 !important; /* Remove right margin when stacked */
         margin-bottom: 0.25rem;
     }
+
+    /* Stack the last two tabs on a new row */
+    .philosophy-tab-btn:nth-child(4),
+    .philosophy-tab-btn:nth-child(5) {
+        grid-column: span 1;
+    }
+
+     /* Center the last tab if it's alone on the row */
+    .philosophy-tab-btn:nth-child(5) {
+        grid-column: 2 / 3;
+    }
     
     /* Enhanced active state for mobile */
     .philosophy-tab-btn.active {
@@ -2098,7 +2187,7 @@
     }
 }
 
-/* Extra small screens - single column */
+/* Extra small screens - stack vertically */
 @media (max-width: 480px) {
     .philosophy-nav {
         grid-template-columns: 1fr; /* Single column on very small screens */
@@ -2115,6 +2204,11 @@
     .philosophy-tab-btn svg {
         margin-right: 0.75rem !important;
         margin-bottom: 0 !important;
+    }
+
+    .philosophy-tab-btn:nth-child(4),
+    .philosophy-tab-btn:nth-child(5) {
+        grid-column: span 1;
     }
 }
 
@@ -2375,7 +2469,7 @@
     
     <a class="back-to-top">↑</a>
 
-    <!-- Hero Section -->
+    <!-- CORRECTED HERO SECTION - Replace existing hero content -->
     <section class="hero" id="home">
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
@@ -2385,13 +2479,13 @@
         <div class="container">
             <div class="hero-content">
                 <div class="highlight-badge">Movement-Aligned AI Solutions</div>
-                <h1>Transform Your Mission with Human-AI Partnerships</h1>
-                <p>Where movement values meet intelligent technology—creating systems that amplify your impact without compromising your principles</p>
-                <a href="#contact" class="cta-button">Plug in Now</a>
+                <h1>Unleash Your Organization's <span class="gradient-text">Collective Intelligence</span></h1>
+                <p>Where every voice becomes strategic, every insight drives action, and AI amplifies human wisdom instead of replacing it—creating systems that democratize decision-making while advancing justice</p>
+                <a href="#contact" class="cta-button">Amplify Your Team's Impact</a>
             </div>
         </div>
     </section>
-
+    
     <!-- Pain Points Section -->
     <section id="pain-points" class="section-gradient-1">
         <div class="decorative-line"></div>
@@ -2484,6 +2578,29 @@
                         <blockquote>"Our donor management system and our community organizing database might as well be on different planets. We're missing so many opportunities to deepen relationships because our systems don't support an integrated approach." – Almost all Development Directors</blockquote>
                     </div>
                 </div>
+
+                    <!-- CORRECTED CHALLENGE CARD - Add to existing challenges grid -->
+                <div class="challenge-card animate-fade-in-up" onclick="toggleChallenge(4)" style="animation-delay: 0.8s;">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                        <h3>When brilliant ideas get lost in organizational hierarchies</h3>
+                        <div class="challenge-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <p>Your newest community organizer has insights that could transform your campaign strategy, but they struggle to articulate complex ideas in board-ready language. Your finance coordinator sees patterns in the data that could inform program decisions, but feels intimidated speaking up in strategic planning meetings dominated by senior staff.</p>
+                        <p>Meanwhile, leadership makes critical decisions with incomplete information because the people closest to the work—those building relationships daily with community members—don't have accessible pathways to contribute their expertise to organizational strategy.</p>
+                        <blockquote>"Our best ideas often come from our newest staff members, but our systems aren't designed to capture and elevate those insights. We're leaving so much collective wisdom on the table." – Executive Directors everywhere</blockquote>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -2628,6 +2745,38 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- CORRECTED SOLUTION CARD - Add to existing solutions grid -->
+                <div class="solution-card animate-fade-in-up" onclick="toggleSolution(4)" style="animation-delay: 0.8s;">
+                    <div class="solution-header">
+                        <div class="solution-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="solution-title">
+                            <h3>Staff Empowerment & Cross-Functional Collaboration</h3>
+                        </div>
+                        <div class="solution-toggle">
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="solution-content">
+                        <p>Imagine Carlos, a community organizer with two years of experience who notices patterns in tenant complaints that could inform policy advocacy. Previously, he'd struggle to present these insights in language that resonates with the policy team. Now, with AI as his thinking partner, Carlos can articulate his observations clearly and contribute strategic recommendations that draw from his deep community relationships.</p>
+                        <p>Meanwhile, Maria from finance uses AI assistance to translate budget constraints into program-friendly language, enabling her to participate meaningfully in program design conversations. The AI doesn't replace their expertise—it amplifies their voices and creates bridges between different kinds of knowledge within your organization.</p>
+                        <p>This approach transforms organizational dynamics by creating what I call "intelligence amplification"—where every staff member, regardless of position or communication style, can contribute their full potential to collective strategy and decision-making.</p>
+                        <div class="benefits">
+                            <p><strong>Key Benefits:</strong></p>
+                            <p>• <strong>Democratized Strategic Participation:</strong> Every team member can contribute to high-level planning and decision-making</p>
+                            <p>• <strong>Cross-Functional Bridge Building:</strong> AI helps translate between different areas of expertise within your organization</p>
+                            <p>• <strong>Idea Elevation:</strong> Transform nascent insights from any staff level into actionable strategic recommendations</p>
+                            <p>• <strong>Confidence Building:</strong> Staff feel empowered to contribute beyond their traditional roles with AI as a thinking partner</p>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -2826,6 +2975,60 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- CORRECTED PHILOSOPHY PANEL - Add to existing philosophy content -->
+                    <div class="philosophy-panel" id="philosophy-panel-4">
+                        <h3>Flattening Hierarchies Through Intelligent Collaboration</h3>
+                        <p>The most transformative potential of Human-AI Partnership lies not in efficiency gains, but in democratizing strategic thinking across your entire organization. When every staff member—from newest organizers to senior leadership—can articulate their insights clearly and contribute to collective decision-making, we unlock the full intellectual capacity of movement organizations.</p>
+                        
+                        <div class="philosophy-features">
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Voice Amplification</h4>
+                                    <p>AI helps every staff member translate their expertise into language that resonates across departments and hierarchical levels</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Cross-Functional Collaboration</h4>
+                                    <p>Break down silos by enabling meaningful participation in discussions outside traditional role boundaries</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Idea Innovation Pathways</h4>
+                                    <p>Transform brilliant observations into actionable strategies, regardless of who generates them</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-feature">
+                                <div class="feature-icon">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Collective Intelligence</h4>
+                                    <p>Harness the full strategic capacity of your organization by removing communication and confidence barriers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             
@@ -3285,106 +3488,96 @@
         });
     </script>
 
-<!-- Challenge/Solution Toggle Functions -->
-<script>
- // Enhanced toggle functions that prevent scroll jumping
-function toggleChallenge(index) {
-    const card = document.querySelectorAll('.challenge-card')[index];
-    const isActive = card.classList.contains('active');
-    
-    // Store current scroll position
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Close all challenge cards
-    document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
-    
-    // If it wasn't active, open it
-    if (!isActive) {
-        card.classList.add('active');
+    <!-- CORRECTED JAVASCRIPT ADDITIONS - Add to existing script section -->
+    <script>
+    // Update the existing toggle functions to handle the new cards
+    function toggleChallenge(index) {
+        const card = document.querySelectorAll('.challenge-card')[index];
+        if (!card) return; // Safety check
         
-        // Restore scroll position after DOM update
-        requestAnimationFrame(() => {
-            window.scrollTo({
-                top: scrollPosition,
-                behavior: 'instant'
-            });
-        });
-    }
-}
-
-function toggleSolution(index) {
-    const card = document.querySelectorAll('.solution-card')[index];
-    const isActive = card.classList.contains('active');
-    
-    // Store current scroll position
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-    
-    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
-    
-    if (!isActive) {
-        card.classList.add('active');
+        const isActive = card.classList.contains('active');
         
-        // Restore scroll position after DOM update
-        requestAnimationFrame(() => {
-            window.scrollTo({
-                top: scrollPosition,
-                behavior: 'instant'
+        // Store current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Close all challenge cards
+        document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
+        
+        // If it wasn't active, open it
+        if (!isActive) {
+            card.classList.add('active');
+            
+            // Restore scroll position after DOM update
+            requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'instant'
+                });
             });
-        });
+        }
     }
-}
     
-    // Philosophy tab functionality
+    function toggleSolution(index) {
+        const card = document.querySelectorAll('.solution-card')[index];
+        if (!card) return; // Safety check
+        
+        const isActive = card.classList.contains('active');
+        
+        // Store current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
+        
+        if (!isActive) {
+            card.classList.add('active');
+            
+            // Restore scroll position after DOM update
+            requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'instant'
+                });
+            });
+        }
+    }
+    
+    // Update philosophy tab function to handle 5 tabs (0-4)
     function switchPhilosophyTab(index) {
         // Remove active class from all tabs and panels
         document.querySelectorAll('.philosophy-tab-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelectorAll('.philosophy-panel').forEach(panel => panel.classList.remove('active'));
         
         // Add active class to selected tab and panel
-        document.querySelectorAll('.philosophy-tab-btn')[index].classList.add('active');
-        document.getElementById(`philosophy-panel-${index}`).classList.add('active');
-    }
-    
-    function toggleService(index) {
-    const card = document.querySelectorAll('.service-card-modern')[index];
-    const isActive = card.classList.contains('active');
-    
-    // Store current scroll position
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-    
-    document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
-    
-    if (!isActive) {
-        card.classList.add('active');
+        const selectedBtn = document.querySelectorAll('.philosophy-tab-btn')[index];
+        const selectedPanel = document.getElementById(`philosophy-panel-${index}`);
         
-        // Restore scroll position after DOM update
-        requestAnimationFrame(() => {
-            window.scrollTo({
-                top: scrollPosition,
-                behavior: 'instant'
-            });
-        });
+        if (selectedBtn && selectedPanel) {
+            selectedBtn.classList.add('active');
+            selectedPanel.classList.add('active');
+        }
     }
-}
     
-     // Initialize first cards as open on page load
+    // Update the initialization to handle new cards properly
     document.addEventListener('DOMContentLoaded', function() {
-        // Open first challenge by default
-        if (document.querySelectorAll('.challenge-card').length > 0) {
+        // Open first challenge by default (only if cards exist)
+        const challengeCards = document.querySelectorAll('.challenge-card');
+        if (challengeCards.length > 0) {
             toggleChallenge(0);
         }
         
-        // Open first solution by default
-        if (document.querySelectorAll('.solution-card').length > 0) {
+        // Open first solution by default (only if cards exist)
+        const solutionCards = document.querySelectorAll('.solution-card');
+        if (solutionCards.length > 0) {
             toggleSolution(0);
         }
         
-        // Open first service by default
-        if (document.querySelectorAll('.service-card-modern').length > 0) {
+        // Open first service by default (only if cards exist)
+        const serviceCards = document.querySelectorAll('.service-card-modern');
+        if (serviceCards.length > 0) {
             toggleService(0);
         }
-});
-</script>
+    });
+    </script>
 
 <!-- Replace the existing demo script section with this alternative version -->
 <script>
