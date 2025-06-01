@@ -784,7 +784,9 @@
         .philosophy-nav {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            gap: 1px; /* Add small gap between tabs */
+            background: rgba(0,0,0,0.05); /* Background shows through gaps */
         }
         
         .philosophy-tab-btn {
@@ -793,13 +795,13 @@
             justify-content: center;
             padding: 1rem;
             border: none;
-            background: transparent;
+            background: white; /* Solid background for each tab */
             color: var(--text-dark);
             font-weight: 500;
             cursor: pointer;
             transition: all var(--transition-fast);
-            border-right: 1px solid rgba(0,0,0,0.1);
             position: relative;
+            border-radius: 0; /* Remove border radius for cleaner separation */
         }
         
         .philosophy-tab-btn:last-child {
@@ -1963,26 +1965,67 @@
             stroke: none !important;
         }
 
-        /* FIXED: Mobile Philosophy Tab Layout */
-        @media (max-width: 768px) {
-            .philosophy-tab-btn {
-                min-height: 60px !important;
-                padding: 1rem 0.75rem !important;
-                font-size: 0.9rem !important;
-                -webkit-tap-highlight-color: rgba(46, 93, 59, 0.1) !important;
-            }
+       /* Enhanced mobile styling for philosophy tabs */
+@media (max-width: 768px) {
+    .philosophy-nav {
+        grid-template-columns: 1fr 1fr; /* Two columns on mobile */
+        gap: 2px; /* Slightly larger gap on mobile */
+    }
+    
+    .philosophy-tab-btn {
+        min-height: 70px !important; /* Increased height for better touch targets */
+        padding: 1rem 0.75rem !important;
+        font-size: 0.9rem !important;
+        flex-direction: column; /* Stack icon and text vertically */
+        gap: 0.25rem;
+        border-radius: 4px; /* Add slight radius on mobile for modern look */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow for separation */
+        margin: 1px; /* Small margin for visual separation */
+        background: white;
+    }
 
-            .philosophy-tab-btn svg {
-                width: 16px !important;
-                height: 16px !important;
-                margin-right: 0.5rem !important;
-            }
+    .philosophy-tab-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 0 !important; /* Remove right margin when stacked */
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Enhanced active state for mobile */
+    .philosophy-tab-btn.active {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* Better hover states for mobile */
+    .philosophy-tab-btn:not(.active):hover {
+        background: rgba(46, 93, 59, 0.05);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+}
 
-            .philosophy-tab-btn:active {
-                background: rgba(46, 93, 59, 0.1) !important;
-                transform: translateY(-2px) !important;
-            }
-        }
+/* Extra small screens - single column */
+@media (max-width: 480px) {
+    .philosophy-nav {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+        gap: 2px;
+    }
+    
+    .philosophy-tab-btn {
+        min-height: 60px !important;
+        flex-direction: row !important; /* Back to horizontal on single column */
+        justify-content: flex-start !important;
+        padding-left: 1.5rem !important;
+    }
+    
+    .philosophy-tab-btn svg {
+        margin-right: 0.75rem !important;
+        margin-bottom: 0 !important;
+    }
+}
 
     /* PULSING ICON EFFECTS - Add to existing CSS */
         
@@ -3143,33 +3186,53 @@
 
 <!-- Challenge/Solution Toggle Functions -->
 <script>
-    // Challenge card toggle functionality
-    function toggleChallenge(index) {
-        const card = document.querySelectorAll('.challenge-card')[index];
-        const isActive = card.classList.contains('active');
-        
-        // Close all challenge cards
-        document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
-        
-        // If it wasn't active, open it
-        if (!isActive) {
-            card.classList.add('active');
-        }
-    }
+  // Enhanced toggle functions with better scroll behavior
+function toggleChallenge(index) {
+    const card = document.querySelectorAll('.challenge-card')[index];
+    const isActive = card.classList.contains('active');
     
-    // Solution card toggle functionality
-    function toggleSolution(index) {
-        const card = document.querySelectorAll('.solution-card')[index];
-        const isActive = card.classList.contains('active');
+    // Close all challenge cards
+    document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
+    
+    // If it wasn't active, open it
+    if (!isActive) {
+        card.classList.add('active');
         
-        // Close all solution cards
-        document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
-        
-        // If it wasn't active, open it
-        if (!isActive) {
-            card.classList.add('active');
-        }
+        // Smooth scroll to keep the card header visible
+        setTimeout(() => {
+            const cardTop = card.offsetTop;
+            const navHeight = 80; // Height of your fixed nav
+            const buffer = 20; // Extra space from top
+            
+            window.scrollTo({
+                top: cardTop - navHeight - buffer,
+                behavior: 'smooth'
+            });
+        }, 100); // Small delay to allow expansion to start
     }
+}
+
+function toggleSolution(index) {
+    const card = document.querySelectorAll('.solution-card')[index];
+    const isActive = card.classList.contains('active');
+    
+    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
+    
+    if (!isActive) {
+        card.classList.add('active');
+        
+        setTimeout(() => {
+            const cardTop = card.offsetTop;
+            const navHeight = 80;
+            const buffer = 20;
+            
+            window.scrollTo({
+                top: cardTop - navHeight - buffer,
+                behavior: 'smooth'
+            });
+        }, 100);
+    }
+}
     
     // Philosophy tab functionality
     function switchPhilosophyTab(index) {
@@ -3184,17 +3247,26 @@
     
     // Service card toggle functionality
     function toggleService(index) {
-        const card = document.querySelectorAll('.service-card-modern')[index];
-        const isActive = card.classList.contains('active');
+    const card = document.querySelectorAll('.service-card-modern')[index];
+    const isActive = card.classList.contains('active');
+    
+    document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
+    
+    if (!isActive) {
+        card.classList.add('active');
         
-        // Close all service cards
-        document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
-        
-        // If it wasn't active, open it
-        if (!isActive) {
-            card.classList.add('active');
-        }
+        setTimeout(() => {
+            const cardTop = card.offsetTop;
+            const navHeight = 80;
+            const buffer = 20;
+            
+            window.scrollTo({
+                top: cardTop - navHeight - buffer,
+                behavior: 'smooth'
+            });
+        }, 100);
     }
+}
     
     // Initialize first cards as open on page load
     document.addEventListener('DOMContentLoaded', function() {
