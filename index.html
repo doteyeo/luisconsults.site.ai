@@ -3196,19 +3196,7 @@ function toggleChallenge(index) {
     
     // If it wasn't active, open it
     if (!isActive) {
-        card.classList.add('active');
-        
-        // Smooth scroll to keep the card header visible
-        setTimeout(() => {
-            const cardTop = card.offsetTop;
-            const navHeight = 80; // Height of your fixed nav
-            const buffer = 20; // Extra space from top
-            
-            window.scrollTo({
-                top: cardTop - navHeight - buffer,
-                behavior: 'smooth'
-            });
-        }, 100); // Small delay to allow expansion to start
+        card.classList.add('active')        
     }
 }
 
@@ -3220,17 +3208,6 @@ function toggleSolution(index) {
     
     if (!isActive) {
         card.classList.add('active');
-        
-        setTimeout(() => {
-            const cardTop = card.offsetTop;
-            const navHeight = 80;
-            const buffer = 20;
-            
-            window.scrollTo({
-                top: cardTop - navHeight - buffer,
-                behavior: 'smooth'
-            });
-        }, 100);
     }
 }
     
@@ -3253,18 +3230,7 @@ function toggleSolution(index) {
     document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
     
     if (!isActive) {
-        card.classList.add('active');
-        
-        setTimeout(() => {
-            const cardTop = card.offsetTop;
-            const navHeight = 80;
-            const buffer = 20;
-            
-            window.scrollTo({
-                top: cardTop - navHeight - buffer,
-                behavior: 'smooth'
-            });
-        }, 100);
+        card.classList.add('active');     
     }
 }
     
