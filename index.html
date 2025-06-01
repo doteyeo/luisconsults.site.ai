@@ -352,12 +352,20 @@
             text-decoration: none;
             transition: all var(--transition-fast);
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            animation: fadeInUp 1s 0.4s ease-out both;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--primary);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* Gradient button variant */
+        .cta-button.gradient-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
         }
         
         .cta-button::after {
@@ -1517,7 +1525,7 @@
             overflow: hidden;
         }
 
-        /* close all button */ 
+        /* Demo Info Box */ 
     .demo-info-box {
         background: rgba(251, 211, 141, 0.2);
         border: 1px solid rgba(251, 211, 141, 0.5);
@@ -1533,6 +1541,43 @@
         font-size: 0.95rem;
     }
     
+    /* Demo section specific buttons */
+    #demos .cta-button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* View Demo Guide button specific styling */
+    #demos a.cta-button[target="_blank"] {
+        background: var(--secondary);
+        color: white;
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        width: auto;
+    }
+    
+    /* Hover effect for demo buttons */
+    #demos .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(46, 93, 59, 0.3);
+        background: var(--primary);
+        filter: brightness(1.1);
+    }
+
+    /* Hover effect for View Demo Guide button */
+    #demos a.cta-button[target="_blank"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(74, 109, 167, 0.3);
+        background: var(--secondary);
+        filter: brightness(1.1);
+    }
+    
+    /* Close demos button */
     .close-demos-btn {
         background: #e53e3e;
         color: white;
@@ -1543,6 +1588,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
         margin-top: 1rem;
+        display: inline-block;
     }
     
     .close-demos-btn:hover {
@@ -2241,7 +2287,17 @@
                 font-size: 1.4rem !important; /* Slightly smaller for small screens */
             }
         }
-    
+        /* Ensure buttons work on mobile */
+        @media (max-width: 768px) {
+            .cta-button {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .cta-button:active {
+                transform: scale(0.98);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            }
+        }
     </style>
     
 </head>
@@ -3186,17 +3242,28 @@
 
 <!-- Challenge/Solution Toggle Functions -->
 <script>
-  // Enhanced toggle functions with better scroll behavior
+ // Enhanced toggle functions that prevent scroll jumping
 function toggleChallenge(index) {
     const card = document.querySelectorAll('.challenge-card')[index];
     const isActive = card.classList.contains('active');
+    
+    // Store current scroll position
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     
     // Close all challenge cards
     document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
     
     // If it wasn't active, open it
     if (!isActive) {
-        card.classList.add('active')        
+        card.classList.add('active');
+        
+        // Restore scroll position after DOM update
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'instant'
+            });
+        });
     }
 }
 
@@ -3204,10 +3271,21 @@ function toggleSolution(index) {
     const card = document.querySelectorAll('.solution-card')[index];
     const isActive = card.classList.contains('active');
     
+    // Store current scroll position
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
     document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('active'));
     
     if (!isActive) {
         card.classList.add('active');
+        
+        // Restore scroll position after DOM update
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'instant'
+            });
+        });
     }
 }
     
@@ -3222,15 +3300,25 @@ function toggleSolution(index) {
         document.getElementById(`philosophy-panel-${index}`).classList.add('active');
     }
     
-    // Service card toggle functionality
     function toggleService(index) {
     const card = document.querySelectorAll('.service-card-modern')[index];
     const isActive = card.classList.contains('active');
     
+    // Store current scroll position
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
     document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
     
     if (!isActive) {
-        card.classList.add('active');     
+        card.classList.add('active');
+        
+        // Restore scroll position after DOM update
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'instant'
+            });
+        });
     }
 }
     
