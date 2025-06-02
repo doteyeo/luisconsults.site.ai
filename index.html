@@ -3582,6 +3582,32 @@
             console.error('Panel not found for index:', index);
         }
     }
+
+    function toggleService(index) {
+        const card = document.querySelectorAll('.service-card-modern')[index];
+        if (!card) return; // Safety check
+        
+        const isActive = card.classList.contains('active');
+        
+        // Store current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Close all service cards
+        document.querySelectorAll('.service-card-modern').forEach(c => c.classList.remove('active'));
+        
+        // If it wasn't active, open it
+        if (!isActive) {
+            card.classList.add('active');
+            
+            // Restore scroll position after DOM update
+            requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'instant'
+                });
+            });
+        }
+    }
     
        // Initialize philosophy tabs properly
     document.addEventListener('DOMContentLoaded', function() {
